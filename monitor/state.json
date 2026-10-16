@@ -1,5 +1,21 @@
 {
  "flats": {
+  "21845501": {
+   "status": "online",
+   "rent": 1200,
+   "charges": null,
+   "available": "2026-11-30",
+   "first_watched": "2026-10-16",
+   "last_checked": "2026-10-16",
+   "public": {
+    "status": "online",
+    "rent": 1200,
+    "charges": null,
+    "available": "2026-11-30",
+    "since": "2026-10-16",
+    "checked": "2026-10-16"
+   }
+  },
   "21857766": {
    "status": "online",
    "rent": 970,
@@ -60,6 +76,38 @@
     "rent": 990,
     "charges": null,
     "available": "2026-12-01",
+    "since": "2026-10-16",
+    "checked": "2026-10-16"
+   }
+  },
+  "21917601": {
+   "status": "online",
+   "rent": 875,
+   "charges": 100,
+   "available": "2027-01-04",
+   "first_watched": "2026-10-16",
+   "last_checked": "2026-10-16",
+   "public": {
+    "status": "online",
+    "rent": 875,
+    "charges": 100,
+    "available": "2027-01-04",
+    "since": "2026-10-16",
+    "checked": "2026-10-16"
+   }
+  },
+  "21919319": {
+   "status": "online",
+   "rent": 1000,
+   "charges": 125,
+   "available": "2027-01-01",
+   "first_watched": "2026-10-16",
+   "last_checked": "2026-10-16",
+   "public": {
+    "status": "online",
+    "rent": 1000,
+    "charges": 125,
+    "available": "2027-01-01",
     "since": "2026-10-16",
     "checked": "2026-10-16"
    }
