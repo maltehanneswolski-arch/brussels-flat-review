@@ -1,6 +1,14 @@
 {
  "updated": "2026-10-16",
  "flats": {
+  "21857766": {
+   "status": "online",
+   "rent": 970,
+   "charges": 60,
+   "available": "2026-12-01",
+   "since": "2026-10-16",
+   "checked": "2026-10-16"
+  },
   "21896344": {
    "status": "online",
    "rent": 990,
