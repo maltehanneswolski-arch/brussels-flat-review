@@ -1,0 +1,46 @@
+name: Watch flats with a Yes vote
+
+on:
+  schedule:
+    # 07:23 and 17:23 UTC: twice a day, morning and evening in Brussels
+    - cron: "23 7,17 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  issues: write
+
+concurrency:
+  group: monitor
+  cancel-in-progress: false
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Check the listings
+        run: node monitor/check.mjs --report "$RUNNER_TEMP/report.md"
+
+      - name: Save the new status
+        run: |
+          if ! git diff --quiet -- data/status.json monitor/state.json || [ -n "$(git ls-files --others --exclude-standard data/status.json monitor/state.json)" ]; then
+            git config user.name "github-actions[bot]"
+            git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+            git add data/status.json monitor/state.json
+            git commit -m "Update listing status"
+            git push
+          fi
+
+      - name: Open an issue when something changed
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          if [ -s "$RUNNER_TEMP/report.md" ]; then
+            gh issue create --title "Flat update $(date -u +%Y-%m-%d): a Yes flat changed" --body-file "$RUNNER_TEMP/report.md"
+          fi

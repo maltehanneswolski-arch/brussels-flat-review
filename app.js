@@ -110,7 +110,7 @@ const state = {
   flats: [], areas: [], checked: "2026-10-16",
   areaOn: new Set(), cats: new Set(["fit", "ask", "later"]), furn: new Set(["f", "u"]),
   gnKm: 1, sort: "score", selected: null,
-  rows: [], byFlat: {}, lastSync: null
+  rows: [], byFlat: {}, lastSync: null, status: {}
 };
 
 function aggregate(rows) {
@@ -237,6 +237,23 @@ function whoLine(x) {
     r.yes.length && r.no.length ? " · " : null,
     r.no.length ? [el("b", {class: "x"}, "No: "), names(r.no)] : null);
 }
+// Status from the daily check of flats with a Yes vote (monitor/check.mjs)
+function watchLine(x) {
+  const w = state.status[x.id];
+  if (!w) return null;
+  const when = (d) => d ? fmtDate(d) : "?";
+  const text = {
+    online: `Watching: still online, checked ${when(w.checked)}`,
+    "under-option": `Under option since ${when(w.since)}: someone else is ahead`,
+    removed: `Listing removed since ${when(w.since)}, probably rented`,
+    unknown: `Watching: last check failed (${when(w.checked)})`
+  }[w.status];
+  const extra = [];
+  if (w.status !== "removed" && w.rent != null && x.rent != null && w.rent !== x.rent) extra.push(`rent now ${euro(w.rent)}`);
+  if (w.status !== "removed" && w.available && x.available && w.available !== x.available) extra.push(`start now ${/^\d{4}-/.test(w.available) ? fmtDate(w.available) : w.available.toLowerCase()}`);
+  return el("div", {class: "watch " + w.status}, text, extra.length ? " · " + extra.join(" · ") : null);
+}
+
 function card(x) {
   const sel = state.selected === x.id;
   const r = rev(x.id);
@@ -261,6 +278,7 @@ function card(x) {
       el("span", {class: "when " + x.cat}, whenLabel(x))
     ),
     el("div", {class: "facts"}, facts.join(" · "), x.epc ? el("span", {class: "peb " + x.epc, title: "Energy class (PEB) " + x.epc}, "PEB " + x.epc) : null),
+    watchLine(x),
     x.description || x.warning || x.lat == null ? el("p", {class: "desc"}, x.description,
       x.warning ? [" ", el("span", {class: "warn"}, x.warning)] : null,
       x.lat == null ? [" ", el("em", {}, "Address not given, so no map pin.")] : null) : null,
@@ -307,7 +325,8 @@ function pillHtml(x) {
   const s = score(x.id);
   const r = rev(x.id);
   const consensus = r.yes.length + r.no.length ? (s > 0 ? "c-yes" : s < 0 ? "c-no" : "") : "";
-  const cls = ["pill", x.cat, x.kind === "vista" ? "vista" : "", x.approx ? "approx" : "", consensus, state.selected === x.id ? "sel" : ""].join(" ");
+  const gone = state.status[x.id]?.status === "removed" ? "gone" : "";
+  const cls = ["pill", x.cat, x.kind === "vista" ? "vista" : "", x.approx ? "approx" : "", consensus, gone, state.selected === x.id ? "sel" : ""].join(" ");
   const label = x.kind === "vista" ? "Vista" : euro(total(x));
   const tally = r.yes.length + r.no.length ? `<span class="s">${r.yes.length}✓ ${r.no.length}✗</span>` : "";
   return `<span class="${cls}">${label}${tally}</span>`;
@@ -363,6 +382,7 @@ $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; rend
   state.areaOn = new Set(data.areas);
   state.flats = data.flats.map((x) => ({...x, cat: catOf(x, data.checked), d: x.lat != null ? distKm(x.lat, x.lng) : null}));
   $("#checked").textContent = fmtDate(data.checked) + " " + data.checked.slice(0, 4);
+  try { state.status = (await (await fetch("data/status.json", {cache: "no-store"})).json()).flats || {}; } catch { state.status = {}; }
   for (const x of state.flats) {
     if (x.lat == null) continue;
     const mk = L.marker([x.lat, x.lng], {icon: L.divIcon({className: "pw", html: pillHtml(x), iconSize: [0, 0]}), title: x.street + " · " + priceText(x), riseOnHover: true});

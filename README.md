@@ -30,6 +30,21 @@ The price shown is rent plus monthly charges. Each flat links to its listing on 
 
 Map pins turn green when a flat has more Yes than No votes, and red when it has more No.
 
+## Watching the Yes flats
+
+Twice a day, a GitHub Action ([`monitor.yml`](.github/workflows/monitor.yml)) runs [`monitor/check.mjs`](monitor/check.mjs). It checks every flat with at least one Yes vote and records whether the listing is:
+
+- still online,
+- under option (someone else is ahead),
+- removed (usually rented),
+- or changed its rent, charges or start date.
+
+The result goes into `data/status.json`, and the map shows it on each watched flat. When something changes, the Action opens a GitHub issue, so you get a notification. To run a check by hand:
+
+```bash
+node monitor/check.mjs
+```
+
 ## Shared reviews
 
 Votes and comments are stored in a Supabase database, so everyone sees everyone's reviews. Without a database in `config.js`, reviews stay in each visitor's own browser. To connect a different database:

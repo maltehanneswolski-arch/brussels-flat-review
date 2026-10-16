@@ -1,0 +1,36 @@
+{
+ "flats": {
+  "21896344": {
+   "status": "online",
+   "rent": 990,
+   "charges": null,
+   "available": "2026-12-01",
+   "first_watched": "2026-10-16",
+   "last_checked": "2026-10-16",
+   "public": {
+    "status": "online",
+    "rent": 990,
+    "charges": null,
+    "available": "2026-12-01",
+    "since": "2026-10-16",
+    "checked": "2026-10-16"
+   }
+  },
+  "vbe62552": {
+   "status": "online",
+   "rent": 990,
+   "charges": null,
+   "available": "2026-12-01",
+   "first_watched": "2026-10-16",
+   "last_checked": "2026-10-16",
+   "public": {
+    "status": "online",
+    "rent": 990,
+    "charges": null,
+    "available": "2026-12-01",
+    "since": "2026-10-16",
+    "checked": "2026-10-16"
+   }
+  }
+ }
+}
