@@ -1,0 +1,78 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Brussels Flat Review</title>
+<meta name="description" content="Shortlist of rental flats for two in Schaerbeek, Etterbeek, the EU quarter, Saint-Josse, Ixelles and Woluwe. Mark each one Yes or No and leave a comment.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<div class="app">
+  <header class="top">
+    <div class="intro">
+      <h1>Brussels <span>flat review</span></h1>
+      <p>We're two people looking for a flat from December or January. Open any flat, read the listing, and tell us <strong>Yes</strong> or <strong>No</strong>. Comments help even more.</p>
+    </div>
+    <div class="me">
+      <label for="me-name">Your name</label>
+      <input id="me-name" type="text" maxlength="40" placeholder="So we know who voted" autocomplete="nickname">
+    </div>
+  </header>
+
+  <div class="banner" id="banner" role="status" hidden></div>
+
+  <div class="main">
+    <div class="mapwrap">
+      <div id="map" role="region" aria-label="Map of the flats"></div>
+    </div>
+    <aside class="side">
+      <div class="filters">
+        <div class="frow">
+          <span class="flabel" id="lbl-area">Area</span>
+          <div class="chips" id="f-area" role="group" aria-labelledby="lbl-area"></div>
+        </div>
+        <div class="frow">
+          <span class="flabel" id="lbl-when">Start date</span>
+          <div class="chips" id="f-when" role="group" aria-labelledby="lbl-when"></div>
+        </div>
+        <div class="frow two">
+          <div class="frow">
+            <span class="flabel" id="lbl-furn">Furnishing</span>
+            <div class="chips" id="f-furn" role="group" aria-labelledby="lbl-furn"></div>
+          </div>
+          <div class="frow">
+            <label class="flabel" for="sort">Sort</label>
+            <select id="sort">
+              <option value="score">Most Yes votes</option>
+              <option value="price">Cheapest first</option>
+              <option value="date">Earliest start</option>
+            </select>
+          </div>
+        </div>
+        <div class="frow">
+          <label class="flabel" for="gn-range">Hide flats near Gare du Nord</label>
+          <div class="range"><input type="range" id="gn-range" min="0" max="2" step="0.1" value="1"><output id="gn-out" for="gn-range">1.0 km</output></div>
+        </div>
+      </div>
+      <div class="listhead"><span id="count"></span><span id="sync"></span></div>
+      <div class="list" id="list" role="list"></div>
+    </aside>
+  </div>
+
+  <footer class="foot">
+    Listings from Immoweb, Immovlan and Vista Residences, checked <span id="checked">16 Oct 2026</span>. Prices are rent + monthly charges.
+    Map © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors.
+  </footer>
+</div>
+<div class="toast" id="toast" role="status" hidden></div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
+<script src="config.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
