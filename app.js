@@ -357,7 +357,7 @@ $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; rend
 
 // ---------- boot ----------
 (async () => {
-  const data = await (await fetch("data/flats.json")).json();
+  const data = await (await fetch("data/flats.json?v=2")).json();
   state.checked = data.checked;
   state.areas = data.areas;
   state.areaOn = new Set(data.areas);
