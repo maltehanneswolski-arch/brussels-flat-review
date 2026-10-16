@@ -280,7 +280,7 @@ function renderList() {
   const list = $("#list");
   const vis = sorted(state.flats.filter(visible));
   const hidden = state.flats.filter((x) => x.d != null && x.d < state.gnKm && state.areaOn.has(x.area)).length;
-  const reviewers = new Set(state.rows.filter((r) => r.verdict !== "none" || r.comment).map((r) => r.reviewer_id)).size;
+  const reviewers = new Set(Object.values(state.byFlat).flatMap((r) => [...r.yes, ...r.no, ...r.comments]).map((p) => p.reviewer_id)).size;
   $("#count").textContent = `${vis.length} of ${state.flats.length} flats` + (hidden ? ` · ${hidden} hidden near Gare du Nord` : "") + (reviewers ? ` · ${reviewers} reviewer${reviewers > 1 ? "s" : ""}` : "");
   $("#sync").textContent = db.shared && state.lastSync ? "Updated " + state.lastSync.toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"}) : "";
   const keepScroll = list.scrollTop;
