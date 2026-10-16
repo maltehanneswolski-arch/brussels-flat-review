@@ -30,9 +30,9 @@ The price shown is rent plus monthly charges. Each flat links to its listing on 
 
 Map pins turn green when a flat has more Yes than No votes, and red when it has more No.
 
-## Turning on shared reviews
+## Shared reviews
 
-Until a database is connected, reviews stay in each visitor's own browser. To share them:
+Votes and comments are stored in a Supabase database, so everyone sees everyone's reviews. Without a database in `config.js`, reviews stay in each visitor's own browser. To connect a different database:
 
 1. Create a free project at [supabase.com](https://supabase.com).
 2. Open **SQL Editor**, paste [`supabase/schema.sql`](supabase/schema.sql) and run it.

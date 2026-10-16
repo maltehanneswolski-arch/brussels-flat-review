@@ -3,6 +3,6 @@
 // the database only lets visitors read reviews and add new ones (see supabase/schema.sql).
 // Leave them empty and every visitor's reviews stay in their own browser.
 window.FLAT_REVIEW_CONFIG = {
-  supabaseUrl: "",
-  supabaseKey: ""
+  supabaseUrl: "https://oklajabatexdsqeqbzrd.supabase.co",
+  supabaseKey: "sb_publishable_ovWq4xbQhwjjoeCwkbKc7g_Z9AlLjoJ"
 };
