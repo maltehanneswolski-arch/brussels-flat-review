@@ -753,9 +753,9 @@
    "source": "Immoweb",
    "url": "https://www.immoweb.be/en/classified/21839361",
    "area": "Schaerbeek",
-   "street": "Address not given",
-   "lat": null,
-   "lng": null,
+   "street": "Boulevard Auguste Reyers 128",
+   "lat": 50.84788,
+   "lng": 4.40367,
    "approx": false,
    "furnished": true,
    "rent": 1300,
@@ -768,7 +768,7 @@
    "terrace": 6,
    "garden": false,
    "available": "2026-11-01",
-   "description": "67 m² with a terrace, near the Ring. A parking space can be rented."
+   "description": "67 m² with a terrace, near the Ring. A parking space can be rented. Address from Capital Rent's site."
   },
   {
    "id": "21840687",
@@ -1120,7 +1120,8 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-16",
-   "description": "31 m² studio with a mezzanine, small for two. Pin shows the area only."
+   "description": "31 m² studio with a mezzanine, small for two. Pin shows the area only.",
+   "warning": "Under option on Immoschmidt as of 18 Oct: someone else is ahead."
   },
   {
    "id": "21915320",
@@ -1335,10 +1336,10 @@
    "source": "Immoweb",
    "url": "https://www.immoweb.be/en/classified/21862387",
    "area": "EU quarter",
-   "street": "Square Ambiorix",
-   "lat": 50.8472,
-   "lng": 4.384,
-   "approx": true,
+   "street": "Boulevard Charlemagne 92",
+   "lat": 50.84591,
+   "lng": 4.38223,
+   "approx": false,
    "furnished": true,
    "rent": 1250,
    "charges": 150,
@@ -1350,7 +1351,7 @@
    "terrace": null,
    "garden": false,
    "available": "2027-01-01",
-   "description": "75 m² about 20 m from Square Ambiorix. Pin shows the square only."
+   "description": "75 m² furnished flat near Square Ambiorix, behind Schuman. Address from Nadimmo's site."
   },
   {
    "id": "21917601",
@@ -1950,7 +1951,7 @@
    "terrace": null,
    "garden": false,
    "available": "2027-01-01",
-   "description": "55 m² 1-bed in the same building. Also listed by Everest Properties as a duplex one minute from Montgomery metro, with Wi-Fi included in the €125 charges."
+   "description": "55 m² 1-bed in the same building. Also listed by Everest Properties as a duplex one minute from Montgomery metro, with Wi-Fi included in the €125 charges. Everest also offers it furnished for €1,100 + €125."
   },
   {
    "id": "21866794",
@@ -1988,7 +1989,7 @@
    "approx": false,
    "furnished": false,
    "rent": 840,
-   "charges": null,
+   "charges": 175,
    "bedrooms": 0,
    "m2": 43,
    "floor": 3,
@@ -1996,8 +1997,8 @@
    "lift": false,
    "terrace": null,
    "garden": false,
-   "available": null,
-   "description": "Renovated 43 m² top-floor studio near Gribaumont metro."
+   "available": "2026-12-01",
+   "description": "Renovated 43 m² top-floor studio near Gribaumont metro. Free from 1 December according to Expertissimmo."
   },
   {
    "id": "vista-a47",
@@ -2182,6 +2183,78 @@
    "available": "2026-12-01",
    "area": "Etterbeek",
    "description": "60 m² near the Ixelles ponds, parquet throughout, 15 m² bedroom. Also listed on Immovlan.",
+   "added": "2026-10-18"
+  },
+  {
+   "id": "ag-2d55e8bf796c",
+   "kind": "listing",
+   "source": "Trevi",
+   "url": "https://www.trevi.be/fr/bien/7788222/1/studio/Schaerbeek",
+   "street": "Avenue Georges Rodenbach 65",
+   "lat": 50.8795423,
+   "lng": 4.3839305,
+   "approx": false,
+   "furnished": false,
+   "rent": 965,
+   "charges": null,
+   "bedrooms": 0,
+   "m2": 45,
+   "floor": null,
+   "epc": null,
+   "lift": false,
+   "terrace": null,
+   "garden": false,
+   "available": "IMMEDIATELY",
+   "area": "Schaerbeek",
+   "description": "45 m² studio. Free now, so ask whether they would wait. From Trevi's own site.",
+   "added": "2026-10-18"
+  },
+  {
+   "id": "ag-96dcbe383580",
+   "kind": "listing",
+   "source": "Trevi",
+   "url": "https://www.trevi.be/fr/bien/7895097/1/studio/Schaerbeek",
+   "street": "Avenue Léon Mahillon 4",
+   "lat": 50.85136439999999,
+   "lng": 4.392837099999999,
+   "approx": false,
+   "furnished": true,
+   "rent": 1000,
+   "charges": 100,
+   "bedrooms": 0,
+   "m2": 40,
+   "floor": null,
+   "epc": null,
+   "lift": false,
+   "terrace": null,
+   "garden": false,
+   "available": "IMMEDIATELY",
+   "area": "Schaerbeek",
+   "description": "Furnished 40 m² studio towards the Cinquantenaire side of Schaerbeek. Free now, so ask whether they would wait. From Trevi's own site.",
+   "added": "2026-10-18"
+  },
+  {
+   "id": "ag-9be1b6f0aef3",
+   "kind": "listing",
+   "source": "Everest Properties",
+   "url": "https://www.everestproperties.be/en/for-rent/bruxelles/schuman-very-nice-furnished-studio-for-rent/32330/",
+   "street": "Rue Stevin 69",
+   "lat": 50.84496,
+   "lng": 4.37937,
+   "approx": false,
+   "furnished": true,
+   "rent": 920,
+   "charges": 270,
+   "bedrooms": 0,
+   "m2": 32,
+   "floor": null,
+   "epc": null,
+   "lift": false,
+   "terrace": null,
+   "garden": false,
+   "available": "2026-12-01",
+   "area": "EU quarter",
+   "description": "Furnished 32 m² studio near Schuman, small for two. Also listed by Macnash. From Everest's own site.",
    "added": "2026-10-18"
   }
  ]

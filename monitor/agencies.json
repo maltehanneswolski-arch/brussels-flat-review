@@ -1,0 +1,124 @@
+[
+ {
+  "name": "Immoschmidt",
+  "website": "https://www.immoschmidt.be",
+  "type": "html",
+  "rentalsUrl": "https://www.immoschmidt.be/locations/view-view2",
+  "linkPattern": "/fiche/(appartement|studio|duplex|penthouse|loft|flat|triplex)/a-louer/",
+  "postcodeFrom": "url",
+  "noStreet": true
+ },
+ {
+  "name": "Immo Clicking",
+  "website": "https://immoclicking.be",
+  "type": "html",
+  "rentalsUrl": "https://immoclicking.be/fr/a-louer",
+  "linkPattern": "/fr/offre/[0-9]+/(appartement|studio|duplex|penthouse|loft|flat)[^/]*-a-louer-a-",
+  "postcodeFrom": "url"
+ },
+ {
+  "name": "Realty Belgium",
+  "website": "https://www.realtybelgium.be",
+  "type": "html",
+  "rentalsUrl": "https://www.realtybelgium.be/fr/a-louer?view=list",
+  "linkPattern": "view=detail&id=[0-9]+",
+  "streetRe": "Adresse\\s*:?\\s*(.{4,60}?),\\s*\\d{4}"
+ },
+ {
+  "name": "Immo2gether",
+  "website": "https://immo2gether.be",
+  "type": "html",
+  "rentalsUrl": "https://immo2gether.be/location/",
+  "linkPattern": "/nos-biens/bien/[?]EstateID=[0-9]+"
+ },
+ {
+  "name": "Grant Properties",
+  "website": "https://www.grantproperties.be",
+  "type": "html",
+  "rentalsUrl": "https://www.grantproperties.be/fr/a-louer/",
+  "linkPattern": "grantproperties[.]be/fr/biens/[0-9]+-"
+ },
+ {
+  "name": "Immo 2A",
+  "website": "https://www.immo2a.be",
+  "type": "html",
+  "rentalsUrl": ["https://www.immo2a.be/fr/a-louer?view=list", "https://www.immo2a.be/fr/a-louer?view=list&page=2"],
+  "linkPattern": "view=details&id=[0-9]+"
+ },
+ {
+  "name": "Macnash",
+  "website": "https://www.macnash.com",
+  "type": "html",
+  "rentalsUrl": ["https://www.macnash.com/en/our-agencies/macnash-montgomery/properties.aspx", "https://www.macnash.com/en/our-agencies/macnash-sud/properties.aspx"],
+  "linkPattern": "/EN/property/for-rent/(flat|studio|duplex|penthouse|loft|apartment)/(1030|1040|1000|1210|1050|1200)/",
+  "postcodeFrom": "url",
+  "noStreet": true,
+  "rentRe": "ID \\d+ (\\d{1,2}[,.]\\d{3}|\\d{3,4}) €",
+  "bedroomsRe": "not disclosed (\\d+) \\d+ \\d{2,3} M²",
+  "m2Re": "not disclosed \\d+ \\d+ (\\d{2,3}) M²"
+ },
+ {
+  "name": "Bathim",
+  "website": "https://www.bathim.be",
+  "type": "html",
+  "rentalsUrl": "https://www.bathim.be/fr/chercher-bien/a-louer",
+  "linkPattern": "/fr/bien/a-louer/(appartement|studio|duplex|penthouse|loft|flat)/(1030|1040|1000|1210|1050|1200)-",
+  "postcodeFrom": "url",
+  "rentRe": "par mois (\\d{1,2}[.]\\d{3}|\\d{3,4}) €",
+  "streetRe": "à louer à [A-Za-zÀ-ÿ' -]+? ((?:Rue|Avenue|Boulevard|Chaussée|Place|Square|Clos|Allée|Drève|Quai)[^0-9]{3,40}\\d{1,4})"
+ },
+ {
+  "name": "Trevi",
+  "website": "https://www.trevi.be",
+  "type": "html",
+  "rentalsUrl": [
+   "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=1", "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=2",
+   "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=3", "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=4",
+   "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=5", "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=6",
+   "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=7", "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=8",
+   "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=9", "https://www.trevi.be/fr/louer-bien-immobilier?pagenumber=10"
+  ],
+  "linkPattern": "/fr/bien/[0-9]+/1/(appartement|studio|duplex|penthouse|loft|flat)/(schaarbeek|schaerbeek|etterbeek|bruxelles|brussel|saint-josse|sint-joost|ixelles|elsene|woluwe-saint-lambert|sint-lambrechts-woluwe)",
+  "maxListings": 140,
+  "rentRe": "À louer - [^-]+ - (\\d{3,5})€",
+  "streetRe": "Adresse\\s*:?\\s*(.{4,60}?)\\s*Code postal"
+ },
+ {
+  "name": "Vaneau Lecobel",
+  "website": "https://www.lecobel-vaneau.be",
+  "type": "html",
+  "rentalsUrl": ["https://www.lecobel-vaneau.be/en/our-properties-brussel-east-rentals", "https://www.lecobel-vaneau.be/en/our-properties-brussels-center-rentals"],
+  "linkAttr": "data-url",
+  "linkPattern": "/en/real-estate-(schaerbeek|etterbeek|brussels|bruxelles|saint-josse|ixelles|woluwe-saint-lambert)",
+  "postcodeFrom": "url",
+  "noStreet": true,
+  "rentRe": "Price : (\\d{1,2} \\d{3}|\\d{3,4}) €",
+  "bedroomsRe": "Bedroom\\(s\\) : (\\d+)",
+  "m2Re": "(?<![\\d.,])(\\d{2,3})(?:[.,]\\d+)? m²"
+ },
+ {
+  "name": "Immobilière Petitjean",
+  "website": "https://www.immopetitjean.be",
+  "type": "html",
+  "rentalsUrl": "https://www.immopetitjean.be/fr/List/InfiniteScroll?json=%7B%22SliderList%22%3Afalse%2C%22SliderMultiAgencies%22%3Afalse%2C%22IsProject%22%3Afalse%2C%22PageMaximum%22%3A0%2C%22FirstPage%22%3Atrue%2C%22CanGetNextPage%22%3Afalse%2C%22CMSListType%22%3A2%2C%22SortParameter%22%3A5%2C%22MaxItemsPerPage%22%3A60%2C%22PageNumber%22%3A0%2C%22EstateSearchParams%22%3A%5B%7B%22FieldName%22%3A%22StatusIDList%22%2C%22FieldValue%22%3A%5B1%5D%7D%2C%7B%22FieldName%22%3A%22CategoryIDList%22%2C%22FieldValue%22%3A%5B2%5D%7D%2C%7B%22FieldName%22%3A%22ShowDetails%22%2C%22FieldValue%22%3Atrue%7D%2C%7B%22FieldName%22%3A%22CanHaveChildren%22%2C%22FieldValue%22%3Afalse%7D%5D%2C%22CustomQuery%22%3Anull%2C%22jsonEstateParams%22%3Anull%2C%22BaseEstateID%22%3A0%7D",
+  "linkPattern": "/fr/bien/a-louer/(appartement|studio|duplex|penthouse|loft|flat)/(1030|1040|1000|1210|1050|1200)-",
+  "postcodeFrom": "url",
+  "rentRe": "à louer - \\d{4} [^-]+ - (\\d{1,2} \\d{3}|\\d{3,4}) €",
+  "streetRe": "Adresse (.{4,60}?) - \\d{4}"
+ },
+ {
+  "name": "Trior",
+  "website": "https://www.trior.be",
+  "type": "html",
+  "rentalsUrl": "https://immo.trior.be/fr/List/InfiniteScroll?json=%7B%22SliderList%22%3Afalse%2C%22SliderMultiAgencies%22%3Afalse%2C%22IsProject%22%3Afalse%2C%22PageMaximum%22%3A0%2C%22FirstPage%22%3Atrue%2C%22CanGetNextPage%22%3Afalse%2C%22CMSListType%22%3A2%2C%22SortParameter%22%3A5%2C%22MaxItemsPerPage%22%3A60%2C%22PageNumber%22%3A0%2C%22EstateSearchParams%22%3A%5B%7B%22FieldName%22%3A%22StatusIDList%22%2C%22FieldValue%22%3A%5B1%5D%7D%2C%7B%22FieldName%22%3A%22CategoryIDList%22%2C%22FieldValue%22%3A%5B2%5D%7D%2C%7B%22FieldName%22%3A%22ShowDetails%22%2C%22FieldValue%22%3Atrue%7D%2C%7B%22FieldName%22%3A%22CanHaveChildren%22%2C%22FieldValue%22%3Afalse%7D%5D%2C%22CustomQuery%22%3Anull%2C%22jsonEstateParams%22%3Anull%2C%22BaseEstateID%22%3A0%7D",
+  "linkPattern": "/fr/bien/a-louer/(appartement|studio|duplex|penthouse|loft|flat)/(1030|1040|1000|1210|1050|1200)-",
+  "postcodeFrom": "url",
+  "rentRe": "à louer - \\d{4} [^-]+ - (\\d{1,2} \\d{3}|\\d{3,4}) €",
+  "streetRe": "Adresse (.{4,60}?) - \\d{4}"
+ },
+ {"name": "Everest Properties", "website": "https://www.everestproperties.be", "type": "omnicasa", "listData": "/page-data/fr/a-louer/page-data.json"},
+ {"name": "Homeside Properties", "website": "https://www.homeside.be", "type": "omnicasa", "listData": "/page-data/fr/a-louer/page-data.json"},
+ {"name": "Nadimmo", "website": "https://www.nadimmo.be", "type": "omnicasa", "listData": "/page-data/fr/a-louer/page-data.json"},
+ {"name": "Eventimmo", "website": "https://www.eventimmo.be", "type": "omnicasa", "listData": "/page-data/fr/louer/page-data.json"},
+ {"name": "Expertissimmo", "website": "https://expertissimmo.eu", "type": "expertissimmo", "streetRe": "Adresse\\s*(.{4,60}?)\\s*\\d{4}"}
+]

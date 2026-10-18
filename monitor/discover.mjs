@@ -64,6 +64,7 @@ export function judge(f, text = "") {
   if (ROOM.test(text)) return "room in a shared house";
   const studio = !f.bedrooms || /\bstudio\b/i.test(text.slice(0, 160)); // portals often count a studio as "1 bedroom"
   if (studio && !(f.m2 >= 30)) return "studio under 30 m² or size unknown";
+  if (f.m2 && f.m2 < 28) return "under 28 m², too small for two";
   if (area.mustBeNear) {
     if (f.lat == null) return "no address, can't tell if it's near our areas";
     if (nearPins(f.lat, f.lng) > 1.0) return "more than 1 km from our areas";
