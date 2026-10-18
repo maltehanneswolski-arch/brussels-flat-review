@@ -88,6 +88,7 @@ function renderWhoami() {
 for (const b of document.querySelectorAll("#whoami [data-person]")) b.addEventListener("click", () => {
   person = b.dataset.person;
   store("flat-review:person", person);
+  loadSeen();
   renderWhoami();
   state.byFlat = aggregate(state.rows);
   renderAll();
@@ -167,8 +168,8 @@ const TABS = {all: "all", shortlist: "short", short: "short", contact: "contact"
 const state = {
   flats: [], areas: [], checked: "2026-10-16",
   areaOn: new Set(), cats: new Set(["fit", "ask", "later"]), furn: new Set(["f", "u"]),
-  gnKm: 1, sort: "score", selected: null,
-  rows: [], byFlat: {}, lastSync: null, status: {},
+  gnKm: 1, sort: "new", selected: null, onlyNew: false,
+  rows: [], byFlat: {}, lastSync: null, syncError: false, status: {},
   tab: TABS[location.hash.slice(1)] || "all",
   progressRows: [], progress: {}, progressReady: true
 };
@@ -215,8 +216,9 @@ async function refresh() {
     state.rows = await db.load();
     state.byFlat = aggregate(state.rows);
     state.lastSync = new Date();
+    state.syncError = false;
   } catch (e) {
-    $("#sync").textContent = "Couldn't load reviews. Retrying…";
+    state.syncError = true;
   }
   try {
     state.progressRows = await progressDb.load();
@@ -284,18 +286,43 @@ function isNew(x) {
   return days >= 0 && days < 2;
 }
 
+// What's new to you: flats that weren't on the map at your last visit (per person, in this browser).
+// A visit ends after an hour away, so a reload doesn't wipe the list.
+// On a first visit there is nothing to compare with, so it falls back to "added in the last 2 days".
+const VISIT_GAP = 3600e3;
+let seenRec = {};
+let seenBefore = null;
+let lastVisitAt = null;
+const seenKey = () => "flat-review:seen:" + (person || "anyone");
+function loadSeen() {
+  try { seenRec = JSON.parse(store(seenKey()) || "null") || {}; } catch { seenRec = {}; }
+  if (seenRec.latest && Date.now() - new Date(seenRec.latest.at) > VISIT_GAP) seenRec.base = seenRec.latest;
+  seenBefore = seenRec.base ? new Set(seenRec.base.ids) : null;
+  lastVisitAt = seenRec.base?.at || null;
+}
+function saveSeen() {
+  if (!state.flats.length) return;
+  seenRec.latest = {at: new Date().toISOString(), ids: state.flats.map((f) => f.id)};
+  store(seenKey(), JSON.stringify(seenRec));
+}
+const isUnseen = (x) => (seenBefore ? !seenBefore.has(x.id) : isNew(x));
+document.addEventListener("visibilitychange", () => { if (document.hidden) saveSeen(); });
+window.addEventListener("pagehide", saveSeen);
+
 // ---------- filters ----------
 function visible(x) {
   if (state.tab === "short") return inShort(x);
   if (state.tab === "contact") return inContact(x);
+  if (state.onlyNew) return isUnseen(x);
   if (!state.areaOn.has(x.area)) return false;
-  if (!state.cats.has(x.cat) && !isNew(x)) return false; // new flats show whatever their start date
+  if (!state.cats.has(x.cat) && !isNew(x) && !isUnseen(x)) return false; // new flats show whatever their start date
   if (!state.furn.has(x.furnished === true ? "f" : "u")) return false;
   if (x.d != null && x.d < state.gnKm) return false;
   return true;
 }
 function sorted(list) {
   const by = {
+    new: (a, b) => (isUnseen(b) - isUnseen(a)) || (isNew(b) - isNew(a)) || (score(b.id) - score(a.id)) || (CAT_ORDER[a.cat] - CAT_ORDER[b.cat]) || ((total(a) ?? 1e9) - (total(b) ?? 1e9)),
     score: (a, b) => (score(b.id) - score(a.id)) || (isNew(b) - isNew(a)) || (CAT_ORDER[a.cat] - CAT_ORDER[b.cat]) || ((total(a) ?? 1e9) - (total(b) ?? 1e9)),
     price: (a, b) => ((total(a) ?? 1e9) - (total(b) ?? 1e9)),
     date: (a, b) => (CAT_ORDER[a.cat] - CAT_ORDER[b.cat]) || String(a.available || "z").localeCompare(String(b.available || "z"))
@@ -315,6 +342,46 @@ function renderChips() {
   const furn = $("#f-furn"); furn.replaceChildren();
   [{k: "f", label: "Furnished"}, {k: "u", label: "Unfurnished"}].forEach((c) => furn.append(el("button", {type: "button", class: "chip", "aria-pressed": String(state.furn.has(c.k)),
     onclick: () => { state.furn.has(c.k) ? state.furn.delete(c.k) : state.furn.add(c.k); renderAll(); }}, c.label)));
+  renderFilterSummary();
+}
+// The one-line summary shown while the filter panel is folded
+function renderFilterSummary() {
+  const areas = state.areaOn.size === state.areas.length ? "All areas" : state.areaOn.size ? [...state.areaOn].join(", ") : "No area";
+  const dates = CATS.filter((c) => state.cats.has(c.k)).map((c) => c.label).join(", ") || "no start date";
+  const furn = state.furn.size === 2 ? "furnished or not" : state.furn.has("f") ? "furnished only" : state.furn.has("u") ? "unfurnished only" : "no furnishing";
+  const gn = state.gnKm ? `not within ${state.gnKm.toFixed(1)} km of Gare du Nord` : null;
+  $("#f-summary").textContent = [areas, dates, furn, gn].filter(Boolean).join(" · ");
+}
+
+// The strip on top of the list: what's new to you, with a one-tap filter
+function renderNewStrip() {
+  const strip = $("#newstrip");
+  const unseen = state.flats.filter(isUnseen);
+  const last = lastVisitAt && new Date(lastVisitAt);
+  const since = !last ? "in the last 2 days"
+    : last.toDateString() === new Date().toDateString() ? "since your last visit at " + last.toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"})
+    : "since your last visit on " + last.toLocaleDateString("en-GB", {weekday: "short", day: "numeric", month: "short"});
+  strip.hidden = false;
+  if (!unseen.length) {
+    state.onlyNew = false;
+    strip.classList.add("quiet");
+    strip.replaceChildren(el("span", {}, `Nothing new ${since}.`));
+    return;
+  }
+  strip.classList.remove("quiet");
+  const byArea = {};
+  unseen.forEach((x) => { byArea[x.area] = (byArea[x.area] || 0) + 1; });
+  const where = Object.entries(byArea).sort((a, b) => b[1] - a[1]).map(([a, n]) => `${n} in ${a}`).join(", ");
+  strip.replaceChildren(
+    el("span", {class: "nsum"}, el("b", {}, `${unseen.length} new`), ` ${since}: ${where}.`),
+    el("button", {type: "button", class: "btn " + (state.onlyNew ? "primary" : "ghost"), "aria-pressed": String(state.onlyNew),
+      onclick: () => { state.onlyNew = !state.onlyNew; renderAll(); setTimeout(fitVisible, 0); }}, state.onlyNew ? "Show all flats" : "Show only these"));
+}
+
+function renderStatusLine() {
+  const time = (d) => d.toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"});
+  $("#status-line").textContent = `${state.flats.length} flats · checked ${fmtDate(state.checked)}` +
+    (state.syncError ? " · couldn't load votes, retrying" : db.shared && state.lastSync ? ` · votes updated ${time(state.lastSync)}` : "");
 }
 
 // ---------- cards ----------
@@ -373,9 +440,9 @@ function card(x) {
   const fresh = isNew(x);
   return el("article", {class: "card" + (sel ? " sel" : "") + (fresh ? " new" : ""), role: "listitem", id: "card-" + x.id},
     el("div", {class: "chead"},
-      el("button", {class: "selbtn", type: "button", "aria-expanded": String(sel), onclick: () => select(x.id)},
+      el("div", {class: "ctitle"},
         el("span", {class: "price"}, priceText(x), " ", el("small", {}, x.rent == null ? "price and dates on request" : x.charges ? `${euro(x.rent)} rent + ${euro(x.charges)} charges` : "rent, charges not stated")),
-        el("span", {class: "street"}, x.street)
+        el("h3", {class: "street"}, el("button", {class: "selbtn", type: "button", "aria-expanded": String(sel), onclick: () => select(x.id)}, x.street))
       ),
       el("span", {class: "tags"},
         fresh ? el("span", {class: "newtag", title: "Found by the daily search on " + fmtDate(x.added)}, "New " + fmtDate(x.added)) : null,
@@ -401,16 +468,10 @@ function card(x) {
 function renderList() {
   const list = $("#list");
   const vis = sorted(state.flats.filter(visible));
-  const hidden = state.flats.filter((x) => x.d != null && x.d < state.gnKm && state.areaOn.has(x.area)).length;
-  const reviewers = new Set(Object.values(state.byFlat).flatMap((r) => [...r.yes, ...r.no, ...r.comments]).map(personKey)).size;
-  const fresh = state.flats.filter(isNew).length;
-  $("#count").textContent = `${vis.length} of ${state.flats.length} flats` + (fresh ? ` · ${fresh} new` : "") + (hidden ? ` · ${hidden} hidden near Gare du Nord` : "") + (reviewers ? ` · ${reviewers} reviewer${reviewers > 1 ? "s" : ""}` : "");
-  $("#sync").textContent = db.shared && state.lastSync ? "Updated " + state.lastSync.toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"}) : "";
-  const keepScroll = list.scrollTop;
-  const typing = document.activeElement?.id?.startsWith("comment-") ? {id: document.activeElement.id, v: document.activeElement.value} : null;
-  list.replaceChildren(...(vis.length ? vis.map(card) : [el("div", {class: "empty"}, "No flats match these filters. Turn an area or start date back on.")]));
-  list.scrollTop = keepScroll;
-  if (typing) { const t = document.getElementById(typing.id); if (t) { t.value = typing.v; t.focus(); } }
+  const hidden = state.onlyNew ? 0 : state.flats.filter((x) => x.d != null && x.d < state.gnKm && state.areaOn.has(x.area)).length;
+  $("#count").textContent = `${vis.length} of ${state.flats.length} flats` + (hidden ? ` · ${hidden} hidden near Gare du Nord` : "");
+  renderNewStrip();
+  keepTyping(list, () => list.replaceChildren(...(vis.length ? vis.map(card) : [el("div", {class: "empty"}, "No flats match these filters. Turn an area or start date back on.")])));
 }
 
 // ---------- Shortlist and In contact tabs ----------
@@ -555,9 +616,9 @@ function headerOf(x) {
   const st = stageOf(x);
   const ls = stageSince(x);
   return el("div", {class: "chead"},
-    el("button", {class: "selbtn", type: "button", onclick: () => select(x.id)},
+    el("div", {class: "ctitle"},
       el("span", {class: "price"}, priceText(x)),
-      el("span", {class: "street"}, `${x.street} · ${x.area}`)),
+      el("h3", {class: "street"}, el("button", {class: "selbtn", type: "button", onclick: () => select(x.id)}, `${x.street} · ${x.area}`))),
     el("span", {class: "stage s-" + st, title: ls ? `${STAGE[st].label} since ${fmtStamp(ls.created_at)}` : STAGE[st].label}, STAGE[st].label));
 }
 
@@ -718,30 +779,62 @@ function fitVisible() {
 
 // ---------- map ----------
 const map = L.map("map", {minZoom: 12, maxZoom: 18, zoomSnap: 0.5});
+let mapReady = false;
+map.whenReady(() => { mapReady = true; });
 map.attributionControl.setPrefix(false);
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
 }).addTo(map);
-// Keep Leaflet's idea of the map size right when the layout changes (tab switch, scrollbar appearing)
-if (window.ResizeObserver) new ResizeObserver(() => map.invalidateSize()).observe(document.getElementById("map"));
+// Keep Leaflet's idea of the map size right when the layout changes (tab switch, scrollbar appearing),
+// and keep the flats in view until someone moves the map themselves (a tab opened in the background has no size yet).
+let mapTouched = false;
+for (const ev of ["pointerdown", "wheel", "keydown"]) document.getElementById("map").addEventListener(ev, () => { mapTouched = true; }, {passive: true});
+if (window.ResizeObserver) new ResizeObserver(() => {
+  map.invalidateSize();
+  if (mapReady && !mapTouched) fitVisible();
+}).observe(document.getElementById("map"));
 const zone = L.circle(GN, {radius: 1000, className: "gn-zone", interactive: false}).addTo(map);
 L.marker(GN, {icon: L.divIcon({className: "pw", html: '<span class="gn">Gare du Nord</span>', iconSize: [0, 0]}), interactive: false, keyboard: false}).addTo(map);
 const layer = L.layerGroup().addTo(map);
 const markers = {};
 let popupFor = null;
 
+// Pins: colour fill means new only. Dec–Jan is a yellow edge, an approximate address a dashed edge,
+// and the vote balance a small dot (green more Yes, red more No, hollow tied).
 function pillHtml(x) {
   const s = score(x.id);
   const r = rev(x.id);
-  const consensus = r.yes.length + r.no.length ? (s > 0 ? "c-yes" : s < 0 ? "c-no" : "") : "";
   const gone = state.status[x.id]?.status === "removed" ? "gone" : "";
-  const cls = ["pill", x.cat, x.kind === "vista" ? "vista" : "", x.approx ? "approx" : "", isNew(x) ? "new" : "", consensus, gone, state.selected === x.id ? "sel" : ""].join(" ");
+  const cls = ["pill", x.cat, x.kind === "vista" ? "vista" : "", x.approx ? "approx" : "", isNew(x) ? "new" : "", gone, state.selected === x.id ? "sel" : ""].join(" ");
   const label = x.kind === "vista" ? "Vista" : x.rent == null ? "Ask" : euro(total(x));
   const st = stageOf(x);
   if (state.tab !== "all" && STAGE[st]) return `<span class="${cls} st-${st}">${label}<span class="s">${STAGE[st].pin}</span></span>`;
-  const tally = r.yes.length + r.no.length ? `<span class="s">${r.yes.length}✓ ${r.no.length}✗</span>` : isNew(x) ? `<span class="s">new</span>` : "";
-  return `<span class="${cls}">${label}${tally}</span>`;
+  const dot = r.yes.length + r.no.length ? `<i class="vd ${s > 0 ? "y" : s < 0 ? "x" : "t"}"></i>` : "";
+  return `<span class="${cls}">${dot}${label}${isNew(x) ? '<span class="s">new</span>' : ""}</span>`;
+}
+
+// Pins that would sit on top of each other become one count bubble; tapping it zooms in.
+// From zoom 16 every flat has its own pin.
+const GROUP_BELOW = 16;
+function groupPins(list) {
+  if (!mapReady || map.getZoom() >= GROUP_BELOW) return list.map((x) => [x]);
+  const groups = [];
+  for (const x of list) {
+    const p = map.project([x.lat, x.lng]);
+    const g = x.id === state.selected ? null : groups.find((g) => g.p && Math.abs(g.p.x - p.x) < 64 && Math.abs(g.p.y - p.y) < 26);
+    if (g) g.push(x);
+    else groups.push(Object.assign([x], {p: x.id === state.selected ? null : p}));
+  }
+  return groups;
+}
+function groupMarker(g) {
+  const fresh = g.filter(isNew).length;
+  const pos = [g[0].lat, g[0].lng]; // every member is within a pin's width of the first one, others aren't
+  const html = `<span class="grp">${g.length}${fresh ? `<b>${fresh} new</b>` : ""}</span>`;
+  const mk = L.marker(pos, {icon: L.divIcon({className: "pw", html, iconSize: [0, 0]}), title: `${g.length} flats here${fresh ? `, ${fresh} new` : ""}. Zoom in`, zIndexOffset: 500});
+  mk.on("click", () => map.fitBounds(L.latLngBounds(g.map((x) => [x.lat, x.lng])), {padding: [60, 60], maxZoom: GROUP_BELOW}));
+  return mk;
 }
 function popupContent(x) {
   return el("div", {class: "pop"},
@@ -751,14 +844,18 @@ function popupContent(x) {
     state.tab === "all" ? voteRow(x) : el("a", {class: "link", href: x.url, target: "_blank", rel: "noopener"}, "Open on " + x.source + " ↗"));
 }
 function renderMarkers() {
-  layer.clearLayers();
+  const shown = [];
   for (const x of state.flats) {
     const mk = markers[x.id];
     if (!mk) continue;
     mk.setIcon(L.divIcon({className: "pw", html: pillHtml(x), iconSize: [0, 0]}));
     mk.setZIndexOffset(state.selected === x.id ? 1000 : score(x.id) * 10 + (isNew(x) ? 8 : 0) + (x.cat === "fit" ? 5 : 0));
-    if (visible(x)) layer.addLayer(mk);
+    if (visible(x)) shown.push(x);
   }
+  // swap only what changed, so an open popup stays open
+  const want = new Set(groupPins(shown).map((g) => g.length > 1 ? groupMarker(g) : markers[g[0].id]));
+  layer.eachLayer((l) => { if (!want.has(l)) layer.removeLayer(l); });
+  want.forEach((l) => { if (!layer.hasLayer(l)) layer.addLayer(l); });
   zone.setRadius(Math.max(state.gnKm, 0.01) * 1000);
   zone.setStyle({opacity: state.gnKm > 0 ? 1 : 0, fillOpacity: state.gnKm > 0 ? 0.07 : 0});
   if (popupFor && markers[popupFor]?.isPopupOpen()) markers[popupFor].setPopupContent(popupContent(state.flats.find((f) => f.id === popupFor)));
@@ -770,6 +867,7 @@ function select(id, fromMap) {
   const stacked = state.tab !== "all";
   if (state.selected && x?.lat != null) {
     if (!fromMap) {
+      mapTouched = true;
       map.panTo([x.lat, x.lng]);
       if (stacked) document.querySelector(".mapwrap").scrollIntoView({block: "nearest", behavior: "smooth"});
     }
@@ -780,9 +878,11 @@ function select(id, fromMap) {
   if (state.selected && fromMap && (stacked || matchMedia("(min-width: 901px)").matches)) document.getElementById(prefix + id)?.scrollIntoView({block: stacked ? "start" : "nearest", behavior: "smooth"});
 }
 map.on("popupclose", () => { popupFor = null; });
+map.on("zoomend", renderMarkers);
 
 function renderAll() {
   renderTabs();
+  renderStatusLine();
   if (state.tab === "all") { renderChips(); renderList(); }
   else if (state.tab === "short") renderShort();
   else renderContact();
@@ -793,7 +893,7 @@ function renderAll() {
 $("#gn-range").addEventListener("input", (e) => {
   state.gnKm = +e.target.value;
   $("#gn-out").textContent = state.gnKm ? state.gnKm.toFixed(1) + " km" : "Off";
-  renderList(); renderMarkers();
+  renderFilterSummary(); renderList(); renderMarkers();
 });
 $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; renderList(); });
 
@@ -805,6 +905,7 @@ $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; rend
   state.areaOn = new Set(data.areas);
   state.flats = data.flats.map((x) => ({...x, cat: catOf(x, data.checked), d: x.lat != null ? distKm(x.lat, x.lng) : null}));
   $("#checked").textContent = fmtDate(data.checked) + " " + data.checked.slice(0, 4);
+  loadSeen();
   try { state.status = (await (await fetch("data/status.json", {cache: "no-store"})).json()).flats || {}; } catch { state.status = {}; }
   for (const x of state.flats) {
     if (x.lat == null) continue;

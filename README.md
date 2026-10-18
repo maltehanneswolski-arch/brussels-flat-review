@@ -25,7 +25,7 @@ The price shown is rent plus monthly charges. Each flat links to its listing on 
 
 Twice a day, at 06:00 and 16:00 Brussels time, a GitHub Action ([`monitor.yml`](.github/workflows/monitor.yml)) does two things:
 
-1. **Finds new flats.** [`monitor/discover.mjs`](monitor/discover.mjs) searches Immoweb, Immovlan and the agency websites in [`monitor/agencies.json`](monitor/agencies.json). It adds every listing that fits the rules above to `data/flats.json`. New flats show **in purple** on the map for 2 days. Each listing is judged once; the verdicts are kept in `monitor/seen.json`.
+1. **Finds new flats.** [`monitor/discover.mjs`](monitor/discover.mjs) searches Immoweb, Immovlan and the agency websites in [`monitor/agencies.json`](monitor/agencies.json). It adds every listing that fits the rules above to `data/flats.json`. New flats show **in purple** on the map for 2 days, and the strip above the list counts the flats that are new since your last visit (one tap shows only those). Each listing is judged once; the verdicts are kept in `monitor/seen.json`.
 2. **Watches the Yes flats** (see below).
 
 **Agency websites checked:** Immoschmidt, Immo Clicking, Realty Belgium, Immo2gether, Grant Properties, Immo 2A, Macnash (Montgomery and Sud), Bathim, Trevi (first 10 pages), Vaneau Lecobel (East and Centre), Immobilière Petitjean, Trior, Everest Properties, Homeside, Nadimmo, Eventimmo and Expertissimmo. Each site's address and reading rules are in `monitor/agencies.json`; the reading code is [`monitor/agencies.mjs`](monitor/agencies.mjs).

@@ -9,14 +9,14 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
-<link rel="stylesheet" href="styles.css?v=9">
+<link rel="stylesheet" href="styles.css?v=10">
 </head>
 <body>
 <div class="app">
   <header class="top">
     <div class="intro">
       <h1>Brussels <span>flat review</span></h1>
-      <p>We're two people looking for a flat from December or January. Open any flat, read the listing, and tell us <strong>Yes</strong> or <strong>No</strong>. Comments help even more.</p>
+      <p class="statusline" id="status-line">Loading flats…</p>
     </div>
     <div class="me">
       <span class="melabel" id="me-label">Who are you?</span>
@@ -35,41 +35,53 @@
 
   <div class="banner" id="banner" role="status" hidden></div>
 
-  <div class="main" id="main">
+  <main class="main" id="main">
     <div class="mapwrap">
       <div id="map" role="region" aria-label="Map of the flats"></div>
+      <ul class="legend" aria-label="Map legend">
+        <li><span class="lg lg-new"></span>New (2 days)</li>
+        <li><span class="lg lg-fit"></span>Starts Dec–Jan</li>
+        <li><span class="lg lg-approx"></span>Rough address</li>
+        <li><span class="lg lg-yes"></span><span class="lg lg-no"></span>More Yes / more No</li>
+        <li><span class="lg lg-group">5</span>Group: tap to zoom</li>
+      </ul>
     </div>
     <aside class="side">
      <div class="pane" id="pane-all" role="tabpanel" aria-labelledby="tab-all">
-      <div class="filters">
-        <div class="frow">
-          <span class="flabel" id="lbl-area">Area</span>
-          <div class="chips" id="f-area" role="group" aria-labelledby="lbl-area"></div>
-        </div>
-        <div class="frow">
-          <span class="flabel" id="lbl-when">Start date</span>
-          <div class="chips" id="f-when" role="group" aria-labelledby="lbl-when"></div>
-        </div>
-        <div class="frow two">
+      <h2 class="sr-only">Flats</h2>
+      <div class="newstrip" id="newstrip" role="status" hidden></div>
+      <details class="filters" id="filters">
+        <summary><span class="flabel">Filters</span> <span class="fsum" id="f-summary"></span></summary>
+        <div class="frows">
+          <div class="frow">
+            <span class="flabel" id="lbl-area">Area</span>
+            <div class="chips" id="f-area" role="group" aria-labelledby="lbl-area"></div>
+          </div>
+          <div class="frow">
+            <span class="flabel" id="lbl-when">Start date</span>
+            <div class="chips" id="f-when" role="group" aria-labelledby="lbl-when"></div>
+          </div>
           <div class="frow">
             <span class="flabel" id="lbl-furn">Furnishing</span>
             <div class="chips" id="f-furn" role="group" aria-labelledby="lbl-furn"></div>
           </div>
           <div class="frow">
-            <label class="flabel" for="sort">Sort</label>
-            <select id="sort">
-              <option value="score">Most Yes votes</option>
-              <option value="price">Cheapest first</option>
-              <option value="date">Earliest start</option>
-            </select>
+            <label class="flabel" for="gn-range">Hide flats near Gare du Nord</label>
+            <div class="range"><input type="range" id="gn-range" min="0" max="2" step="0.1" value="1"><output id="gn-out" for="gn-range">1.0 km</output></div>
           </div>
         </div>
-        <div class="frow">
-          <label class="flabel" for="gn-range">Hide flats near Gare du Nord</label>
-          <div class="range"><input type="range" id="gn-range" min="0" max="2" step="0.1" value="1"><output id="gn-out" for="gn-range">1.0 km</output></div>
-        </div>
+      </details>
+      <div class="listhead">
+        <span id="count"></span>
+        <label class="sortl">Sort
+          <select id="sort">
+            <option value="new">New first</option>
+            <option value="score">Most Yes votes</option>
+            <option value="price">Cheapest first</option>
+            <option value="date">Earliest start</option>
+          </select>
+        </label>
       </div>
-      <div class="listhead"><span id="count"></span><span id="sync"></span></div>
       <div class="list" id="list" role="list"></div>
      </div>
      <div class="pane" id="pane-short" role="tabpanel" aria-labelledby="tab-short" hidden>
@@ -87,7 +99,7 @@
       <div class="list" id="list-contact" role="list"></div>
      </div>
     </aside>
-  </div>
+  </main>
 
   <footer class="foot">
     Listings from Immoweb, Immovlan, agency websites and Vista Residences, checked <span id="checked">16 Oct 2026</span>. Prices are rent + monthly charges.
@@ -98,6 +110,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script src="config.js?v=3"></script>
-<script src="app.js?v=10"></script>
+<script src="app.js?v=11"></script>
 </body>
 </html>
