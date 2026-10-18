@@ -192,8 +192,16 @@ select { border: 1px solid var(--line); background: var(--panel); border-radius:
 .tabs button[aria-selected="true"] { color: var(--ink); border-bottom-color: var(--accent); }
 .tabs button .n { font-family: var(--font-data); font-size: 11px; background: var(--line); color: var(--ink); border-radius: 999px; padding: 0 7px; }
 .tabs button[aria-selected="true"] .n { background: var(--accent); color: var(--accent-ink); }
-.main.wide { grid-template-columns: minmax(0, 1fr) 560px; }
 .pane { min-height: 0; flex: 1; display: flex; flex-direction: column; gap: 10px; }
+
+/* Shortlist and In contact: one wide map on top, the flats below it in columns */
+html.stacked, html.stacked body, html.stacked .app { height: auto; }
+html.stacked .main { display: flex; flex-direction: column; gap: 14px; }
+html.stacked .mapwrap { height: 50vh; min-height: 320px; flex: none; }
+html.stacked .side, html.stacked .pane, html.stacked .list { overflow: visible; min-height: auto; }
+html.stacked #list-short, html.stacked #list-contact { grid-template-columns: repeat(auto-fill, minmax(min(100%, 430px), 1fr)); gap: 12px; align-items: start; }
+html.stacked .setup, html.stacked .empty, html.stacked .dropped { grid-column: 1 / -1; }
+html.stacked .card.big { scroll-margin-top: 12px; }
 .side { overflow: hidden; }
 .panehead h2 { margin: 0; font-size: 17px; }
 .panehead p { margin: 2px 0 0; color: var(--muted); font-size: 13px; }
@@ -241,12 +249,11 @@ select { border: 1px solid var(--line); background: var(--panel); border-radius:
   max-width: calc(100% - 32px);
 }
 
-@media (max-width: 1200px) { .main.wide { grid-template-columns: minmax(0, 1fr) 460px; } }
 @media (max-width: 900px) {
   html, body { height: auto; }
   .app { height: auto; }
   .side { overflow: visible; }
-  .main, .main.wide { display: flex; flex-direction: column; }
+  .main { display: flex; flex-direction: column; }
   .mapwrap { height: 55vh; min-height: 320px; }
   .list { overflow: visible; }
   .me input { width: 100%; }

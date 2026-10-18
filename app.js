@@ -652,7 +652,8 @@ function renderTabs() {
   $("#pane-all").hidden = state.tab !== "all";
   $("#pane-short").hidden = state.tab !== "short";
   $("#pane-contact").hidden = state.tab !== "contact";
-  $("#main").classList.toggle("wide", state.tab !== "all");
+  // Shortlist and In contact: map on top, flats below it (the page scrolls)
+  document.documentElement.classList.toggle("stacked", state.tab !== "all");
 }
 function setTab(tab) {
   if (state.tab === tab) return;
@@ -661,7 +662,7 @@ function setTab(tab) {
   history.replaceState(null, "", tab === "all" ? location.pathname + location.search : "#" + (tab === "short" ? "shortlist" : tab));
   map.closePopup();
   renderAll();
-  setTimeout(() => { map.invalidateSize(); fitVisible(); }, 50);
+  requestAnimationFrame(() => { map.invalidateSize(); fitVisible(); });
 }
 for (const b of document.querySelectorAll(".tabs [data-tab]")) b.addEventListener("click", () => setTab(b.dataset.tab));
 window.addEventListener("hashchange", () => setTab(TABS[location.hash.slice(1)] || "all"));
@@ -674,17 +675,19 @@ document.querySelector(".tabs").addEventListener("keydown", (e) => {
 });
 function fitVisible() {
   const pts = state.flats.filter((x) => x.lat != null && visible(x)).map((x) => [x.lat, x.lng]);
-  if (pts.length > 1) map.fitBounds(L.latLngBounds(pts), {padding: [40, 40], maxZoom: 15});
+  if (pts.length > 1) map.fitBounds(L.latLngBounds(pts), {paddingTopLeft: [30, 40], paddingBottomRight: [30, 16], maxZoom: 15});
   else if (pts.length === 1) map.setView(pts[0], 15);
 }
 
 // ---------- map ----------
-const map = L.map("map", {minZoom: 12, maxZoom: 18});
+const map = L.map("map", {minZoom: 12, maxZoom: 18, zoomSnap: 0.5});
 map.attributionControl.setPrefix(false);
 L.tileLayer("https://tile.openstreetmap.org/{z}/{x}/{y}.png", {
   maxZoom: 19,
   attribution: '© <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors'
 }).addTo(map);
+// Keep Leaflet's idea of the map size right when the layout changes (tab switch, scrollbar appearing)
+if (window.ResizeObserver) new ResizeObserver(() => map.invalidateSize()).observe(document.getElementById("map"));
 const zone = L.circle(GN, {radius: 1000, className: "gn-zone", interactive: false}).addTo(map);
 L.marker(GN, {icon: L.divIcon({className: "pw", html: '<span class="gn">Gare du Nord</span>', iconSize: [0, 0]}), interactive: false, keyboard: false}).addTo(map);
 const layer = L.layerGroup().addTo(map);
@@ -727,13 +730,17 @@ function select(id, fromMap) {
   state.selected = state.selected === id && !fromMap ? null : id;
   renderAll();
   const x = state.flats.find((f) => f.id === id);
+  const stacked = state.tab !== "all";
   if (state.selected && x?.lat != null) {
-    if (!fromMap) map.panTo([x.lat, x.lng]);
+    if (!fromMap) {
+      map.panTo([x.lat, x.lng]);
+      if (stacked) document.querySelector(".mapwrap").scrollIntoView({block: "nearest", behavior: "smooth"});
+    }
     popupFor = id;
     markers[id].bindPopup(popupContent(x), {offset: [0, -22], autoPanPadding: [20, 20]}).openPopup();
   } else { map.closePopup(); popupFor = null; }
   const prefix = {all: "card-", short: "scard-", contact: "ccard-"}[state.tab];
-  if (state.selected && fromMap && matchMedia("(min-width: 901px)").matches) document.getElementById(prefix + id)?.scrollIntoView({block: "nearest", behavior: "smooth"});
+  if (state.selected && fromMap && (stacked || matchMedia("(min-width: 901px)").matches)) document.getElementById(prefix + id)?.scrollIntoView({block: stacked ? "start" : "nearest", behavior: "smooth"});
 }
 map.on("popupclose", () => { popupFor = null; });
 
@@ -778,7 +785,8 @@ $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; rend
   const pts = state.flats.filter((x) => x.lat != null && (state.tab !== "all" || visible(x))).map((x) => [x.lat, x.lng]);
   map.fitBounds(L.latLngBounds(pts), {padding: [30, 30]});
   await refresh();
-  if (state.tab !== "all") fitVisible(); // the shortlist is only known once the votes are in
+  // the shortlist is only known once the votes are in; wait a frame so the list (and scrollbar) has its final size
+  if (state.tab !== "all") requestAnimationFrame(() => { map.invalidateSize(); fitVisible(); });
   if (db.shared) {
     setInterval(() => { if (!document.hidden) refresh(); }, 30000);
     document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
