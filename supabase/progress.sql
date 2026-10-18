@@ -27,3 +27,6 @@ create policy "Anyone can add progress" on public.progress
   for insert to anon, authenticated with check (created_at > now() - interval '1 minute');
 
 grant select, insert on public.progress to anon, authenticated;
+
+-- Make the website's API see the new table right away
+notify pgrst, 'reload schema';
