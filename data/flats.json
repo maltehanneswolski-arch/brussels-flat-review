@@ -2256,6 +2256,30 @@
    "area": "EU quarter",
    "description": "Furnished 32 m² studio near Schuman, small for two. Also listed by Macnash. From Everest's own site.",
    "added": "2026-10-18"
+  },
+  {
+   "id": "21923202",
+   "kind": "listing",
+   "source": "Immoweb",
+   "url": "https://www.immoweb.be/en/classified/21923202",
+   "street": "Avenue Voltaire 57",
+   "lat": 50.869413,
+   "lng": 4.3780481,
+   "approx": false,
+   "furnished": false,
+   "rent": 950,
+   "charges": 45,
+   "bedrooms": 1,
+   "m2": 75,
+   "floor": 2,
+   "epc": "F",
+   "lift": false,
+   "terrace": 2,
+   "garden": false,
+   "available": "2026-10-18",
+   "area": "Schaerbeek",
+   "description": "Found automatically on 18/10, not checked by hand yet.",
+   "added": "2026-10-18"
   }
  ]
 }
