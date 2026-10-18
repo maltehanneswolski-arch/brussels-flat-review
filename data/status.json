@@ -1,5 +1,5 @@
 {
- "updated": "2026-10-17",
+ "updated": "2026-10-18",
  "flats": {
   "21845501": {
    "status": "online",
@@ -7,7 +7,7 @@
    "charges": null,
    "available": "2026-11-30",
    "since": "2026-10-16",
-   "checked": "2026-10-17"
+   "checked": "2026-10-18"
   },
   "21857766": {
    "status": "online",
@@ -15,7 +15,7 @@
    "charges": 60,
    "available": "2026-12-01",
    "since": "2026-10-16",
-   "checked": "2026-10-17"
+   "checked": "2026-10-18"
   },
   "21866794": {
    "status": "online",
@@ -23,7 +23,7 @@
    "charges": null,
    "available": "2027-01-01",
    "since": "2026-10-16",
-   "checked": "2026-10-17"
+   "checked": "2026-10-18"
   },
   "21891432": {
    "status": "online",
@@ -31,7 +31,7 @@
    "charges": 100,
    "available": "2026-11-15",
    "since": "2026-10-16",
-   "checked": "2026-10-17"
+   "checked": "2026-10-18"
   },
   "21896344": {
    "status": "online",
@@ -39,7 +39,7 @@
    "charges": null,
    "available": "2026-12-01",
    "since": "2026-10-16",
-   "checked": "2026-10-17"
+   "checked": "2026-10-18"
   },
   "21917601": {
    "status": "online",
@@ -47,7 +47,7 @@
    "charges": 100,
    "available": "2027-01-04",
    "since": "2026-10-16",
-   "checked": "2026-10-17"
+   "checked": "2026-10-18"
   },
   "21919319": {
    "status": "online",
@@ -55,7 +55,7 @@
    "charges": 125,
    "available": "2027-01-01",
    "since": "2026-10-16",
-   "checked": "2026-10-17"
+   "checked": "2026-10-18"
   },
   "vbe62552": {
    "status": "online",
@@ -63,7 +63,7 @@
    "charges": null,
    "available": "2026-12-01",
    "since": "2026-10-16",
-   "checked": "2026-10-17"
+   "checked": "2026-10-18"
   }
  }
 }
