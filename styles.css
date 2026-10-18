@@ -55,9 +55,12 @@ a { color: var(--accent); }
 .top h1 span { color: var(--accent); }
 .top p { margin: 0; color: var(--muted); }
 .me { display: grid; gap: 3px; }
-.me label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
-.me input { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 6px 10px; width: 220px; max-width: 100%; }
-.me input.need { border-color: var(--no); box-shadow: 0 0 0 2px color-mix(in srgb, var(--no) 30%, transparent); }
+.melabel { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .07em; color: var(--muted); }
+.whoami { display: inline-flex; border: 1px solid var(--line); border-radius: 8px; overflow: hidden; background: var(--panel); }
+.whoami button { border: 0; background: transparent; padding: 6px 16px; font-weight: 600; cursor: pointer; }
+.whoami button + button { border-left: 1px solid var(--line); }
+.whoami button[aria-checked="true"] { background: var(--accent); color: var(--accent-ink); }
+.whoami.need { border-color: var(--no); box-shadow: 0 0 0 2px color-mix(in srgb, var(--no) 30%, transparent); }
 
 .banner { background: var(--iris-soft); border: 1px solid var(--iris); border-radius: 8px; padding: 6px 12px; font-size: 13px; }
 
@@ -224,7 +227,10 @@ html.stacked .card.big { scroll-margin-top: 12px; }
 .actions { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; margin-top: 4px; }
 .btn { border: 1px solid var(--accent); background: transparent; color: var(--accent); border-radius: 8px; padding: 5px 12px; font-weight: 600; cursor: pointer; font-size: 13px; }
 .btn.primary { background: var(--accent); color: var(--accent-ink); }
-.note, .when-input { border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; background: var(--bg); font-size: 13px; width: 100%; }
+.note, .when-input { border: 1px solid var(--line); border-radius: 8px; padding: 6px 8px; background: var(--bg); font-size: 13px; width: 100%; resize: vertical; }
+.notes { border: 1px solid var(--line); border-radius: 8px; padding: 8px 10px; display: grid; gap: 6px; font-size: 13px; }
+.notelist { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.notelist li { background: var(--bg); border-radius: 6px; padding: 5px 8px; overflow-wrap: anywhere; }
 .when-input { width: auto; }
 .msgbox summary, .history summary, .dropped summary { cursor: pointer; font-weight: 600; font-size: 13px; color: var(--accent); }
 .msgbox { display: grid; gap: 6px; }

@@ -67,13 +67,40 @@ function floorLabel(f) {
   return f + s + " floor";
 }
 
-// ---------- reviewer identity (kept in this browser) ----------
-const me = {
-  id: store("flat-review:id") || (() => { const id = (crypto.randomUUID ? crypto.randomUUID() : String(Date.now()) + Math.random().toString(16).slice(2)); store("flat-review:id", id); return id; })(),
-  get name() { return ($("#me-name").value || "").trim().slice(0, 40); }
+// ---------- who is using the page: Malte or Lilly (remembered in this browser) ----------
+// A fixed id per person, so votes and steps from a phone and a laptop count as the same person.
+const PEOPLE = {
+  malte: {name: "Malte", id: "6d616c74-6500-4000-8000-000000000001"},
+  lilly: {name: "Lilly", id: "6c696c6c-7900-4000-8000-000000000002"}
 };
-$("#me-name").value = store("flat-review:name") || "";
-$("#me-name").addEventListener("change", (e) => { store("flat-review:name", e.target.value.trim()); e.target.classList.remove("need"); });
+let person = PEOPLE[store("flat-review:person")] ? store("flat-review:person") : null;
+const me = {
+  get id() { return person ? PEOPLE[person].id : null; },
+  get name() { return person ? PEOPLE[person].name : ""; }
+};
+// Older rows used a random id per browser; the name is what identifies a person now.
+const personKey = (r) => (r.reviewer_name || "").trim().toLowerCase() || r.reviewer_id;
+const isMe = (r) => !!person && personKey(r) === person;
+function renderWhoami() {
+  for (const b of document.querySelectorAll("#whoami [data-person]")) b.setAttribute("aria-checked", String(b.dataset.person === person));
+  $("#whoami").classList.remove("need");
+}
+for (const b of document.querySelectorAll("#whoami [data-person]")) b.addEventListener("click", () => {
+  person = b.dataset.person;
+  store("flat-review:person", person);
+  renderWhoami();
+  state.byFlat = aggregate(state.rows);
+  renderAll();
+  toast(`Hi ${PEOPLE[person].name}!`);
+});
+renderWhoami();
+function needPerson(what) {
+  if (person) return false;
+  $("#whoami").classList.add("need");
+  $("#whoami").scrollIntoView({block: "nearest", behavior: "smooth"});
+  toast(`Pick Malte or Lilly at the top first, so the other knows who ${what}.`);
+  return true;
+}
 
 // ---------- review storage ----------
 // Shared mode: Supabase REST (see supabase/schema.sql). Otherwise reviews stay in this browser.
@@ -150,7 +177,7 @@ function aggregate(rows) {
   const by = {};
   for (const r of rows) {
     const f = by[r.flat_id] || (by[r.flat_id] = {});
-    f[r.reviewer_id] = r; // rows arrive oldest first, so the latest one per person wins
+    f[personKey(r)] = r; // rows arrive oldest first, so the latest one per person wins
   }
   const out = {};
   for (const [flat, people] of Object.entries(by)) {
@@ -159,7 +186,7 @@ function aggregate(rows) {
       yes: list.filter((r) => r.verdict === "yes"),
       no: list.filter((r) => r.verdict === "no"),
       comments: list.filter((r) => r.comment).sort((a, b) => (a.created_at || "").localeCompare(b.created_at || "")),
-      mine: people[me.id] || null
+      mine: person ? people[person] || null : null
     };
   }
   return out;
@@ -202,12 +229,7 @@ async function refresh() {
 }
 
 async function addProgress(x, stage, note = "", happensAt = "", msg = "") {
-  if (!me.name) {
-    const inp = $("#me-name");
-    inp.classList.add("need"); inp.focus();
-    toast("Add your name first so the others know who did this.");
-    return false;
-  }
+  if (needPerson("did this")) return false;
   if (!state.progressReady) { toast("Progress can't be saved yet: the progress table isn't set up (see the banner)."); return false; }
   const row = {flat_id: x.id, stage, note: note.trim().slice(0, 500), happens_at: happensAt.slice(0, 40), reviewer_id: me.id, reviewer_name: me.name};
   state.progressRows = [...state.progressRows, {...row, created_at: new Date().toISOString()}];
@@ -226,24 +248,14 @@ async function addProgress(x, stage, note = "", happensAt = "", msg = "") {
 }
 
 async function vote(x, verdict) {
-  if (!me.name) {
-    const inp = $("#me-name");
-    inp.classList.add("need"); inp.focus();
-    toast("Add your name first so we know who voted.");
-    return;
-  }
+  if (needPerson("voted")) return;
   const cur = rev(x.id).mine;
   const next = cur?.verdict === verdict ? "none" : verdict;
   const row = {flat_id: x.id, reviewer_id: me.id, reviewer_name: me.name, verdict: next, comment: cur?.comment || ""};
   await save(row, next === "none" ? "Vote removed." : next === "yes" ? "Marked Yes." : "Marked No.");
 }
 async function comment(x, text) {
-  if (!me.name) {
-    const inp = $("#me-name");
-    inp.classList.add("need"); inp.focus();
-    toast("Add your name first so we know who wrote this.");
-    return false;
-  }
+  if (needPerson("wrote this")) return false;
   const cur = rev(x.id).mine;
   const row = {flat_id: x.id, reviewer_id: me.id, reviewer_name: me.name, verdict: cur?.verdict || "none", comment: text.trim().slice(0, 500)};
   return save(row, row.comment ? "Comment posted." : "Comment removed.");
@@ -320,7 +332,7 @@ function voteRow(x) {
 function whoLine(x) {
   const r = rev(x.id);
   if (!r.yes.length && !r.no.length) return null;
-  const names = (list) => list.map((p) => p.reviewer_id === me.id ? "you" : p.reviewer_name).join(", ");
+  const names = (list) => list.map((p) => isMe(p) ? "you" : p.reviewer_name).join(", ");
   return el("div", {class: "who"},
     r.yes.length ? [el("b", {class: "y"}, "Yes: "), names(r.yes)] : null,
     r.yes.length && r.no.length ? " · " : null,
@@ -379,7 +391,7 @@ function card(x) {
     voteRow(x),
     whoLine(x),
     r.comments.length ? el("ul", {class: "comments", "aria-label": "Comments"}, r.comments.map((c) =>
-      el("li", {}, el("b", {}, (c.reviewer_id === me.id ? "You" : c.reviewer_name) + ": "), c.comment))) : null,
+      el("li", {}, el("b", {}, (isMe(c) ? "You" : c.reviewer_name) + ": "), c.comment))) : null,
     sel ? el("form", {class: "cform", onsubmit: async (e) => { e.preventDefault(); if (await comment(x, ta.value)) ta.value = ""; }},
       (ta = el("textarea", {id: "comment-" + x.id, maxlength: "500", placeholder: r.mine?.comment ? "Change your comment (empty removes it)" : "Your comment: nice street, too small, call the agent…", "aria-label": "Your comment on " + x.street})),
       el("button", {type: "submit"}, r.mine?.comment ? "Update comment" : "Post comment")) : null
@@ -390,7 +402,7 @@ function renderList() {
   const list = $("#list");
   const vis = sorted(state.flats.filter(visible));
   const hidden = state.flats.filter((x) => x.d != null && x.d < state.gnKm && state.areaOn.has(x.area)).length;
-  const reviewers = new Set(Object.values(state.byFlat).flatMap((r) => [...r.yes, ...r.no, ...r.comments]).map((p) => p.reviewer_id)).size;
+  const reviewers = new Set(Object.values(state.byFlat).flatMap((r) => [...r.yes, ...r.no, ...r.comments]).map(personKey)).size;
   const fresh = state.flats.filter(isNew).length;
   $("#count").textContent = `${vis.length} of ${state.flats.length} flats` + (fresh ? ` · ${fresh} new` : "") + (hidden ? ` · ${hidden} hidden near Gare du Nord` : "") + (reviewers ? ` · ${reviewers} reviewer${reviewers > 1 ? "s" : ""}` : "");
   $("#sync").textContent = db.shared && state.lastSync ? "Updated " + state.lastSync.toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"}) : "";
@@ -492,10 +504,35 @@ function messageBox(x) {
 }
 
 const btn = (label, cls, onclick) => el("button", {type: "button", class: "btn " + (cls || "ghost"), onclick}, label);
-function noteField(x) {
-  return el("input", {type: "text", class: "note", id: "note-" + x.id, maxlength: "500", placeholder: "Note for the others (optional): left a voicemail, viewing only on weekends…", "aria-label": "Note on " + x.street});
+// The step where the current stage began (later rows with the same stage are just notes)
+function stageSince(x) {
+  const steps = state.progress[x.id] || [];
+  let i = steps.length - 1;
+  while (i > 0 && steps[i - 1].stage === steps[i].stage) i--;
+  return steps[i] || null;
 }
-const noteOf = (x) => document.getElementById("note-" + x.id)?.value || "";
+
+// Shared notes on a flat: anything written while working on it, plus review comments from All flats
+function notesBox(x) {
+  const notes = (state.progress[x.id] || []).filter((s) => s.note).slice().reverse();
+  const fromReview = rev(x.id).comments;
+  const input = el("textarea", {class: "note", id: "note-" + x.id, rows: "2", maxlength: "500",
+    placeholder: "Add a note: what the agent said, questions to ask, how the viewing went…", "aria-label": "New note on " + x.street});
+  const add = btn("Add note", "primary", async () => {
+    const text = input.value.trim();
+    if (!text) { toast("Write the note first."); return; }
+    if (await addProgress(x, stageOf(x), text, "", "Note added.")) { const n = document.getElementById("note-" + x.id); if (n) n.value = ""; }
+  });
+  return el("section", {class: "notes", "aria-label": "Notes on " + x.street},
+    el("div", {class: "cb-title"}, notes.length + fromReview.length ? `Notes (${notes.length + fromReview.length})` : "Notes"),
+    notes.length || fromReview.length
+      ? el("ul", {class: "notelist"},
+          notes.map((s) => el("li", {}, el("span", {class: "hdate"}, fmtStamp(s.created_at)), " ", el("b", {}, isMe(s) ? "You" : s.reviewer_name), " ", s.note)),
+          fromReview.map((c) => el("li", {}, el("span", {class: "hdate"}, "review"), " ", el("b", {}, isMe(c) ? "You" : c.reviewer_name), " ", c.comment)))
+      : el("p", {class: "hint"}, "No notes yet."),
+    input,
+    el("div", {class: "actions"}, add));
+}
 
 function stepsBlock(items, actions) {
   return el("div", {class: "steps"},
@@ -505,17 +542,18 @@ function stepsBlock(items, actions) {
 }
 
 function historyBox(x) {
-  const steps = state.progress[x.id];
-  if (!steps?.length) return null;
+  const all = state.progress[x.id] || [];
+  const steps = all.filter((s, i) => i === 0 || s.stage !== all[i - 1].stage || s.happens_at !== all[i - 1].happens_at); // step changes only
+  if (!steps.length) return null;
   return el("details", {class: "history"}, el("summary", {}, `History (${steps.length})`),
     el("ul", {}, steps.slice().reverse().map((s) => el("li", {},
-      el("span", {class: "hdate"}, fmtStamp(s.created_at)), " ", el("b", {}, s.reviewer_id === me.id ? "You" : s.reviewer_name), ": ",
-      STAGE[s.stage]?.label || s.stage, s.happens_at ? ` (${fmtWhen(s.happens_at)})` : "", s.note ? ` · ${s.note}` : ""))));
+      el("span", {class: "hdate"}, fmtStamp(s.created_at)), " ", el("b", {}, isMe(s) ? "You" : s.reviewer_name), ": ",
+      STAGE[s.stage]?.label || s.stage, s.happens_at ? ` (${fmtWhen(s.happens_at)})` : ""))));
 }
 
-function headerOf(x, idPrefix) {
+function headerOf(x) {
   const st = stageOf(x);
-  const ls = lastStep(x);
+  const ls = stageSince(x);
   return el("div", {class: "chead"},
     el("button", {class: "selbtn", type: "button", onclick: () => select(x.id)},
       el("span", {class: "price"}, priceText(x)),
@@ -525,26 +563,25 @@ function headerOf(x, idPrefix) {
 
 function shortCard(x) {
   const st = stageOf(x);
-  const ls = lastStep(x);
+  const since = stageSince(x);
   const c = contactOf(x);
   const how = c.phones?.length ? `Call ${c.phones[0]}` : c.emails?.length ? `Email ${c.emails[0]}` : "Use the contact form on the listing";
-  const yes = rev(x.id).yes.map((p) => p.reviewer_id === me.id ? "you" : p.reviewer_name).join(", ");
+  const yes = rev(x.id).yes.map((p) => isMe(p) ? "you" : p.reviewer_name).join(", ");
   const steps = st === "contacted"
     ? stepsBlock([
-        `Contacted on ${fmtStamp(ls.created_at)} by ${ls.reviewer_id === me.id ? "you" : ls.reviewer_name}${ls.note ? ` (${ls.note})` : ""}. Waiting for their reply.`,
+        `Contacted on ${fmtStamp(since.created_at)} by ${isMe(since) ? "you" : since.reviewer_name}. Waiting for their reply.`,
         "Agencies usually answer within one or two working days.",
         "No answer after two working days? Call again, or try the other channel (phone or form).",
         "When they answer, press “We heard back”: the flat moves to In contact."
-      ], [btn("We heard back", "primary", () => addProgress(x, "heard_back", noteOf(x))),
-          btn("Save note", "", () => noteOf(x).trim() ? addProgress(x, "contacted", noteOf(x), "", "Note saved.") : toast("Write a note first.")),
-          btn("No longer available", "", () => addProgress(x, "dropped", noteOf(x) || "No longer available"))])
+      ], [btn("We heard back", "primary", () => addProgress(x, "heard_back")),
+          btn("No longer available", "", () => addProgress(x, "dropped", "No longer available"))])
     : stepsBlock([
         "Open the listing and check the photos and the full description.",
         `${how}, or send the message below.`,
         "Ask whether it's still free for a December or January start, when you can visit, and what the charges cover.",
-        "Then press “We contacted them”, so the others don't contact them twice."
-      ], [btn("We contacted them", "primary", () => addProgress(x, "contacted", noteOf(x))),
-          btn("Not for us", "", () => addProgress(x, "dropped", noteOf(x) || "Not for us"))]);
+        "Then press “We contacted them”, so you don't both contact them."
+      ], [btn("We contacted them", "primary", () => addProgress(x, "contacted")),
+          btn("Not for us", "", () => addProgress(x, "dropped", "Not for us"))]);
   return el("article", {class: "card big" + (state.selected === x.id ? " sel" : ""), role: "listitem", id: "scard-" + x.id},
     headerOf(x),
     watchLine(x),
@@ -554,47 +591,47 @@ function shortCard(x) {
     contactBox(x),
     st === "to_contact" ? messageBox(x) : null,
     steps,
-    noteField(x),
+    notesBox(x),
     historyBox(x));
 }
 
 const VIEWING_CHECK = "At the viewing, check the heating and hot water, damp or mould, noise from the street and neighbours, daylight, phone signal, storage (cellar, bike room) and where the meters are.";
 function contactCard(x) {
   const st = stageOf(x);
-  const ls = lastStep(x);
+  const since = stageSince(x);
   const viewingAt = [...(state.progress[x.id] || [])].reverse().find((s) => s.stage === "viewing" && s.happens_at)?.happens_at;
   let steps;
   if (st === "heard_back") {
     const dt = el("input", {type: "datetime-local", class: "when-input", id: "when-" + x.id, "aria-label": "Viewing date and time"});
     steps = stepsBlock([
-      `They answered on ${fmtStamp(ls.created_at)}${ls.note ? ` (${ls.note})` : ""}.`,
+      `They answered on ${fmtStamp(since.created_at)}. Put what they said in the notes.`,
       "Book a viewing. Before you go, ask: what the charges cover, the lease length, the deposit (in Brussels at most 2 months' rent on a blocked bank account), whether you can register your address there, and the exact move-in date.",
       "Enter the viewing date and press “Viewing booked”."
-    ], [dt, btn("Viewing booked", "primary", () => dt.value ? addProgress(x, "viewing", noteOf(x), dt.value) : toast("Pick the viewing date and time first.")),
-        btn("Not for us", "", () => addProgress(x, "dropped", noteOf(x) || "Not for us"))]);
+    ], [dt, btn("Viewing booked", "primary", () => dt.value ? addProgress(x, "viewing", "", dt.value) : toast("Pick the viewing date and time first.")),
+        btn("Not for us", "", () => addProgress(x, "dropped", "Not for us"))]);
   } else if (st === "viewing") {
     steps = stepsBlock([
       `Viewing ${viewingAt ? "on " + fmtWhen(viewingAt) : "booked"}. Take ID and proof of income (last 3 payslips or an employment contract).`,
       VIEWING_CHECK,
       "Ask for the energy certificate (PEB) and last year's charges statement.",
-      "Afterwards, press “We've visited” and add a note on what you thought."
-    ], [btn("We've visited", "primary", () => addProgress(x, "viewed", noteOf(x))),
-        btn("New date", "", () => addProgress(x, "heard_back", noteOf(x) || "Viewing moved", "", "Pick the new date above.")),
-        btn("Not for us", "", () => addProgress(x, "dropped", noteOf(x) || "Not for us"))]);
+      "Afterwards, press “We've visited” and write down what you thought in the notes."
+    ], [btn("We've visited", "primary", () => addProgress(x, "viewed")),
+        btn("New date", "", () => addProgress(x, "heard_back", "", "", "Pick the new date above.")),
+        btn("Not for us", "", () => addProgress(x, "dropped", "Not for us"))]);
   } else if (st === "viewed") {
     steps = stepsBlock([
       "Decide together. If it's a yes, apply quickly: good flats go within days.",
       "Send copies of both IDs, the last 3 payslips or employment contracts, and a reference from your current landlord if you have one.",
       "Ask for the draft lease and when the check-in inventory (état des lieux) would be done."
-    ], [btn("Application sent", "primary", () => addProgress(x, "applied", noteOf(x))),
-        btn("Not for us", "", () => addProgress(x, "dropped", noteOf(x) || "Not for us after the visit"))]);
+    ], [btn("Application sent", "primary", () => addProgress(x, "applied")),
+        btn("Not for us", "", () => addProgress(x, "dropped", "Not for us after the visit"))]);
   } else if (st === "applied") {
     steps = stepsBlock([
-      `Applied on ${fmtStamp(ls.created_at)}. Waiting for the landlord's answer.`,
+      `Applied on ${fmtStamp(since.created_at)}. Waiting for the landlord's answer.`,
       "Meanwhile, ask your bank about a rental deposit account (a blocked account, at most 2 months' rent) and get a home insurance quote: landlords usually want proof of both before handing over the keys.",
       "Read the draft lease: duration, notice period, who pays which charges, indexation."
-    ], [btn("Lease signed", "primary", () => addProgress(x, "signed", noteOf(x))),
-        btn("They chose someone else", "", () => addProgress(x, "dropped", noteOf(x) || "Landlord chose someone else"))]);
+    ], [btn("Lease signed", "primary", () => addProgress(x, "signed")),
+        btn("They chose someone else", "", () => addProgress(x, "dropped", "Landlord chose someone else"))]);
   } else {
     steps = stepsBlock([
       "Do the check-in inventory (état des lieux) with the landlord before moving in, and keep a copy.",
@@ -608,7 +645,7 @@ function contactCard(x) {
     watchLine(x),
     factsGrid(x),
     steps,
-    st !== "signed" ? noteField(x) : null,
+    notesBox(x),
     el("details", {class: "history"}, el("summary", {}, "Contact details"), contactBox(x)),
     historyBox(x));
 }
@@ -662,7 +699,7 @@ function setTab(tab) {
   history.replaceState(null, "", tab === "all" ? location.pathname + location.search : "#" + (tab === "short" ? "shortlist" : tab));
   map.closePopup();
   renderAll();
-  requestAnimationFrame(() => { map.invalidateSize(); fitVisible(); });
+  setTimeout(() => { map.invalidateSize(); fitVisible(); }, 60);
 }
 for (const b of document.querySelectorAll(".tabs [data-tab]")) b.addEventListener("click", () => setTab(b.dataset.tab));
 window.addEventListener("hashchange", () => setTab(TABS[location.hash.slice(1)] || "all"));
@@ -675,8 +712,8 @@ document.querySelector(".tabs").addEventListener("keydown", (e) => {
 });
 function fitVisible() {
   const pts = state.flats.filter((x) => x.lat != null && visible(x)).map((x) => [x.lat, x.lng]);
-  if (pts.length > 1) map.fitBounds(L.latLngBounds(pts), {paddingTopLeft: [30, 40], paddingBottomRight: [30, 16], maxZoom: 15});
-  else if (pts.length === 1) map.setView(pts[0], 15);
+  if (pts.length > 1) map.fitBounds(L.latLngBounds(pts), {paddingTopLeft: [30, 40], paddingBottomRight: [30, 16], maxZoom: 15, animate: false});
+  else if (pts.length === 1) map.setView(pts[0], 15, {animate: false});
 }
 
 // ---------- map ----------
@@ -786,7 +823,7 @@ $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; rend
   map.fitBounds(L.latLngBounds(pts), {padding: [30, 30]});
   await refresh();
   // the shortlist is only known once the votes are in; wait a frame so the list (and scrollbar) has its final size
-  if (state.tab !== "all") requestAnimationFrame(() => { map.invalidateSize(); fitVisible(); });
+  if (state.tab !== "all") setTimeout(() => { map.invalidateSize(); fitVisible(); }, 60);
   if (db.shared) {
     setInterval(() => { if (!document.hidden) refresh(); }, 30000);
     document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });

@@ -2,8 +2,11 @@ name: Daily flat check
 
 on:
   schedule:
-    # Once a day at 06:23 UTC: 08:23 in Brussels in summer time, 07:23 in winter
-    - cron: "23 6 * * *"
+    # 06:00 and 16:00 Brussels time. GitHub schedules in UTC, so there is one timetable for
+    # summer time (UTC+2) and one for winter time (UTC+1); the first step skips the one that
+    # doesn't match today. GitHub can start scheduled runs a few minutes late.
+    - cron: "0 4,14 * * *"
+    - cron: "0 5,15 * * *"
   workflow_dispatch:
 
 permissions:
@@ -19,19 +22,36 @@ jobs:
     runs-on: ubuntu-latest
     timeout-minutes: 30
     steps:
+      - name: Only run at 06:00 and 16:00 Brussels time
+        id: gate
+        env:
+          SCHEDULE: ${{ github.event.schedule }}
+        run: |
+          offset=$(TZ=Europe/Brussels date +%z)   # +0200 in summer time, +0100 in winter time
+          run=yes
+          if [ "$SCHEDULE" = "0 4,14 * * *" ] && [ "$offset" != "+0200" ]; then run=no; fi
+          if [ "$SCHEDULE" = "0 5,15 * * *" ] && [ "$offset" != "+0100" ]; then run=no; fi
+          echo "Brussels offset $offset, schedule '${SCHEDULE:-manual}', run=$run"
+          echo "run=$run" >> "$GITHUB_OUTPUT"
+
       - uses: actions/checkout@v4
+        if: steps.gate.outputs.run == 'yes'
 
       - uses: actions/setup-node@v4
+        if: steps.gate.outputs.run == 'yes'
         with:
           node-version: 20
 
       - name: Look for new flats (Immoweb, Immovlan, agency websites)
+        if: steps.gate.outputs.run == 'yes'
         run: node monitor/discover.mjs --report "$RUNNER_TEMP/new.md"
 
       - name: Check the flats with a Yes vote
+        if: steps.gate.outputs.run == 'yes'
         run: node monitor/check.mjs --report "$RUNNER_TEMP/changes.md"
 
       - name: Save the results
+        if: steps.gate.outputs.run == 'yes'
         run: |
           git add data/flats.json data/status.json monitor/state.json monitor/seen.json
           if ! git diff --cached --quiet; then
@@ -42,6 +62,7 @@ jobs:
           fi
 
       - name: Open an issue when there is news
+        if: steps.gate.outputs.run == 'yes'
         env:
           GH_TOKEN: ${{ github.token }}
         run: |

@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
-<link rel="stylesheet" href="styles.css?v=8">
+<link rel="stylesheet" href="styles.css?v=9">
 </head>
 <body>
 <div class="app">
@@ -19,8 +19,11 @@
       <p>We're two people looking for a flat from December or January. Open any flat, read the listing, and tell us <strong>Yes</strong> or <strong>No</strong>. Comments help even more.</p>
     </div>
     <div class="me">
-      <label for="me-name">Your name</label>
-      <input id="me-name" type="text" maxlength="40" placeholder="So we know who voted" autocomplete="nickname">
+      <span class="melabel" id="me-label">Who are you?</span>
+      <div class="whoami" id="whoami" role="radiogroup" aria-labelledby="me-label">
+        <button type="button" role="radio" data-person="malte" aria-checked="false">Malte</button>
+        <button type="button" role="radio" data-person="lilly" aria-checked="false">Lilly</button>
+      </div>
     </div>
   </header>
 
@@ -95,6 +98,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script src="config.js?v=3"></script>
-<script src="app.js?v=9"></script>
+<script src="app.js?v=10"></script>
 </body>
 </html>

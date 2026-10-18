@@ -23,7 +23,7 @@ The price shown is rent plus monthly charges. Each flat links to its listing on 
 
 ## The daily check
 
-Every morning a GitHub Action ([`monitor.yml`](.github/workflows/monitor.yml)) does two things:
+Twice a day, at 06:00 and 16:00 Brussels time, a GitHub Action ([`monitor.yml`](.github/workflows/monitor.yml)) does two things:
 
 1. **Finds new flats.** [`monitor/discover.mjs`](monitor/discover.mjs) searches Immoweb, Immovlan and the agency websites in [`monitor/agencies.json`](monitor/agencies.json). It adds every listing that fits the rules above to `data/flats.json`. New flats show **in purple** on the map for 2 days. Each listing is judged once; the verdicts are kept in `monitor/seen.json`.
 2. **Watches the Yes flats** (see below).
@@ -40,7 +40,7 @@ node monitor/discover.mjs
 
 ## How to review
 
-1. Type your name at the top, so we know who voted.
+1. Pick **Malte** or **Lilly** at the top, so the other knows who voted.
 2. Click a price on the map or a card in the list.
 3. Press **Yes** or **No**. Press it again to take your vote back.
 4. Open a card to leave a comment.
@@ -49,7 +49,7 @@ Map pins turn green when a flat has more Yes than No votes, and red when it has 
 
 ## From Yes to keys: the Shortlist and In contact tabs
 
-- **Shortlist** lists every flat with a Yes vote, with a map of just those flats. Each card has the price, size, rooms, furnishing, start date and location, plus **how to reach them**: who listed it (agency, private owner or booking platform), phone, email, the listing's contact form and the agency's website. There's a ready-to-copy message in French or English. Press **We contacted them** once you've reached out, then **We heard back** when they reply.
+- **Shortlist** lists every flat with a Yes vote, with a map of just those flats. Each card has the price, size, rooms, furnishing, start date and location, plus **how to reach them**: who listed it (agency, private owner or booking platform), phone, email, the listing's contact form and the agency's website. There's a ready-to-copy message in French or English. Press **We contacted them** once you've reached out, then **We heard back** when they reply. Each card has a **Notes** section for what the agent said, questions to ask and how the viewing went.
 - **In contact** takes those flats further: book a viewing (with date), visit, apply, sign. Every step says what to bring, check and ask. Flats you drop go to **Not going ahead**, where you can bring them back.
 
 Everyone sees the same progress. It is stored in a second Supabase table: run [`supabase/progress.sql`](supabase/progress.sql) once in the SQL Editor, after `schema.sql`. The daily check collects the contact details for every Yes flat.

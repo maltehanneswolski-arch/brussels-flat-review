@@ -30,7 +30,8 @@ async function yesFlats() {
   const res = await fetch(`${url.replace(/\/+$/, "")}/rest/v1/reviews?select=flat_id,reviewer_id,reviewer_name,verdict,created_at&order=created_at.asc&limit=10000`, {headers});
   if (!res.ok) throw new Error("Supabase " + res.status);
   const latest = {};
-  for (const r of await res.json()) (latest[r.flat_id] ??= {})[r.reviewer_id] = r;
+  // one vote per person: by name (Malte, Lilly), falling back to the id for older rows
+  for (const r of await res.json()) (latest[r.flat_id] ??= {})[(r.reviewer_name || "").trim().toLowerCase() || r.reviewer_id] = r;
   const out = {};
   for (const [id, people] of Object.entries(latest)) {
     const yes = Object.values(people).filter((r) => r.verdict === "yes").map((r) => r.reviewer_name);
