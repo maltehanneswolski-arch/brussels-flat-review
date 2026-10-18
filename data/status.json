@@ -7,7 +7,18 @@
    "charges": null,
    "available": "2026-11-30",
    "since": "2026-10-16",
-   "checked": "2026-10-18"
+   "checked": "2026-10-18",
+   "contact": {
+    "who": "Vaneau Lecobel Bruxelles Est",
+    "kind": "agency",
+    "phones": [
+     "02 669 70 90"
+    ],
+    "emails": [],
+    "website": "https://www.vaneau-lecobel.be",
+    "form": "https://www.immoweb.be/en/classified/21845501",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
   },
   "21857766": {
    "status": "online",
@@ -15,7 +26,18 @@
    "charges": 60,
    "available": "2026-12-01",
    "since": "2026-10-16",
-   "checked": "2026-10-18"
+   "checked": "2026-10-18",
+   "contact": {
+    "who": "Homeside Properties",
+    "kind": "agency",
+    "phones": [
+     "02 567 96 74"
+    ],
+    "emails": [],
+    "website": "https://www.homeside.be",
+    "form": "https://www.immoweb.be/en/classified/21857766",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
   },
   "21866794": {
    "status": "online",
@@ -23,7 +45,20 @@
    "charges": null,
    "available": "2027-01-01",
    "since": "2026-10-16",
-   "checked": "2026-10-18"
+   "checked": "2026-10-18",
+   "contact": {
+    "who": "SERENIMMO",
+    "kind": "agency",
+    "phones": [
+     "0492 83 46 13"
+    ],
+    "emails": [
+     "vincent@serenimmo.be"
+    ],
+    "website": "https://www.serenimmo.be/",
+    "form": "https://www.immoweb.be/en/classified/21866794",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
   },
   "21891432": {
    "status": "online",
@@ -31,7 +66,16 @@
    "charges": 100,
    "available": "2026-11-15",
    "since": "2026-10-16",
-   "checked": "2026-10-18"
+   "checked": "2026-10-18",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21891432",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
   },
   "21896344": {
    "status": "online",
@@ -39,7 +83,16 @@
    "charges": null,
    "available": "2026-12-01",
    "since": "2026-10-16",
-   "checked": "2026-10-18"
+   "checked": "2026-10-18",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21896344",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
   },
   "21917601": {
    "status": "online",
@@ -47,7 +100,21 @@
    "charges": 100,
    "available": "2027-01-04",
    "since": "2026-10-16",
-   "checked": "2026-10-18"
+   "checked": "2026-10-18",
+   "contact": {
+    "who": "IMMOEXPAT",
+    "kind": "agency",
+    "phones": [
+     "0470 10 11 00",
+     "0470 05 54 50"
+    ],
+    "emails": [
+     "info@immoexpat.be"
+    ],
+    "website": "https://www.immoexpat.be",
+    "form": "https://www.immoweb.be/en/classified/21917601",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
   },
   "21919319": {
    "status": "online",
@@ -55,7 +122,18 @@
    "charges": 125,
    "available": "2027-01-01",
    "since": "2026-10-16",
-   "checked": "2026-10-18"
+   "checked": "2026-10-18",
+   "contact": {
+    "who": "MYIMMO Uccle",
+    "kind": "agency",
+    "phones": [
+     "02 652 25 10"
+    ],
+    "emails": [],
+    "website": "https://www.myimmo.be",
+    "form": "https://www.immoweb.be/en/classified/21919319",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
   },
   "vbe62552": {
    "status": "online",
@@ -63,7 +141,16 @@
    "charges": null,
    "available": "2026-12-01",
    "since": "2026-10-16",
-   "checked": "2026-10-18"
+   "checked": "2026-10-18",
+   "contact": {
+    "who": "Housinganywhere",
+    "kind": "platform",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/apartment/for-rent/1000/brussels/vbe62552",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   }
   }
  }
 }

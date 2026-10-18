@@ -52,6 +52,22 @@ const plain = (html) => html
   .replace(/&euro;/gi, "€").replace(/&nbsp;/g, " ").replace(/&amp;/g, "&")
   .replace(/\s+/g, " ");
 
+// ---------- contact details (for the Shortlist tab) ----------
+// Feed relay addresses (importfrommedia.be, omniwebsites.be) don't reach a person, so they're left out.
+const RELAY = /importfrommedia\.be|omniwebsites\.be|immoweb\.be|immovlan\.be|example\./i;
+const PHONE = /(?:\+32\s?|\b0)(?:4\d{2}|[1-9]\d?)[\s\/.]?\d{2,3}[\s.]?\d{2}[\s.]?\d{2}\b/g;
+const EMAIL = /[\w.+-]+@[\w-]+(?:\.[\w-]+)+/g;
+function prettyPhone(p) {
+  let d = p.replace(/[^\d+]/g, "");
+  if (d.startsWith("+32")) d = "0" + d.slice(3);
+  if (/^04\d{8}$/.test(d)) return d.replace(/^(\d{4})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4");
+  if (/^02\d{7}$/.test(d)) return d.replace(/^(\d{2})(\d{3})(\d{2})(\d{2})$/, "$1 $2 $3 $4");
+  return d.replace(/^(\d{3})(\d{2})(\d{2})(\d{2})$/, "$1 $2 $3 $4");
+}
+const uniq = (a) => [...new Set(a.filter(Boolean))];
+const phonesIn = (text) => uniq((text.match(PHONE) || []).map(prettyPhone)).filter((p) => /^0\d{2,3} /.test(p)).slice(0, 2);
+const emailsIn = (text) => uniq((text.match(EMAIL) || []).map((e) => e.toLowerCase()).filter((e) => !RELAY.test(e))).slice(0, 2);
+
 async function checkImmoweb(flat) {
   const page = await get("https://www.immoweb.be/en/classified/" + flat.id);
   if (page.status === 404 || page.status === 410 || (page.status === 200 && !page.url.includes(flat.id))) return {status: "removed"};
@@ -61,11 +77,22 @@ async function checkImmoweb(flat) {
   const c = JSON.parse(page.text.slice(start, page.text.indexOf("};\n", start) + 1));
   const t = c.transaction || {};
   const flags = c.flags || {};
+  const cu = (c.customers || [])[0] || {};
+  const desc = c.property?.description || "";
+  const privateOwner = cu.type === "PRIVATE" || !cu.name;
   return {
     status: flags.isSoldOrRented ? "removed" : flags.isUnderOption ? "under-option" : "online",
     rent: t.rental?.monthlyRentalPrice ?? null,
     charges: t.rental?.monthlyRentalCosts ?? null,
-    available: t.availabilityDate || t.availabilityPeriodType || null
+    available: t.availabilityDate || t.availabilityPeriodType || null,
+    contact: {
+      who: privateOwner ? "Private owner" : cu.name.replace(/\s+/g, " ").trim(),
+      kind: privateOwner ? "private" : "agency",
+      phones: uniq([cu.phoneNumber, cu.mobileNumber].filter(Boolean).map(prettyPhone).concat(phonesIn(desc))).slice(0, 2),
+      emails: emailsIn([cu.email || "", desc].join(" ")),
+      website: privateOwner ? null : cu.website?.replace(/^http:\/\//, "https://") || null,
+      form: flat.url, formLabel: "Contact form on the Immoweb listing"
+    }
   };
 }
 
@@ -76,11 +103,19 @@ async function checkImmovlan(flat) {
   if (page.status !== 200 || !/Rent [\d ]+ €/.test(text)) return {status: "unknown", note: "Immovlan answered " + page.status};
   const num = (re) => { const m = text.match(re); return m ? Number(m[1].replace(/\s/g, "")) : null; };
   const av = (text.match(/Availability (From \d\d\/\d\d\/\d{4}|Immediately|[A-Za-z ]{3,30}?) (?:Financial|Currently|Build|Rent|General)/) || [])[1] || null;
+  const seller = (text.match(/([A-Z][A-Z0-9 &'.\-]{2,40}?) View all properties/) || [])[1]?.trim() || null;
+  const desc = (text.match(/Description (.{0,2500})/) || [])[1] || "";
   return {
     status: /under option|sous option/i.test(text) ? "under-option" : "online",
     rent: num(/Rent ([\d ]+) €/),
     charges: num(/(?:Maintenance cost|Charges) ([\d ]+) €/),
-    available: av ? av.replace(/^From (\d\d)\/(\d\d)\/(\d{4})$/, "$3-$2-$1").replace(/^Immediately$/, "IMMEDIATELY") : null
+    available: av ? av.replace(/^From (\d\d)\/(\d\d)\/(\d{4})$/, "$3-$2-$1").replace(/^Immediately$/, "IMMEDIATELY") : null,
+    contact: {
+      who: seller ? seller.replace(/\b([A-Z])([A-Z]+)\b/g, (_, a, b) => a + b.toLowerCase()) : "Advertiser on Immovlan",
+      kind: /housinganywhere|spotahome|uniplaces/i.test(seller || "") ? "platform" : "agency",
+      phones: phonesIn(desc), emails: emailsIn(desc), website: null,
+      form: flat.url, formLabel: "“Contact by email” on the Immovlan listing"
+    }
   };
 }
 
@@ -88,14 +123,34 @@ async function checkVista(flat) {
   const page = await get(flat.url);
   if (page.status === 404) return {status: "removed"};
   if (page.status !== 200) return {status: "unknown", note: "Vista answered " + page.status};
-  return {status: "online", pageHash: createHash("sha1").update(plain(page.text)).digest("hex").slice(0, 12)};
+  return {
+    status: "online", pageHash: createHash("sha1").update(plain(page.text)).digest("hex").slice(0, 12),
+    contact: {who: "Vista Residences", kind: "agency", phones: ["0478 55 56 20"], emails: ["info@vistaresidences.org"], website: "https://www.vistaresidences.org", form: null, formLabel: null}
+  };
+}
+
+// A flat found on an agency's own website
+async function checkAgencyPage(flat) {
+  const page = await get(flat.url);
+  if (page.status === 404 || page.status === 410) return {status: "removed"};
+  if (page.status !== 200) return {status: "unknown", note: `${flat.source} answered ${page.status}`};
+  const text = plain(page.text);
+  const head = text.slice(0, 4000);
+  const status = /(?<![\wÀ-ÿ])(loué|rented|verhuurd)(?![\wÀ-ÿ])/i.test(head) ? "removed" : /sous[- ]option|under option|onder optie/i.test(head) ? "under-option" : "online";
+  let website = null;
+  try { website = new URL(flat.url).origin; } catch { /* keep null */ }
+  return {
+    status, rent: flat.rent, charges: flat.charges, available: flat.available,
+    contact: {who: flat.source, kind: "agency", phones: phonesIn(text), emails: emailsIn(text), website, form: flat.url, formLabel: `Contact form on ${flat.source}'s listing page`}
+  };
 }
 
 async function check(flat) {
   try {
     if (flat.kind === "vista") return await checkVista(flat);
     if (flat.source === "Immovlan") return await checkImmovlan(flat);
-    return await checkImmoweb(flat);
+    if (flat.source === "Immoweb") return await checkImmoweb(flat);
+    return await checkAgencyPage(flat);
   } catch (e) {
     return {status: "unknown", note: String(e.message || e).slice(0, 120)};
   }
@@ -139,7 +194,8 @@ for (const [id, voters] of Object.entries(yes)) {
   const changed = !prev || lines.length > 0;
   const kept = now.status === "removed" && prev ? {rent: prev.rent, charges: prev.charges, available: prev.available, pageHash: prev.pageHash} : {};
   const since = changed ? today : prev.public?.since || today;
-  const pub = {status: now.status, rent: now.rent ?? kept.rent ?? null, charges: now.charges ?? kept.charges ?? null, available: now.available ?? kept.available ?? null, since, checked: today};
+  const pub = {status: now.status, rent: now.rent ?? kept.rent ?? null, charges: now.charges ?? kept.charges ?? null, available: now.available ?? kept.available ?? null, since, checked: today,
+    contact: now.contact ?? prev?.public?.contact ?? null};
   state.flats[id] = {...kept, ...now, status: now.status, first_watched: prev?.first_watched || today, last_checked: today, public: pub};
   status.flats[id] = pub;
   if (lines.length) changes.push({name, lines, alert: !!prev});

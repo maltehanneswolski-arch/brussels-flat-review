@@ -47,6 +47,13 @@ node monitor/discover.mjs
 
 Map pins turn green when a flat has more Yes than No votes, and red when it has more No.
 
+## From Yes to keys: the Shortlist and In contact tabs
+
+- **Shortlist** lists every flat with a Yes vote, with a map of just those flats. Each card has the price, size, rooms, furnishing, start date and location, plus **how to reach them**: who listed it (agency, private owner or booking platform), phone, email, the listing's contact form and the agency's website. There's a ready-to-copy message in French or English. Press **We contacted them** once you've reached out, then **We heard back** when they reply.
+- **In contact** takes those flats further: book a viewing (with date), visit, apply, sign. Every step says what to bring, check and ask. Flats you drop go to **Not going ahead**, where you can bring them back.
+
+Everyone sees the same progress. It is stored in a second Supabase table: run [`supabase/progress.sql`](supabase/progress.sql) once in the SQL Editor, after `schema.sql`. The daily check collects the contact details for every Yes flat.
+
 ## Watching the Yes flats
 
 As part of the daily check, [`monitor/check.mjs`](monitor/check.mjs) looks at every flat with at least one Yes vote and records whether the listing is:

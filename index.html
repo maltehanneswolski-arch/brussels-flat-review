@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
-<link rel="stylesheet" href="styles.css?v=4">
+<link rel="stylesheet" href="styles.css?v=6">
 </head>
 <body>
 <div class="app">
@@ -24,13 +24,20 @@
     </div>
   </header>
 
+  <nav class="tabs" role="tablist" aria-label="Views">
+    <button type="button" role="tab" id="tab-all" aria-controls="pane-all" data-tab="all">All flats <span class="n" id="n-all"></span></button>
+    <button type="button" role="tab" id="tab-short" aria-controls="pane-short" data-tab="short">Shortlist <span class="n" id="n-short"></span></button>
+    <button type="button" role="tab" id="tab-contact" aria-controls="pane-contact" data-tab="contact">In contact <span class="n" id="n-contact"></span></button>
+  </nav>
+
   <div class="banner" id="banner" role="status" hidden></div>
 
-  <div class="main">
+  <div class="main" id="main">
     <div class="mapwrap">
       <div id="map" role="region" aria-label="Map of the flats"></div>
     </div>
     <aside class="side">
+     <div class="pane" id="pane-all" role="tabpanel" aria-labelledby="tab-all">
       <div class="filters">
         <div class="frow">
           <span class="flabel" id="lbl-area">Area</span>
@@ -61,11 +68,26 @@
       </div>
       <div class="listhead"><span id="count"></span><span id="sync"></span></div>
       <div class="list" id="list" role="list"></div>
+     </div>
+     <div class="pane" id="pane-short" role="tabpanel" aria-labelledby="tab-short" hidden>
+      <div class="panehead">
+        <h2>Shortlist</h2>
+        <p>Every flat someone said <strong>Yes</strong> to. Get in touch, then press <strong>We heard back</strong> when they answer: the flat moves to <em>In contact</em>.</p>
+      </div>
+      <div class="list" id="list-short" role="list"></div>
+     </div>
+     <div class="pane" id="pane-contact" role="tabpanel" aria-labelledby="tab-contact" hidden>
+      <div class="panehead">
+        <h2>In contact</h2>
+        <p>Flats that answered. Work through viewing, application and lease; each step says what to bring and ask.</p>
+      </div>
+      <div class="list" id="list-contact" role="list"></div>
+     </div>
     </aside>
   </div>
 
   <footer class="foot">
-    Listings from Immoweb, Immovlan and Vista Residences, checked <span id="checked">16 Oct 2026</span>. Prices are rent + monthly charges.
+    Listings from Immoweb, Immovlan, agency websites and Vista Residences, checked <span id="checked">16 Oct 2026</span>. Prices are rent + monthly charges.
     Map © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors.
   </footer>
 </div>
@@ -73,6 +95,6 @@
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script src="config.js?v=3"></script>
-<script src="app.js?v=5"></script>
+<script src="app.js?v=7"></script>
 </body>
 </html>
