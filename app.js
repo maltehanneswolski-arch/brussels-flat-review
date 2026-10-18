@@ -185,17 +185,24 @@ async function save(row, okMsg) {
   }
 }
 
+// Flats the daily search added in the last 2 days show in purple.
+function isNew(x) {
+  if (!x.added) return false;
+  const days = (Date.now() - new Date(x.added + "T00:00:00").getTime()) / 86400000;
+  return days >= 0 && days < 2;
+}
+
 // ---------- filters ----------
 function visible(x) {
   if (!state.areaOn.has(x.area)) return false;
-  if (!state.cats.has(x.cat)) return false;
+  if (!state.cats.has(x.cat) && !isNew(x)) return false; // new flats show whatever their start date
   if (!state.furn.has(x.furnished === true ? "f" : "u")) return false;
   if (x.d != null && x.d < state.gnKm) return false;
   return true;
 }
 function sorted(list) {
   const by = {
-    score: (a, b) => (score(b.id) - score(a.id)) || (CAT_ORDER[a.cat] - CAT_ORDER[b.cat]) || ((total(a) ?? 1e9) - (total(b) ?? 1e9)),
+    score: (a, b) => (score(b.id) - score(a.id)) || (isNew(b) - isNew(a)) || (CAT_ORDER[a.cat] - CAT_ORDER[b.cat]) || ((total(a) ?? 1e9) - (total(b) ?? 1e9)),
     price: (a, b) => ((total(a) ?? 1e9) - (total(b) ?? 1e9)),
     date: (a, b) => (CAT_ORDER[a.cat] - CAT_ORDER[b.cat]) || String(a.available || "z").localeCompare(String(b.available || "z"))
   }[state.sort];
@@ -269,13 +276,16 @@ function card(x) {
     x.d != null ? x.d.toFixed(1) + " km from Gare du Nord" : null
   ].filter(Boolean);
   let ta;
-  return el("article", {class: "card" + (sel ? " sel" : ""), role: "listitem", id: "card-" + x.id},
+  const fresh = isNew(x);
+  return el("article", {class: "card" + (sel ? " sel" : "") + (fresh ? " new" : ""), role: "listitem", id: "card-" + x.id},
     el("div", {class: "chead"},
       el("button", {class: "selbtn", type: "button", "aria-expanded": String(sel), onclick: () => select(x.id)},
         el("span", {class: "price"}, priceText(x), " ", el("small", {}, x.rent == null ? "price and dates on request" : x.charges ? `${euro(x.rent)} rent + ${euro(x.charges)} charges` : "rent, charges not stated")),
         el("span", {class: "street"}, x.street)
       ),
-      el("span", {class: "when " + x.cat}, whenLabel(x))
+      el("span", {class: "tags"},
+        fresh ? el("span", {class: "newtag", title: "Found by the daily search on " + fmtDate(x.added)}, "New " + fmtDate(x.added)) : null,
+        el("span", {class: "when " + x.cat}, whenLabel(x)))
     ),
     el("div", {class: "facts"}, facts.join(" · "), x.epc ? el("span", {class: "peb " + x.epc, title: "Energy class (PEB) " + x.epc}, "PEB " + x.epc) : null),
     watchLine(x),
@@ -299,7 +309,8 @@ function renderList() {
   const vis = sorted(state.flats.filter(visible));
   const hidden = state.flats.filter((x) => x.d != null && x.d < state.gnKm && state.areaOn.has(x.area)).length;
   const reviewers = new Set(Object.values(state.byFlat).flatMap((r) => [...r.yes, ...r.no, ...r.comments]).map((p) => p.reviewer_id)).size;
-  $("#count").textContent = `${vis.length} of ${state.flats.length} flats` + (hidden ? ` · ${hidden} hidden near Gare du Nord` : "") + (reviewers ? ` · ${reviewers} reviewer${reviewers > 1 ? "s" : ""}` : "");
+  const fresh = state.flats.filter(isNew).length;
+  $("#count").textContent = `${vis.length} of ${state.flats.length} flats` + (fresh ? ` · ${fresh} new` : "") + (hidden ? ` · ${hidden} hidden near Gare du Nord` : "") + (reviewers ? ` · ${reviewers} reviewer${reviewers > 1 ? "s" : ""}` : "");
   $("#sync").textContent = db.shared && state.lastSync ? "Updated " + state.lastSync.toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"}) : "";
   const keepScroll = list.scrollTop;
   const typing = document.activeElement?.id?.startsWith("comment-") ? {id: document.activeElement.id, v: document.activeElement.value} : null;
@@ -326,9 +337,9 @@ function pillHtml(x) {
   const r = rev(x.id);
   const consensus = r.yes.length + r.no.length ? (s > 0 ? "c-yes" : s < 0 ? "c-no" : "") : "";
   const gone = state.status[x.id]?.status === "removed" ? "gone" : "";
-  const cls = ["pill", x.cat, x.kind === "vista" ? "vista" : "", x.approx ? "approx" : "", consensus, gone, state.selected === x.id ? "sel" : ""].join(" ");
-  const label = x.kind === "vista" ? "Vista" : euro(total(x));
-  const tally = r.yes.length + r.no.length ? `<span class="s">${r.yes.length}✓ ${r.no.length}✗</span>` : "";
+  const cls = ["pill", x.cat, x.kind === "vista" ? "vista" : "", x.approx ? "approx" : "", isNew(x) ? "new" : "", consensus, gone, state.selected === x.id ? "sel" : ""].join(" ");
+  const label = x.kind === "vista" ? "Vista" : x.rent == null ? "Ask" : euro(total(x));
+  const tally = r.yes.length + r.no.length ? `<span class="s">${r.yes.length}✓ ${r.no.length}✗</span>` : isNew(x) ? `<span class="s">new</span>` : "";
   return `<span class="${cls}">${label}${tally}</span>`;
 }
 function popupContent(x) {
@@ -344,7 +355,7 @@ function renderMarkers() {
     const mk = markers[x.id];
     if (!mk) continue;
     mk.setIcon(L.divIcon({className: "pw", html: pillHtml(x), iconSize: [0, 0]}));
-    mk.setZIndexOffset(state.selected === x.id ? 1000 : score(x.id) * 10 + (x.cat === "fit" ? 5 : 0));
+    mk.setZIndexOffset(state.selected === x.id ? 1000 : score(x.id) * 10 + (isNew(x) ? 8 : 0) + (x.cat === "fit" ? 5 : 0));
     if (visible(x)) layer.addLayer(mk);
   }
   zone.setRadius(Math.max(state.gnKm, 0.01) * 1000);
@@ -376,7 +387,7 @@ $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; rend
 
 // ---------- boot ----------
 (async () => {
-  const data = await (await fetch("data/flats.json?v=3")).json();
+  const data = await (await fetch("data/flats.json", {cache: "no-cache"})).json();
   state.checked = data.checked;
   state.areas = data.areas;
   state.areaOn = new Set(data.areas);

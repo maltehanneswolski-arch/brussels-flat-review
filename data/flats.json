@@ -1,5 +1,5 @@
 {
- "checked": "2026-10-16",
+ "checked": "2026-10-18",
  "areas": [
   "Schaerbeek",
   "Etterbeek",
@@ -2135,6 +2135,54 @@
     "2-bed, ~95 m², terrace",
     "2-bed penthouse, ~80 m², terrace"
    ]
+  },
+  {
+   "id": "21922865",
+   "kind": "listing",
+   "source": "Immoweb",
+   "url": "https://www.immoweb.be/en/classified/21922865",
+   "street": "Allée des Freesias 18",
+   "lat": 50.8650179,
+   "lng": 4.390484799999999,
+   "approx": false,
+   "furnished": true,
+   "rent": 1200,
+   "charges": 180,
+   "bedrooms": 1,
+   "m2": 52,
+   "floor": 4,
+   "epc": "D",
+   "lift": true,
+   "terrace": null,
+   "garden": false,
+   "available": "IMMEDIATELY",
+   "area": "Schaerbeek",
+   "description": "Furnished 52 m² on the 4th floor of a residential building, with a parking space. Free now, so ask if they would wait.",
+   "added": "2026-10-18"
+  },
+  {
+   "id": "21920548",
+   "kind": "listing",
+   "source": "Immoweb",
+   "url": "https://www.immoweb.be/en/classified/21920548",
+   "street": "Avenue Victor Jacobs 48",
+   "lat": 50.8298553,
+   "lng": 4.3838191,
+   "approx": false,
+   "furnished": false,
+   "rent": 980,
+   "charges": 80,
+   "bedrooms": 1,
+   "m2": 60,
+   "floor": 1,
+   "epc": "E",
+   "lift": false,
+   "terrace": null,
+   "garden": false,
+   "available": "2026-12-01",
+   "area": "Etterbeek",
+   "description": "60 m² near the Ixelles ponds, parquet throughout, 15 m² bedroom. Also listed on Immovlan.",
+   "added": "2026-10-18"
   }
  ]
 }

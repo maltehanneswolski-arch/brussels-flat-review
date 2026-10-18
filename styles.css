@@ -12,6 +12,8 @@
   --yes: #1c8a50;
   --no: #b3443b;
   --zone: #c2453b;
+  --new: #7a35d8;         /* purple: found by the daily search in the last 2 days */
+  --new-soft: #f1e9fd;
   --shadow: 0 1px 2px rgba(22, 32, 58, .12), 0 4px 14px rgba(22, 32, 58, .08);
   --tile-filter: none;
   --peb-a: #1a9641; --peb-b: #52b151; --peb-c: #a6d96a; --peb-d: #f2dc45;
@@ -24,7 +26,7 @@
   :root {
     --bg: #0f131b; --panel: #171c27; --ink: #e5e9f1; --muted: #9aa4b6; --line: #2a3243;
     --accent: #86a8ff; --accent-ink: #0f131b; --iris: #f3c63a; --iris-soft: #3a3117;
-    --yes: #4fc68a; --no: #e57b70; --zone: #ef7f74;
+    --yes: #4fc68a; --no: #e57b70; --zone: #ef7f74; --new: #b48cff; --new-soft: #2c2142;
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.3);
     --tile-filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.88) saturate(.45);
     color-scheme: dark;
@@ -91,6 +93,9 @@ select { border: 1px solid var(--line); background: var(--panel); border-radius:
 
 .card { background: var(--panel); border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; display: grid; gap: 7px; min-width: 0; }
 .card.sel { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow); }
+.card.new:not(.sel) { border-color: var(--new); box-shadow: 0 0 0 1px var(--new); }
+.tags { flex: none; display: inline-flex; gap: 6px; align-items: center; flex-wrap: wrap; justify-content: end; }
+.newtag { font-size: 12px; font-weight: 600; border-radius: 6px; padding: 2px 8px; color: #fff; background: var(--new); white-space: nowrap; }
 .chead { display: flex; justify-content: space-between; align-items: start; gap: 8px; }
 .selbtn { all: unset; cursor: pointer; display: grid; gap: 1px; min-width: 0; }
 .selbtn:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 4px; }
@@ -157,6 +162,7 @@ select { border: 1px solid var(--line); background: var(--panel); border-radius:
 .pill.early { opacity: .62; }
 .pill.approx { border-style: dashed; }
 .pill.vista { border-color: var(--accent); color: var(--accent); font-family: var(--font-ui); }
+.pill.new { background: var(--new); border-color: var(--new); color: #fff; opacity: 1; }
 .pill.c-yes { background: var(--yes); border-color: var(--yes); color: #fff; opacity: 1; }
 .pill.c-no { background: var(--no); border-color: var(--no); color: #fff; opacity: .8; }
 .pill .s { font-family: var(--font-ui); font-size: 10px; margin-left: 4px; opacity: .85; }
