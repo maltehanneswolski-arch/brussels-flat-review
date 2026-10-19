@@ -17,14 +17,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-18",
+   "last_checked": "2026-10-19",
    "public": {
     "status": "online",
     "rent": 1200,
     "charges": null,
     "available": "2026-11-30",
     "since": "2026-10-16",
-    "checked": "2026-10-18",
+    "checked": "2026-10-19",
     "contact": {
      "who": "Vaneau Lecobel Bruxelles Est",
      "kind": "agency",
@@ -55,14 +55,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-18",
+   "last_checked": "2026-10-19",
    "public": {
     "status": "online",
     "rent": 970,
     "charges": 60,
     "available": "2026-12-01",
     "since": "2026-10-16",
-    "checked": "2026-10-18",
+    "checked": "2026-10-19",
     "contact": {
      "who": "Homeside Properties",
      "kind": "agency",
@@ -95,14 +95,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-18",
+   "last_checked": "2026-10-19",
    "public": {
     "status": "online",
     "rent": 950,
     "charges": null,
     "available": "2027-01-01",
     "since": "2026-10-16",
-    "checked": "2026-10-18",
+    "checked": "2026-10-19",
     "contact": {
      "who": "SERENIMMO",
      "kind": "agency",
@@ -133,14 +133,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-18",
+   "last_checked": "2026-10-19",
    "public": {
     "status": "online",
     "rent": 730,
     "charges": 100,
     "available": "2026-11-15",
     "since": "2026-10-16",
-    "checked": "2026-10-18",
+    "checked": "2026-10-19",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -167,14 +167,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-18",
+   "last_checked": "2026-10-19",
    "public": {
     "status": "online",
     "rent": 990,
     "charges": null,
     "available": "2026-12-01",
     "since": "2026-10-16",
-    "checked": "2026-10-18",
+    "checked": "2026-10-19",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -206,14 +206,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-18",
+   "last_checked": "2026-10-19",
    "public": {
     "status": "online",
     "rent": 875,
     "charges": 100,
     "available": "2027-01-04",
     "since": "2026-10-16",
-    "checked": "2026-10-18",
+    "checked": "2026-10-19",
     "contact": {
      "who": "IMMOEXPAT",
      "kind": "agency",
@@ -247,14 +247,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-18",
+   "last_checked": "2026-10-19",
    "public": {
     "status": "online",
     "rent": 1000,
     "charges": 125,
     "available": "2027-01-01",
     "since": "2026-10-16",
-    "checked": "2026-10-18",
+    "checked": "2026-10-19",
     "contact": {
      "who": "MYIMMO Uccle",
      "kind": "agency",
@@ -283,14 +283,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-18",
+   "last_checked": "2026-10-19",
    "public": {
     "status": "online",
     "rent": 990,
     "charges": null,
     "available": "2026-12-01",
     "since": "2026-10-16",
-    "checked": "2026-10-18",
+    "checked": "2026-10-19",
     "contact": {
      "who": "Housinganywhere",
      "kind": "platform",
