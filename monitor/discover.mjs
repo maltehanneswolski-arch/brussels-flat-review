@@ -12,6 +12,7 @@
 
 import {readFile, writeFile} from "node:fs/promises";
 import {checkAgencies} from "./agencies.mjs";
+import {domicileFrom} from "./domicile.mjs";
 
 const root = new URL("../", import.meta.url);
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
@@ -77,10 +78,10 @@ export function judge(f, text = "") {
   return null;
 }
 
-export function summary(f, title) {
-  const t = (title || "").trim();
-  const useful = t.length >= 10 && t.length <= 90 && !/^(apartment|appartement|appartment|flat|studio|duplex|penthouse)$/i.test(t);
-  return (useful ? t.replace(/\s+/g, " ").replace(/[.!]*$/, ".") + " " : "") + `Found automatically on ${TODAY.slice(8)}/${TODAY.slice(5, 7)}, not checked by hand yet.`;
+// The site shows English only, so the listing's own title (often French or Dutch) isn't copied;
+// the card's facts line already gives size, rooms and furnishing.
+export function summary() {
+  return `Found automatically on ${TODAY.slice(8)}/${TODAY.slice(5, 7)}, not checked by hand yet.`;
 }
 
 export async function get(url, accept) {
@@ -172,7 +173,7 @@ async function immovlanFlat(url, pc) {
     available: avRaw ? avRaw.replace(/^From (\d\d)\/(\d\d)\/(\d{4})$/, "$3-$2-$1").replace(/^Immediately$/, "IMMEDIATELY") : null
   };
   if (/under option|sous option/i.test(text.slice(0, 4000))) return {skip: "already under option"};
-  return {flat: f, text: `${title} ${desc}`, title: title.replace(/ [A-Z]{3}\d+$/, "").replace(/^(Apartment|Studio|Duplex|Flat|Penthouse|Loft) for rent, .*$/i, "")};
+  return {flat: f, text: `${title} ${desc}`, page: text, title: title.replace(/ [A-Z]{3}\d+$/, "").replace(/^(Apartment|Studio|Duplex|Flat|Penthouse|Loft) for rent, .*$/i, "")};
 }
 
 // Same flat already on the map under another site?
@@ -201,7 +202,8 @@ export async function main() {
     seen[site][key] = TODAY + " " + (why || (dup ? "same as " + dup.id : "added"));
     if (why || dup) return;
     const area = areaFor(f.pc);
-    const flat = {...f, area: area.name(f.lat, f.lng), description: summary(f, found.title), added: TODAY};
+    const dom = domicileFrom(found.page || found.text); // the whole Immovlan page: the domiciliation line is often far down
+    const flat = {...f, area: area.name(f.lat, f.lng), description: summary(), domicile: dom.domicile, domicileQuote: dom.quote, added: TODAY};
     delete flat.pc;
     data.flats.push(flat); known.add(flat.id); added.push(flat);
   };

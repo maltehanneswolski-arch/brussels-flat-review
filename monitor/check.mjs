@@ -34,7 +34,7 @@ async function yesFlats() {
   for (const r of await res.json()) (latest[r.flat_id] ??= {})[(r.reviewer_name || "").trim().toLowerCase() || r.reviewer_id] = r;
   const out = {};
   for (const [id, people] of Object.entries(latest)) {
-    const yes = Object.values(people).filter((r) => r.verdict === "yes").map((r) => r.reviewer_name);
+    const yes = Object.values(people).filter((r) => r.verdict === "yes" || r.verdict === "super").map((r) => r.reviewer_name);
     if (yes.length) out[id] = yes;
   }
   return out;

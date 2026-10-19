@@ -1,4 +1,4 @@
--- Brussels Flat Review: shared Yes/No votes and comments.
+-- Brussels Flat Review: shared Super yes/Yes/No votes and comments.
 -- Run this once in the Supabase SQL editor of a new project.
 -- Every vote or comment is a new row; the app shows each person's latest row per flat.
 
@@ -7,7 +7,7 @@ create table if not exists public.reviews (
   flat_id text not null check (char_length(flat_id) between 1 and 64),
   reviewer_id uuid not null,
   reviewer_name text not null check (char_length(reviewer_name) between 1 and 40),
-  verdict text not null check (verdict in ('yes', 'no', 'none')),
+  verdict text not null check (verdict in ('yes', 'super', 'no', 'none')),
   comment text not null default '' check (char_length(comment) <= 500),
   created_at timestamptz not null default now()
 );

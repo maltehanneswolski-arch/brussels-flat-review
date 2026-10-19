@@ -16,6 +16,7 @@
   --zone: #c2453b;
   --new: #7a35d8;         /* purple: found by the daily search in the last 2 days */
   --new-soft: #f1e9fd;
+  --super: #8f6400;       /* deep gold: Super yes */
   --shadow: 0 1px 2px rgba(22, 32, 58, .12), 0 4px 14px rgba(22, 32, 58, .08);
   --tile-filter: none;
   --peb-a: #1a9641; --peb-b: #52b151; --peb-c: #a6d96a; --peb-d: #f2dc45;
@@ -31,8 +32,14 @@
     --yes: #4fc68a; --no: #e57b70; --zone: #ef7f74; --new: #b48cff; --new-soft: #2c2142; --on-fill: #0f131b;
     --shadow: 0 1px 2px rgba(0,0,0,.4), 0 4px 14px rgba(0,0,0,.3);
     --tile-filter: invert(1) hue-rotate(180deg) brightness(.9) contrast(.88) saturate(.45);
+    --super: #f3c63a;
     color-scheme: dark;
   }
+}
+/* Lilly's view: the same page with a slight purple tint */
+html.lilly { --bg: #f2eefa; --panel: #fdfbff; --line: #ddd4ee; }
+@media (prefers-color-scheme: dark) {
+  html.lilly { --bg: #130f1c; --panel: #1c1728; --line: #33294a; }
 }
 
 * { box-sizing: border-box; }
@@ -151,6 +158,14 @@ select { border: 1px solid var(--line); background: var(--panel); border-radius:
 .peb.G { color: #fff; }
 .peb.A { background: var(--peb-a); } .peb.B { background: var(--peb-b); } .peb.C { background: var(--peb-c); }
 .peb.D { background: var(--peb-d); } .peb.E { background: var(--peb-e); } .peb.F { background: var(--peb-f); } .peb.G { background: var(--peb-g); }
+/* Domiciliation (can you register your address there): from the listing text */
+.dom { font-size: 13px; font-weight: 600; border-radius: 4px; padding: 0 6px; border: 1px solid var(--line); white-space: nowrap; }
+.dom.yes { color: var(--yes); border-color: currentColor; }
+.dom.no { color: var(--on-fill); background: var(--no); border-color: var(--no); }
+.dom.unknown { color: var(--muted); border-style: dashed; font-weight: 400; }
+.domrow.yes { color: var(--yes); font-weight: 600; }
+.domrow.no { color: var(--no); font-weight: 600; }
+.domrow .domnote { display: block; color: var(--muted); font-weight: 400; }
 .desc { margin: 0; max-width: 68ch; }
 .watch { font-size: 13px; font-weight: 600; border-radius: 6px; padding: 2px 8px; border: 1px solid var(--line); justify-self: start; }
 .watch.online { color: var(--yes); border-color: currentColor; }
@@ -170,15 +185,19 @@ select { border: 1px solid var(--line); background: var(--panel); border-radius:
   font-weight: 600; cursor: pointer; display: inline-flex; gap: 8px; align-items: center;
 }
 .vb .n { font-family: var(--font-data); font-size: 13px; }
-.vb.yes { color: var(--yes); } .vb.no { color: var(--no); }
+.vb.yes { color: var(--yes); } .vb.no { color: var(--no); } .vb.super { color: var(--super); }
 .vb[aria-pressed="true"] { color: var(--on-fill); }
+.vb.super[aria-pressed="true"] { background: var(--super); border-color: var(--super); }
 .vb.yes[aria-pressed="true"] { background: var(--yes); border-color: var(--yes); }
 .vb.no[aria-pressed="true"] { background: var(--no); border-color: var(--no); }
 .link { font-weight: 600; font-size: 13px; text-decoration: none; }
 .link:hover { text-decoration: underline; }
 .who { font-size: 13px; color: var(--muted); overflow-wrap: anywhere; }
 .who b { font-weight: 600; }
-.who .y { color: var(--yes); } .who .x { color: var(--no); }
+.who .y { color: var(--yes); } .who .x { color: var(--no); } .who .s { color: var(--super); }
+.pill .star { color: var(--super); margin-right: 4px; }
+.pill.new .star, .pill[class*="st-"] .star { color: inherit; }
+.lg-super { color: var(--super); font-weight: 800; }
 .comments { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
 .comments li { font-size: 13px; background: var(--bg); border-radius: 8px; padding: 5px 8px; overflow-wrap: anywhere; }
 .comments li b { font-weight: 600; }
@@ -217,6 +236,7 @@ select { border: 1px solid var(--line); background: var(--panel); border-radius:
   font: 600 13px/1 var(--font-data); cursor: pointer; white-space: nowrap;
 }
 .grp b { position: absolute; left: calc(100% - 10px); top: -10px; background: var(--new); color: var(--on-fill); border-radius: 999px; padding: 2px 6px; font: 600 13px/1 var(--font-ui); box-shadow: var(--shadow); }
+.grp .gstar { position: absolute; right: calc(100% - 10px); top: -10px; background: var(--super); color: var(--on-fill); border-radius: 999px; padding: 2px 5px; font: 600 13px/1 var(--font-ui); font-style: normal; box-shadow: var(--shadow); }
 .gn {
   position: absolute; transform: translate(-50%, -50%); white-space: nowrap;
   font-size: 13px; font-weight: 800; letter-spacing: .02em;

@@ -84,6 +84,7 @@ const isMe = (r) => !!person && personKey(r) === person;
 function renderWhoami() {
   for (const b of document.querySelectorAll("#whoami [data-person]")) b.setAttribute("aria-checked", String(b.dataset.person === person));
   $("#whoami").classList.remove("need");
+  document.documentElement.classList.toggle("lilly", person === "lilly"); // Lilly's view has a slight purple tint
 }
 for (const b of document.querySelectorAll("#whoami [data-person]")) b.addEventListener("click", () => {
   person = b.dataset.person;
@@ -184,7 +185,8 @@ function aggregate(rows) {
   for (const [flat, people] of Object.entries(by)) {
     const list = Object.values(people);
     out[flat] = {
-      yes: list.filter((r) => r.verdict === "yes"),
+      yes: list.filter((r) => r.verdict === "yes" || r.verdict === "super"), // a super yes is a yes too
+      super: list.filter((r) => r.verdict === "super"),
       no: list.filter((r) => r.verdict === "no"),
       comments: list.filter((r) => r.comment).sort((a, b) => (a.created_at || "").localeCompare(b.created_at || "")),
       mine: person ? people[person] || null : null
@@ -192,8 +194,8 @@ function aggregate(rows) {
   }
   return out;
 }
-const rev = (id) => state.byFlat[id] || {yes: [], no: [], comments: [], mine: null};
-const score = (id) => { const r = rev(id); return r.yes.length - r.no.length; };
+const rev = (id) => state.byFlat[id] || {yes: [], super: [], no: [], comments: [], mine: null};
+const score = (id) => { const r = rev(id); return r.yes.length + r.super.length - r.no.length; }; // a super yes counts twice
 
 function aggregateProgress(rows) {
   const out = {};
@@ -254,7 +256,7 @@ async function vote(x, verdict) {
   const cur = rev(x.id).mine;
   const next = cur?.verdict === verdict ? "none" : verdict;
   const row = {flat_id: x.id, reviewer_id: me.id, reviewer_name: me.name, verdict: next, comment: cur?.comment || ""};
-  await save(row, next === "none" ? "Vote removed." : next === "yes" ? "Marked Yes." : "Marked No.");
+  await save(row, {none: "Vote removed.", yes: "Marked Yes.", super: "Marked Super yes!", no: "Marked No."}[next]);
 }
 async function comment(x, text) {
   if (needPerson("wrote this")) return false;
@@ -273,7 +275,10 @@ async function save(row, okMsg) {
     if (db.shared) refresh();
     return true;
   } catch (e) {
-    toast("Couldn't save that. Check your connection and try again.");
+    // the database refuses "super" until supabase/super-yes.sql has been run once
+    toast(row.verdict === "super" && e.message === "save 400"
+      ? "Super yes needs a one-time database update: run supabase/super-yes.sql in the Supabase SQL Editor."
+      : "Couldn't save that. Check your connection and try again.");
     refresh();
     return false;
   }
@@ -390,7 +395,8 @@ function voteRow(x) {
   const mine = r.mine?.verdict;
   return el("div", {class: "vote"},
     el("div", {class: "vbtns", role: "group", "aria-label": "Your vote"},
-      el("button", {type: "button", class: "vb yes", "aria-pressed": String(mine === "yes"), onclick: (e) => { e.stopPropagation(); vote(x, "yes"); }}, "Yes", el("span", {class: "n"}, r.yes.length)),
+      el("button", {type: "button", class: "vb super", "aria-pressed": String(mine === "super"), onclick: (e) => { e.stopPropagation(); vote(x, "super"); }}, "★ Super yes", el("span", {class: "n"}, r.super.length)),
+      el("button", {type: "button", class: "vb yes", "aria-pressed": String(mine === "yes"), onclick: (e) => { e.stopPropagation(); vote(x, "yes"); }}, "Yes", el("span", {class: "n"}, r.yes.length - r.super.length)),
       el("button", {type: "button", class: "vb no", "aria-pressed": String(mine === "no"), onclick: (e) => { e.stopPropagation(); vote(x, "no"); }}, "No", el("span", {class: "n"}, r.no.length))
     ),
     el("a", {class: "link", href: x.url, target: "_blank", rel: "noopener"}, "Open on " + x.source + " ↗")
@@ -400,10 +406,12 @@ function whoLine(x) {
   const r = rev(x.id);
   if (!r.yes.length && !r.no.length) return null;
   const names = (list) => list.map((p) => isMe(p) ? "you" : p.reviewer_name).join(", ");
-  return el("div", {class: "who"},
-    r.yes.length ? [el("b", {class: "y"}, "Yes: "), names(r.yes)] : null,
-    r.yes.length && r.no.length ? " · " : null,
-    r.no.length ? [el("b", {class: "x"}, "No: "), names(r.no)] : null);
+  const plainYes = r.yes.filter((p) => p.verdict === "yes");
+  return el("div", {class: "who"}, [
+    r.super.length ? [el("b", {class: "s"}, "★ Super yes: "), names(r.super)] : null,
+    plainYes.length ? [el("b", {class: "y"}, "Yes: "), names(plainYes)] : null,
+    r.no.length ? [el("b", {class: "x"}, "No: "), names(r.no)] : null
+  ].filter(Boolean).flatMap((part, i) => (i ? [" · ", part] : [part])));
 }
 // Status from the daily check of flats with a Yes vote (monitor/check.mjs)
 function watchLine(x) {
@@ -418,8 +426,21 @@ function watchLine(x) {
   }[w.status];
   const extra = [];
   if (w.status !== "removed" && w.rent != null && x.rent != null && w.rent !== x.rent) extra.push(`rent now ${euro(w.rent)}`);
-  if (w.status !== "removed" && w.available && x.available && w.available !== x.available) extra.push(`start now ${/^\d{4}-/.test(w.available) ? fmtDate(w.available) : w.available.toLowerCase()}`);
+  if (w.status !== "removed" && w.available && x.available && w.available !== x.available) extra.push(`start now ${/^\d{4}-/.test(w.available) ? fmtDate(w.available) : {IMMEDIATELY: "free now", TO_BE_DEFINED: "to be agreed"}[w.available] || "to be agreed"}`);
   return el("div", {class: "watch " + w.status}, text, extra.length ? " · " + extra.join(" · ") : null);
+}
+
+// Can you register your address there (domiciliation)? Read from the listing text (monitor/domicile.mjs); most listings don't say.
+// domicileNote is an English sentence written by hand; the listing's own words (domicileQuote) aren't shown.
+const DOMICILE = {
+  yes: {label: "Domiciliation possible", row: "Possible"},
+  no: {label: "No domiciliation", row: "Not allowed"},
+  unknown: {label: "Domiciliation not stated", row: "Not stated in the listing. Ask them."}
+};
+const domOf = (x) => (x.domicile === "yes" || x.domicile === "no" ? x.domicile : "unknown");
+function domBadge(x) {
+  const d = domOf(x);
+  return el("span", {class: "dom " + d, title: x.domicileNote || (d === "unknown" ? "The listing doesn't say whether you can register your address there." : null)}, DOMICILE[d].label);
 }
 
 function card(x) {
@@ -448,7 +469,7 @@ function card(x) {
         fresh ? el("span", {class: "newtag", title: "Found by the daily search on " + fmtDate(x.added)}, "New " + fmtDate(x.added)) : null,
         el("span", {class: "when " + x.cat}, whenLabel(x)))
     ),
-    el("div", {class: "facts"}, facts.join(" · "), x.epc ? el("span", {class: "peb " + x.epc, title: "Energy class (PEB) " + x.epc}, "PEB " + x.epc) : null),
+    el("div", {class: "facts"}, facts.join(" · "), x.epc ? el("span", {class: "peb " + x.epc, title: "Energy class (PEB) " + x.epc}, "PEB " + x.epc) : null, domBadge(x)),
     watchLine(x),
     x.description || x.warning || x.lat == null ? el("p", {class: "desc"}, x.description,
       x.warning ? [" ", el("span", {class: "warn"}, x.warning)] : null,
@@ -515,6 +536,7 @@ function factsGrid(x) {
     ["Location", [x.street, x.area, x.d != null ? x.d.toFixed(1) + " km from Gare du Nord" : null].filter(Boolean).join(" · ")],
     x.floor != null ? ["Floor", floorLabel(x.floor) + (x.lift ? ", lift" : "")] : null,
     x.epc ? ["Energy", "PEB " + x.epc] : null,
+    ["Domiciliation", el("span", {class: "domrow " + domOf(x)}, DOMICILE[domOf(x)].row, x.domicileNote ? el("span", {class: "domnote"}, x.domicileNote) : null)],
     x.terrace || x.garden ? ["Outside", [x.terrace === true ? "terrace" : x.terrace ? `terrace ${x.terrace} m²` : null, x.garden ? "garden" : null].filter(Boolean).join(", ")] : null
   ].filter(Boolean);
   return el("dl", {class: "kv"}, rows.map(([k, v]) => [el("dt", {}, k), el("dd", {}, v)]));
@@ -540,12 +562,13 @@ function contactBox(x) {
 function messageText(x, lang) {
   const ref = x.source === "Immoweb" ? `Immoweb ${x.id}` : x.source === "Immovlan" ? `Immovlan ${x.id.toUpperCase()}` : x.url;
   const name = me.name || (lang === "fr" ? "[votre nom]" : "[your name]");
+  const askDom = domOf(x) === "unknown";
   if (lang === "fr") {
     const price = x.rent != null ? `, ${x.rent} €${x.charges ? ` + ${x.charges} € de charges` : ""}` : "";
-    return `Bonjour,\n\nNous sommes intéressés par l'appartement ${x.street} (${x.area})${price}, annonce ${ref}.\n\nEst-il toujours disponible pour une entrée en décembre ou en janvier ? Serait-il possible de le visiter dans les prochains jours ?\n\nNous sommes deux. [Une phrase sur vous : travail, durée prévue du bail.]\n\nBien à vous,\n${name}`;
+    return `Bonjour,\n\nNous sommes intéressés par l'appartement ${x.street} (${x.area})${price}, annonce ${ref}.\n\nEst-il toujours disponible pour une entrée en décembre ou en janvier ?${askDom ? " La domiciliation est-elle possible ?" : ""} Serait-il possible de le visiter dans les prochains jours ?\n\nNous sommes deux. [Une phrase sur vous : travail, durée prévue du bail.]\n\nBien à vous,\n${name}`;
   }
   const price = x.rent != null ? `, €${x.rent}${x.charges ? ` + €${x.charges} charges` : ""}` : "";
-  return `Hello,\n\nWe are interested in the flat at ${x.street} (${x.area})${price}, listing ${ref}.\n\nIs it still available for a move-in in December or January? Could we visit it in the coming days?\n\nWe are two people. [One line about you: work, how long you plan to stay.]\n\nKind regards,\n${name}`;
+  return `Hello,\n\nWe are interested in the flat at ${x.street} (${x.area})${price}, listing ${ref}.\n\nIs it still available for a move-in in December or January?${askDom ? " Can we register our address there (domiciliation)?" : ""} Could we visit it in the coming days?\n\nWe are two people. [One line about you: work, how long you plan to stay.]\n\nKind regards,\n${name}`;
 }
 function messageBox(x) {
   const lang = state.msgLang[x.id] || "fr";
@@ -598,7 +621,7 @@ function notesBox(x) {
 function stepsBlock(items, actions) {
   return el("div", {class: "steps"},
     el("div", {class: "cb-title"}, "Next steps"),
-    el("ol", {}, items.map((t) => el("li", {}, t))),
+    el("ol", {}, items.filter(Boolean).map((t) => el("li", {}, t))),
     actions ? el("div", {class: "actions"}, actions) : null);
 }
 
@@ -627,7 +650,7 @@ function shortCard(x) {
   const since = stageSince(x);
   const c = contactOf(x);
   const how = c.phones?.length ? `Call ${c.phones[0]}` : c.emails?.length ? `Email ${c.emails[0]}` : "Use the contact form on the listing";
-  const yes = rev(x.id).yes.map((p) => isMe(p) ? "you" : p.reviewer_name).join(", ");
+  const yes = rev(x.id).yes.map((p) => (isMe(p) ? "you" : p.reviewer_name) + (p.verdict === "super" ? " ★" : "")).join(", ");
   const steps = st === "contacted"
     ? stepsBlock([
         `Contacted on ${fmtStamp(since.created_at)} by ${isMe(since) ? "you" : since.reviewer_name}. Waiting for their reply.`,
@@ -639,7 +662,8 @@ function shortCard(x) {
     : stepsBlock([
         "Open the listing and check the photos and the full description.",
         `${how}, or send the message below.`,
-        "Ask whether it's still free for a December or January start, when you can visit, and what the charges cover.",
+        `Ask whether it's still free for a December or January start, when you can visit, ${domOf(x) === "unknown" ? "what the charges cover, and whether you can register your address there (domiciliation)" : "and what the charges cover"}.`,
+        domOf(x) === "no" ? "Keep in mind: the listing says you can't register your address there (no domiciliation)." : null,
         "Then press “We contacted them”, so you don't both contact them."
       ], [btn("We contacted them", "primary", () => addProgress(x, "contacted")),
           btn("Not for us", "", () => addProgress(x, "dropped", "Not for us"))]);
@@ -725,7 +749,7 @@ function keepTyping(list, render) {
 }
 function renderShort() {
   const list = $("#list-short");
-  const flats = state.flats.filter(inShort).sort((a, b) => (stageOf(a) === "contacted") - (stageOf(b) === "contacted") || (rev(b.id).yes.length - rev(a.id).yes.length) || ((total(a) ?? 1e9) - (total(b) ?? 1e9)));
+  const flats = state.flats.filter(inShort).sort((a, b) => (stageOf(a) === "contacted") - (stageOf(b) === "contacted") || (score(b.id) - score(a.id)) || ((total(a) ?? 1e9) - (total(b) ?? 1e9)));
   keepTyping(list, () => list.replaceChildren(...[setupBanner(),
     ...(flats.length ? flats.map(shortCard) : [el("div", {class: "empty"}, "No flats here yet. Say Yes to a flat in All flats and it appears here.")])].filter(Boolean)));
 }
@@ -801,13 +825,13 @@ const markers = {};
 let popupFor = null;
 
 // Pins: colour fill means new only. Dec–Jan is a yellow edge, an approximate address a dashed edge,
-// and the vote balance a small dot (green more Yes, red more No, hollow tied).
+// and the vote balance a small dot (green more Yes, red more No, hollow tied). A star marks a Super yes.
 function pillHtml(x) {
   const s = score(x.id);
   const r = rev(x.id);
   const gone = state.status[x.id]?.status === "removed" ? "gone" : "";
   const cls = ["pill", x.cat, x.kind === "vista" ? "vista" : "", x.approx ? "approx" : "", isNew(x) ? "new" : "", gone, state.selected === x.id ? "sel" : ""].join(" ");
-  const label = x.kind === "vista" ? "Vista" : x.rent == null ? "Ask" : euro(total(x));
+  const label = (r.super.length ? '<b class="star">★</b>' : "") + (x.kind === "vista" ? "Vista" : x.rent == null ? "Ask" : euro(total(x)));
   const st = stageOf(x);
   if (state.tab !== "all" && STAGE[st]) return `<span class="${cls} st-${st}">${label}<span class="s">${STAGE[st].pin}</span></span>`;
   const dot = r.yes.length + r.no.length ? `<i class="vd ${s > 0 ? "y" : s < 0 ? "x" : "t"}"></i>` : "";
@@ -831,7 +855,8 @@ function groupPins(list) {
 function groupMarker(g) {
   const fresh = g.filter(isNew).length;
   const pos = [g[0].lat, g[0].lng]; // every member is within a pin's width of the first one, others aren't
-  const html = `<span class="grp">${g.length}${fresh ? `<b>${fresh} new</b>` : ""}</span>`;
+  const star = g.some((x) => rev(x.id).super.length);
+  const html = `<span class="grp">${g.length}${fresh ? `<b>${fresh} new</b>` : ""}${star ? '<i class="gstar">★</i>' : ""}</span>`;
   const mk = L.marker(pos, {icon: L.divIcon({className: "pw", html, iconSize: [0, 0]}), title: `${g.length} flats here${fresh ? `, ${fresh} new` : ""}. Zoom in`, zIndexOffset: 500});
   mk.on("click", () => map.fitBounds(L.latLngBounds(g.map((x) => [x.lat, x.lng])), {padding: [60, 60], maxZoom: GROUP_BELOW}));
   return mk;

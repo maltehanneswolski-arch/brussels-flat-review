@@ -31,7 +31,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-01",
-   "description": "The only 2-bedroom under €1,000. The listing gives no size or description, so ask before visiting."
+   "description": "The only 2-bedroom under €1,000. The listing gives no size or description, so ask before visiting.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21891432",
@@ -54,7 +56,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-11-15",
-   "description": "Small duplex in the owner's house, bedroom under the roof, near Josaphat Park. Pin shows the street only."
+   "description": "Small duplex in the owner's house, bedroom under the roof, near Josaphat Park. Pin shows the street only.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21845501",
@@ -77,7 +81,9 @@
    "terrace": 7,
    "garden": false,
    "available": "2026-11-30",
-   "description": "Renovated, with a cellar and a 7 m² terrace. The bedroom is small (about 9 m²)."
+   "description": "Renovated, with a cellar and a 7 m² terrace. The bedroom is small (about 9 m²).",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21878026",
@@ -101,7 +107,9 @@
    "garden": false,
    "available": "2026-12-01",
    "description": "78 m² with a separate office.",
-   "warning": "Under option on Immoweb and Zimmo as of 16 Oct: someone else is ahead."
+   "warning": "Under option on Immoweb and Zimmo as of 16 Oct: someone else is ahead.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21857766",
@@ -124,7 +132,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-01",
-   "description": "Top floor of a house, renovated 2024–25. Only 40 m² for two people."
+   "description": "Top floor of a house, renovated 2024–25. Only 40 m² for two people.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21879373",
@@ -147,7 +157,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-16",
-   "description": "95 m² in a mansion with garage; the 2nd bedroom is an open office. Couples only. The agency wants a form and motivation letter first."
+   "description": "95 m² in a mansion with garage; the 2nd bedroom is an open office. Couples only. The agency wants a form and motivation letter first.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe70113",
@@ -170,7 +182,10 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-21",
-   "description": "Private living room and bedroom (31 m²) in a shared house. Kitchens and bathrooms are shared. All bills included."
+   "description": "Private living room and bedroom (31 m²) in a shared house. Kitchens and bathrooms are shared. All bills included.",
+   "domicile": "yes",
+   "domicileQuote": "…seeking a calm living environment with the convenience of official registration",
+   "domicileNote": "The listing offers official address registration."
   },
   {
    "id": "21883665",
@@ -193,7 +208,9 @@
    "terrace": 9,
    "garden": false,
    "available": "2027-02-01",
-   "description": "90 m² in a 2022 building, energy class A, 9 m² terrace."
+   "description": "90 m² in a 2022 building, energy class A, 9 m² terrace.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21786140",
@@ -216,7 +233,9 @@
    "terrace": null,
    "garden": false,
    "available": "2027-02-28",
-   "description": "35 m² studio. Free from the end of February."
+   "description": "35 m² studio. Free from the end of February.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21915621",
@@ -239,7 +258,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "1-bed with lift. The listing gives no size and no start date."
+   "description": "1-bed with lift. The listing gives no size and no start date.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21905071",
@@ -262,7 +283,9 @@
    "terrace": null,
    "garden": false,
    "available": "TO_BE_DEFINED",
-   "description": "45 m², leases of 6 months or 1 year. Aimed at expats."
+   "description": "45 m², leases of 6 months or 1 year. Aimed at expats.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vwd18894",
@@ -285,7 +308,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "69 m² in a townhouse with a front garden. Charges of €399 bring it to €1,298."
+   "description": "69 m² in a townhouse with a front garden. Charges of €399 bring it to €1,298.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21873593",
@@ -308,7 +333,9 @@
    "terrace": null,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "Studio with a sleeping alcove on a quiet one-way street. Pin shows the area only."
+   "description": "Studio with a sleeping alcove on a quiet one-way street. Pin shows the area only.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21913844",
@@ -331,7 +358,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-11-01",
-   "description": "About 50 m² on Place Dailly, 4th floor without lift."
+   "description": "About 50 m² on Place Dailly, 4th floor without lift.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21914177",
@@ -354,7 +383,9 @@
    "terrace": 1,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "Cheap 1-bed with a tiny terrace. Few details in the listing."
+   "description": "Cheap 1-bed with a tiny terrace. Few details in the listing.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21913830",
@@ -377,7 +408,9 @@
    "terrace": null,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "Energy class B. €250 charges bring it to €1,400."
+   "description": "Energy class B. €250 charges bring it to €1,400.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21911204",
@@ -400,7 +433,9 @@
    "terrace": 2,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "Bright 60 m² with a balcony, on the Woluwe border."
+   "description": "Bright 60 m² with a balcony, on the Woluwe border.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21909498",
@@ -423,7 +458,9 @@
    "terrace": null,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "1-bed with its own bathroom off the bedroom, on a quiet street."
+   "description": "1-bed with its own bathroom off the bedroom, on a quiet street.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21906933",
@@ -446,7 +483,9 @@
    "terrace": null,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "70 m² garden-level flat facing Josaphat Park. Private landlord."
+   "description": "70 m² garden-level flat facing Josaphat Park. Private landlord.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21900569",
@@ -469,7 +508,9 @@
    "terrace": null,
    "garden": true,
    "available": "IMMEDIATELY",
-   "description": "1-bed duplex with lift and a shared garden."
+   "description": "1-bed duplex with lift and a shared garden.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21867926",
@@ -492,7 +533,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-09-30",
-   "description": "55 m² on the 8th floor with lift. Several units in this building are listed."
+   "description": "55 m² on the 8th floor with lift. Several units in this building are listed.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21869717",
@@ -515,7 +558,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-10-10",
-   "description": "55 m² on the 8th floor with lift."
+   "description": "55 m² on the 8th floor with lift.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21890126",
@@ -538,7 +583,9 @@
    "terrace": null,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "48 m² on the 6th floor with lift."
+   "description": "48 m² on the 6th floor with lift.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21885322",
@@ -561,7 +608,9 @@
    "terrace": 3,
    "garden": false,
    "available": "2026-10-19",
-   "description": "65 m² with a large bedroom and balcony, lift. Pin shows the area only."
+   "description": "65 m² with a large bedroom and balcony, lift. Pin shows the area only.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21884268",
@@ -584,7 +633,9 @@
    "terrace": null,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "46 m² near Diamant, lift."
+   "description": "46 m² near Diamant, lift.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21868618",
@@ -607,7 +658,9 @@
    "terrace": 6,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "55 m² on the 5th floor with a 6 m² terrace. Same building as the 46 m² flat."
+   "description": "55 m² on the 5th floor with a 6 m² terrace. Same building as the 46 m² flat.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21874920",
@@ -630,7 +683,9 @@
    "terrace": 5,
    "garden": true,
    "available": "2026-10-17",
-   "description": "Ground floor with garden, near the Cinquantenaire."
+   "description": "Ground floor with garden, near the Cinquantenaire.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21868758",
@@ -653,7 +708,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-09-25",
-   "description": "40 m², five minutes' walk from Gare du Nord."
+   "description": "40 m², five minutes' walk from Gare du Nord.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21868664",
@@ -676,7 +733,9 @@
    "terrace": 2,
    "garden": false,
    "available": "2026-11-01",
-   "description": "Three rooms in a row with high ceilings, small terrace, near the EU quarter. Pin shows the square only."
+   "description": "Three rooms in a row with high ceilings, small terrace, near the EU quarter. Pin shows the square only.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21868294",
@@ -699,7 +758,9 @@
    "terrace": 11,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "55 m² with an 11 m² terrace and lift."
+   "description": "55 m² with an 11 m² terrace and lift.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21855095",
@@ -722,7 +783,9 @@
    "terrace": null,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "52 m² with a small office."
+   "description": "52 m² with a small office.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21853878",
@@ -745,7 +808,9 @@
    "terrace": null,
    "garden": false,
    "available": "IMMEDIATELY",
-   "description": "42 m² with a mezzanine."
+   "description": "42 m² with a mezzanine.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21839361",
@@ -768,7 +833,9 @@
    "terrace": 6,
    "garden": false,
    "available": "2026-11-01",
-   "description": "67 m² with a terrace, near the Ring. A parking space can be rented. Address from Capital Rent's site."
+   "description": "67 m² with a terrace, near the Ring. A parking space can be rented. Address from Capital Rent's site.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21840687",
@@ -792,7 +859,9 @@
    "garden": false,
    "available": "2026-11-01",
    "description": "60 m², energy class A, lift and a 9 m² terrace.",
-   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead."
+   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21808110",
@@ -816,7 +885,9 @@
    "garden": false,
    "available": "2026-10-10",
    "description": "A 2-bedroom triplex with no description.",
-   "warning": "Unusually cheap: see it in person before you pay anything."
+   "warning": "Unusually cheap: see it in person before you pay anything.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21814906",
@@ -840,7 +911,9 @@
    "garden": false,
    "available": "2026-09-15",
    "description": "Renovated 64 m² studio near Dailly, lift.",
-   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead."
+   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21791376",
@@ -863,7 +936,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-10-01",
-   "description": "58 m² 1-bed on the 2nd floor."
+   "description": "58 m² 1-bed on the 2nd floor.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21790409",
@@ -887,7 +962,9 @@
    "garden": false,
    "available": "IMMEDIATELY",
    "description": "Ground-floor flat. No description in the listing.",
-   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead."
+   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21760877",
@@ -911,7 +988,9 @@
    "garden": false,
    "available": "2026-11-01",
    "description": "52 m² on the 4th floor, on the avenue leading up to Josaphat Park.",
-   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead."
+   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21696179",
@@ -935,7 +1014,9 @@
    "garden": false,
    "available": "IMMEDIATELY",
    "description": "64 m² with a 22 m² living room opening onto a terrace. Pin shows the area only.",
-   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead."
+   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21916679",
@@ -958,7 +1039,9 @@
    "terrace": 15,
    "garden": false,
    "available": "2027-01-01",
-   "description": "Penthouse with a 15 m² terrace."
+   "description": "Penthouse with a 15 m² terrace.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21896344",
@@ -981,7 +1064,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-01",
-   "description": "75 m² near Place Jourdan."
+   "description": "75 m² near Place Jourdan.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21888624",
@@ -1004,7 +1089,9 @@
    "terrace": 2,
    "garden": false,
    "available": "2026-12-01",
-   "description": "71 m² on the 5th floor with lift and a small terrace, near La Chasse."
+   "description": "71 m² on the 5th floor with lift and a small terrace, near La Chasse.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21872512",
@@ -1027,7 +1114,9 @@
    "terrace": 9,
    "garden": false,
    "available": "2027-01-01",
-   "description": "Ground floor with a 9 m² terrace, energy class B."
+   "description": "Ground floor with a 9 m² terrace, energy class B.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21839613",
@@ -1050,7 +1139,9 @@
    "terrace": null,
    "garden": true,
    "available": "2026-12-01",
-   "description": "50 m² garden-level flat with its own garden."
+   "description": "50 m² garden-level flat with its own garden.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21829466",
@@ -1073,7 +1164,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-01",
-   "description": "Bright, modern 60 m² facing the Cinquantenaire park."
+   "description": "Bright, modern 60 m² facing the Cinquantenaire park.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21875245",
@@ -1097,7 +1190,9 @@
    "garden": false,
    "available": null,
    "description": "Duplex penthouse in a renovated house, near trams 81 and 82.",
-   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead."
+   "warning": "Under option on Immoweb as of 16 Oct: someone else is ahead.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21849598",
@@ -1144,7 +1239,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "1-bed with no description in the listing."
+   "description": "1-bed with no description in the listing.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe73026",
@@ -1167,7 +1264,10 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-05",
-   "description": "Modern furnished flat aimed at temporary stays. Its text says €1,250 and 21 Dec."
+   "description": "Modern furnished flat aimed at temporary stays. Its text says €1,250 and 21 Dec.",
+   "domicile": "yes",
+   "domicileQuote": "…are weekly apartment cleaning, high-speed Wi-Fi, satellite TV, and address registration, making it suitable for individuals needing…",
+   "domicileNote": "The listing includes address registration."
   },
   {
    "id": "vbe73939",
@@ -1190,7 +1290,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "1-bed in a recent building near La Chasse."
+   "description": "1-bed in a recent building near La Chasse.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe73468",
@@ -1213,7 +1315,9 @@
    "terrace": true,
    "garden": false,
    "available": null,
-   "description": "60 m² in a modern building with a terrace, near Avenue de la Couronne."
+   "description": "60 m² in a modern building with a terrace, near Avenue de la Couronne.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe34959",
@@ -1236,7 +1340,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "Renovated 40 m² studio."
+   "description": "Renovated 40 m² studio.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "rbv42404",
@@ -1259,7 +1365,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "Bright 56 m² flat. Pin shows the area only."
+   "description": "Bright 56 m² flat. Pin shows the area only.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "rbv42411",
@@ -1282,7 +1390,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "60 m² flat somewhere in Etterbeek."
+   "description": "60 m² flat somewhere in Etterbeek.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21898608",
@@ -1305,7 +1415,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "Cheap for this area and the listing has no description, so ask for details."
+   "description": "Cheap for this area and the listing has no description, so ask for details.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21786752",
@@ -1328,7 +1440,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "9th floor. No description in the listing."
+   "description": "9th floor. No description in the listing.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21862387",
@@ -1351,7 +1465,9 @@
    "terrace": null,
    "garden": false,
    "available": "2027-01-01",
-   "description": "75 m² furnished flat near Square Ambiorix, behind Schuman. Address from Nadimmo's site."
+   "description": "75 m² furnished flat near Square Ambiorix, behind Schuman. Address from Nadimmo's site.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21917601",
@@ -1374,7 +1490,9 @@
    "terrace": null,
    "garden": false,
    "available": "2027-01-04",
-   "description": "40 m² on the 4th floor with lift. Company leases possible."
+   "description": "40 m² on the 4th floor with lift. Company leases possible.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21865310",
@@ -1397,7 +1515,9 @@
    "terrace": null,
    "garden": true,
    "available": "2027-01-05",
-   "description": "45 m² ground floor with a garden, near Schuman."
+   "description": "45 m² ground floor with a garden, near Schuman.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21910345",
@@ -1420,7 +1540,9 @@
    "terrace": null,
    "garden": true,
    "available": null,
-   "description": "Renovated 1-bed with a garden, near Square Marie-Louise."
+   "description": "Renovated 1-bed with a garden, near Square Marie-Louise.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe74938",
@@ -1443,7 +1565,9 @@
    "terrace": null,
    "garden": false,
    "available": "2027-01-01",
-   "description": "80 m² top-floor duplex steps from the Berlaymont."
+   "description": "80 m² top-floor duplex steps from the Berlaymont.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe74931",
@@ -1466,7 +1590,9 @@
    "terrace": null,
    "garden": false,
    "available": "2027-01-01",
-   "description": "Renovated ground floor of a mansion with a 55 m² living room, 100 m from the Cinquantenaire."
+   "description": "Renovated ground floor of a mansion with a 55 m² living room, 100 m from the Cinquantenaire.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe62552",
@@ -1489,7 +1615,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-01",
-   "description": "Furnished 1-bed with a double bed."
+   "description": "Furnished 1-bed with a double bed.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vwd18834",
@@ -1512,7 +1640,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "48 m² studio by the Cinquantenaire."
+   "description": "48 m² studio by the Cinquantenaire.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21687596",
@@ -1535,7 +1665,9 @@
    "terrace": 20,
    "garden": false,
    "available": "2026-11-16",
-   "description": "91 m² ground floor with a 20 m² terrace, near the Sablon."
+   "description": "91 m² ground floor with a 20 m² terrace, near the Sablon.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe78467",
@@ -1558,7 +1690,10 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-31",
-   "description": "Furnished 1-bed near the Parliament and the Congress Column."
+   "description": "Furnished 1-bed near the Parliament and the Congress Column.",
+   "domicile": "yes",
+   "domicileQuote": "Domiciliation possible ✅",
+   "domicileNote": "The listing says domiciliation is possible."
   },
   {
    "id": "21907067",
@@ -1581,7 +1716,9 @@
    "terrace": 3,
    "garden": false,
    "available": "2027-01-01",
-   "description": "75 m² duplex with a balcony near Botanique."
+   "description": "75 m² duplex with a balcony near Botanique.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21917668",
@@ -1604,7 +1741,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "55 m² 1-bed with a walk-in wardrobe, near Madou."
+   "description": "55 m² 1-bed with a walk-in wardrobe, near Madou.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21905234",
@@ -1627,7 +1766,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "Cheap 1-bed near Madou. No description in the listing."
+   "description": "Cheap 1-bed near Madou. No description in the listing.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21810512",
@@ -1651,7 +1792,9 @@
    "garden": false,
    "available": null,
    "description": "1-bed with no description.",
-   "warning": "Unusually cheap: see it in person before you pay anything."
+   "warning": "Unusually cheap: see it in person before you pay anything.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe68436",
@@ -1674,7 +1817,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-16",
-   "description": "Furnished 1-bed with a double bed."
+   "description": "Furnished 1-bed with a double bed.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe75037",
@@ -1697,7 +1842,9 @@
    "terrace": null,
    "garden": false,
    "available": "2027-01-01",
-   "description": "Sunny 1-bed aimed at students and young professionals."
+   "description": "Sunny 1-bed aimed at students and young professionals.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe50940",
@@ -1720,7 +1867,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-01",
-   "description": "58 m² on the 3rd floor. The date field says 1 Dec but the text says 1 Oct."
+   "description": "58 m² on the 3rd floor. The date field says 1 Dec but the text says 1 Oct.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "rbv40292",
@@ -1743,7 +1892,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "44 m² flat somewhere in Saint-Josse."
+   "description": "44 m² flat somewhere in Saint-Josse.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21909821",
@@ -1766,7 +1917,9 @@
    "terrace": 1,
    "garden": false,
    "available": "TO_BE_DEFINED",
-   "description": "80 m², energy class B, near Place du Luxembourg."
+   "description": "80 m², energy class B, near Place du Luxembourg.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe79829",
@@ -1789,7 +1942,9 @@
    "terrace": null,
    "garden": false,
    "available": "2027-01-01",
-   "description": "Modern 40 m² 1-bed near the Parliament."
+   "description": "Modern 40 m² 1-bed near the Parliament.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe53237",
@@ -1812,7 +1967,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "Ground-floor 1-bed in a modern building near the Parliament."
+   "description": "Ground-floor 1-bed in a modern building near the Parliament.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21906726",
@@ -1835,7 +1992,10 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-10",
-   "description": "Studio near Porte de Namur. €250 charges."
+   "description": "Studio near Porte de Namur. €250 charges.",
+   "domicile": "no",
+   "domicileQuote": "No registration/domiciliation possible at this address",
+   "domicileNote": "The listing says no registration or domiciliation is possible at this address."
   },
   {
    "id": "21898010",
@@ -1858,7 +2018,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "50 m² 1-bed. No description in the listing."
+   "description": "50 m² 1-bed. No description in the listing.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "20957270",
@@ -1881,7 +2043,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "35 m² studio with stained-glass windows."
+   "description": "35 m² studio with stained-glass windows.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21497227",
@@ -1904,7 +2068,9 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "Renovated loft-style 1-bed near Porte de Namur."
+   "description": "Renovated loft-style 1-bed near Porte de Namur.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21819026",
@@ -1928,7 +2094,9 @@
    "garden": false,
    "available": "2026-12-01",
    "description": "2-bedroom duplex near Montgomery. Also listed as 83 m².",
-   "warning": "Immovlan lists this same flat as unfurnished, which would put it over the €1,000 limit for unfurnished flats."
+   "warning": "Immovlan lists this same flat as unfurnished, which would put it over the €1,000 limit for unfurnished flats.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21919319",
@@ -1951,7 +2119,9 @@
    "terrace": null,
    "garden": false,
    "available": "2027-01-01",
-   "description": "55 m² 1-bed in the same building. Also listed by Everest Properties as a duplex one minute from Montgomery metro, with Wi-Fi included in the €125 charges. Everest also offers it furnished for €1,100 + €125."
+   "description": "55 m² 1-bed in the same building. Also listed by Everest Properties as a duplex one minute from Montgomery metro, with Wi-Fi included in the €125 charges. Everest also offers it furnished for €1,100 + €125.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21866794",
@@ -1975,7 +2145,9 @@
    "garden": false,
    "available": "2027-01-01",
    "description": "Mezzanine 1-bed.",
-   "warning": "The listing text says 1 June, so check the date."
+   "warning": "The listing text says 1 June, so check the date.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vbe75589",
@@ -1998,7 +2170,9 @@
    "terrace": null,
    "garden": false,
    "available": "2026-12-01",
-   "description": "Renovated 43 m² top-floor studio near Gribaumont metro. Free from 1 December according to Expertissimmo."
+   "description": "Renovated 43 m² top-floor studio near Gribaumont metro. Free from 1 December according to Expertissimmo.",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vista-a47",
@@ -2027,7 +2201,9 @@
     "1-bed, ~60 m², garden and park view",
     "1-bed, ~50 m², park view",
     "2-bed penthouse, ~70 m², park view"
-   ]
+   ],
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vista-b7",
@@ -2053,7 +2229,9 @@
    "description": "",
    "units": [
     "Three 1-beds, ~50 m² each, quiet street near Square Ambiorix"
-   ]
+   ],
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vista-d19",
@@ -2080,7 +2258,9 @@
    "units": [
     "1-bed, ~45 m²",
     "Two 1-beds, ~50 m²"
-   ]
+   ],
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vista-m57",
@@ -2106,7 +2286,9 @@
    "description": "",
    "units": [
     "1-bed, ~60 m² (the other units are 30–35 m² studios)"
-   ]
+   ],
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "vista-d75",
@@ -2135,7 +2317,9 @@
     "1-bed, ~40 m², large terrace",
     "2-bed, ~95 m², terrace",
     "2-bed penthouse, ~80 m², terrace"
-   ]
+   ],
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21922865",
@@ -2159,7 +2343,9 @@
    "available": "IMMEDIATELY",
    "area": "Schaerbeek",
    "description": "Furnished 52 m² on the 4th floor of a residential building, with a parking space. Free now, so ask if they would wait.",
-   "added": "2026-10-18"
+   "added": "2026-10-18",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21920548",
@@ -2183,7 +2369,9 @@
    "available": "2026-12-01",
    "area": "Etterbeek",
    "description": "60 m² near the Ixelles ponds, parquet throughout, 15 m² bedroom. Also listed on Immovlan.",
-   "added": "2026-10-18"
+   "added": "2026-10-18",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "ag-2d55e8bf796c",
@@ -2207,7 +2395,9 @@
    "available": "IMMEDIATELY",
    "area": "Schaerbeek",
    "description": "45 m² studio. Free now, so ask whether they would wait. From Trevi's own site.",
-   "added": "2026-10-18"
+   "added": "2026-10-18",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "ag-96dcbe383580",
@@ -2231,7 +2421,9 @@
    "available": "IMMEDIATELY",
    "area": "Schaerbeek",
    "description": "Furnished 40 m² studio towards the Cinquantenaire side of Schaerbeek. Free now, so ask whether they would wait. From Trevi's own site.",
-   "added": "2026-10-18"
+   "added": "2026-10-18",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "ag-9be1b6f0aef3",
@@ -2255,7 +2447,9 @@
    "available": "2026-12-01",
    "area": "EU quarter",
    "description": "Furnished 32 m² studio near Schuman, small for two. Also listed by Macnash. From Everest's own site.",
-   "added": "2026-10-18"
+   "added": "2026-10-18",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21923202",
@@ -2279,7 +2473,9 @@
    "available": "2026-10-18",
    "area": "Schaerbeek",
    "description": "75 m² 1-bed on the 2nd floor with a small terrace, near Josaphat Park. The listing has no description, so ask about the rest. Free now.",
-   "added": "2026-10-18"
+   "added": "2026-10-18",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21917470",
@@ -2302,8 +2498,10 @@
    "garden": false,
    "available": "IMMEDIATELY",
    "area": "Schaerbeek",
-   "description": "ONE-BEDROOM APARTMENT. Found automatically on 19/10, not checked by hand yet.",
-   "added": "2026-10-19"
+   "description": "One-bedroom flat. Found automatically on 19/10, not checked by hand yet.",
+   "added": "2026-10-19",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21924269",
@@ -2327,7 +2525,9 @@
    "available": "2026-11-07",
    "area": "Schaerbeek",
    "description": "Found automatically on 19/10, not checked by hand yet.",
-   "added": "2026-10-19"
+   "added": "2026-10-19",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "21923981",
@@ -2350,8 +2550,10 @@
    "garden": false,
    "available": "2026-12-01",
    "area": "Royal quarter",
-   "description": "QUARTIER TRÔNE : APPT 1 CH +/- 55 M2 + BALCON. Found automatically on 19/10, not checked by hand yet.",
-   "added": "2026-10-19"
+   "description": "Trône quarter: one-bedroom flat of about 55 m² with a balcony. Found automatically on 19/10, not checked by hand yet.",
+   "added": "2026-10-19",
+   "domicile": null,
+   "domicileQuote": null
   },
   {
    "id": "ag-c9192bb3dafe",
@@ -2374,8 +2576,10 @@
    "garden": false,
    "available": "IMMEDIATELY",
    "area": "Schaerbeek",
-   "description": "Appartement à louer à Schaerbeek. Found automatically on 19/10, not checked by hand yet.",
-   "added": "2026-10-19"
+   "description": "Flat for rent in Schaerbeek. Found automatically on 19/10, not checked by hand yet.",
+   "added": "2026-10-19",
+   "domicile": null,
+   "domicileQuote": null
   }
  ]
 }

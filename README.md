@@ -1,6 +1,6 @@
 # Brussels Flat Review
 
-A map of rental flats for two people in Brussels, starting December 2026 or January 2027, where friends can mark each flat **Yes** or **No** and leave a comment.
+A map of rental flats for two people in Brussels, starting December 2026 or January 2027, where Malte and Lilly mark each flat **Super yes**, **Yes** or **No** and leave a comment.
 
 **Live site:** https://maltehanneswolski-arch.github.io/brussels-flat-review/
 
@@ -25,7 +25,7 @@ The price shown is rent plus monthly charges. Each flat links to its listing on 
 
 Twice a day, at 06:00 and 16:00 Brussels time, a GitHub Action ([`monitor.yml`](.github/workflows/monitor.yml)) does two things:
 
-1. **Finds new flats.** [`monitor/discover.mjs`](monitor/discover.mjs) searches Immoweb, Immovlan and the agency websites in [`monitor/agencies.json`](monitor/agencies.json). It adds every listing that fits the rules above to `data/flats.json`. New flats show **in purple** on the map for 2 days, and the strip above the list counts the flats that are new since your last visit (one tap shows only those). Each listing is judged once; the verdicts are kept in `monitor/seen.json`.
+1. **Finds new flats.** [`monitor/discover.mjs`](monitor/discover.mjs) searches Immoweb, Immovlan and the agency websites in [`monitor/agencies.json`](monitor/agencies.json). It adds every listing that fits the rules above to `data/flats.json`. New flats show **in purple** on the map for 2 days, and the strip above the list counts the flats that are new since your last visit (one tap shows only those). Each listing is judged once; the verdicts are kept in `monitor/seen.json`. It also reads whether the listing says you can register your address there (**domiciliation**): possible, not allowed, or not stated ([`monitor/domicile.mjs`](monitor/domicile.mjs)). The site shows English only, so a listing's own French or Dutch wording isn't copied onto it.
 2. **Watches the Yes flats** (see below).
 
 **Agency websites checked:** Immoschmidt, Immo Clicking, Realty Belgium, Immo2gether, Grant Properties, Immo 2A, Macnash (Montgomery and Sud), Bathim, Trevi (first 10 pages), Vaneau Lecobel (East and Centre), Immobilière Petitjean, Trior, Everest Properties, Homeside, Nadimmo, Eventimmo and Expertissimmo. Each site's address and reading rules are in `monitor/agencies.json`; the reading code is [`monitor/agencies.mjs`](monitor/agencies.mjs).
@@ -40,12 +40,12 @@ node monitor/discover.mjs
 
 ## How to review
 
-1. Pick **Malte** or **Lilly** at the top, so the other knows who voted.
+1. Pick **Malte** or **Lilly** at the top, so the other knows who voted. Lilly's view has a slight purple tint.
 2. Click a price on the map or a card in the list.
-3. Press **Yes** or **No**. Press it again to take your vote back.
+3. Press **★ Super yes**, **Yes** or **No**. Press it again to take your vote back. A Super yes counts double when sorting by votes.
 4. Open a card to leave a comment.
 
-Map pins turn green when a flat has more Yes than No votes, and red when it has more No.
+A green dot on a map pin means more Yes than No votes, a red dot more No, and a star a Super yes.
 
 ## From Yes to keys: the Shortlist and In contact tabs
 
@@ -78,6 +78,8 @@ Votes and comments are stored in a Supabase database, so everyone sees everyone'
 3. Open **Project Settings → API** and copy the **Project URL** and the **anon** (or **publishable**) key.
 4. Paste both into [`config.js`](config.js) and push.
 
+Super yes votes need one change to that table: run [`supabase/super-yes.sql`](supabase/super-yes.sql) once in the SQL Editor (a new database set up with `schema.sql` already has it).
+
 The anon key is meant to be public. With the schema above, visitors can only read reviews and add new ones; they can't change or delete anything.
 
 ## Run it locally
@@ -98,5 +100,7 @@ Then open http://localhost:8000.
 | `data/flats.json` | The listings |
 | `config.js` | Supabase connection for shared reviews |
 | `supabase/schema.sql` | Database table and access rules |
+| `supabase/super-yes.sql` | One-time update that allows Super yes votes |
+| `monitor/domicile.mjs` | Reads domiciliation from the listings (`node monitor/domicile.mjs` fills in flats not checked yet) |
 
 Listing details belong to the sites they come from and may have changed since 16 October 2026. Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors.
