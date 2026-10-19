@@ -73,6 +73,23 @@ h2 { font-size: 20px; }
 .whoami button[aria-checked="true"] { background: var(--accent); color: var(--accent-ink); }
 .whoami.need { border-color: var(--no); box-shadow: 0 0 0 2px color-mix(in srgb, var(--no) 30%, transparent); }
 
+/* Activity: who said what about which flat */
+.bell { border: 1px solid var(--line); background: var(--panel); border-radius: 8px; padding: 5px 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; }
+.bell .n { font-family: var(--font-data); font-size: 13px; background: var(--new); color: var(--on-fill); border-radius: 999px; padding: 0 7px; }
+.activity { border: 1px solid var(--line); border-radius: 12px; padding: 0; background: var(--panel); color: var(--ink); width: min(560px, calc(100% - 32px)); max-height: min(80vh, 720px); box-shadow: var(--shadow); }
+.activity[open] { display: flex; flex-direction: column; }
+.activity::backdrop { background: rgba(0, 0, 0, .45); }
+.acthead { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding: 12px 16px; border-bottom: 1px solid var(--line); }
+.acthead h2 { margin: 0; font-size: 20px; }
+.actlist { list-style: none; margin: 0; padding: 10px 16px 16px; display: grid; gap: 10px; overflow-y: auto; }
+.actlist li { display: grid; gap: 2px; padding-left: 10px; border-left: 3px solid transparent; }
+.actlist li.unread { border-left-color: var(--new); }
+.actlist li.empty { color: var(--muted); }
+.actlist .when { font-family: var(--font-data); font-size: 13px; color: var(--muted); }
+.actlist .flatlink { all: unset; cursor: pointer; color: var(--accent); font-weight: 600; text-decoration: underline; text-underline-offset: 2px; }
+.actlist .flatlink:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; border-radius: 3px; }
+.actlist q.note { display: block; color: var(--muted); font-size: 13px; }
+
 .banner { background: var(--iris-soft); border: 1px solid var(--iris); border-radius: 8px; padding: 6px 12px; font-size: 13px; }
 
 .main { flex: 1; min-height: 0; display: grid; grid-template-columns: minmax(0, 1fr) 420px; grid-template-rows: minmax(0, 1fr); gap: 12px; }
@@ -285,6 +302,10 @@ html.stacked .card.big { scroll-margin-top: 12px; }
 /* Shortlist and In contact cards */
 .card.big { gap: 10px; padding: 12px 14px; }
 .stage { flex: none; font-size: 13px; font-weight: 600; border-radius: 6px; padding: 1px 8px; border: 1px solid var(--line); white-space: nowrap; }
+/* Shortlist and In contact cards you said Yes to */
+.mine-tag { flex: none; font-size: 13px; font-weight: 600; border-radius: 6px; padding: 1px 8px; background: var(--yes); color: var(--on-fill); white-space: nowrap; }
+.card.big.mine { border-color: var(--yes); box-shadow: 0 0 0 1px var(--yes); }
+.card.big.mine.sel { border-color: var(--accent); box-shadow: 0 0 0 1px var(--accent), var(--shadow); }
 .stage.s-to_contact { border-color: var(--accent); color: var(--accent); }
 .stage.s-contacted { background: var(--iris-soft); border-color: var(--iris); }
 .stage.s-heard_back, .stage.s-viewing, .stage.s-viewed, .stage.s-applied { background: var(--accent); border-color: var(--accent); color: var(--accent-ink); }
@@ -345,7 +366,8 @@ html.stacked .card.big { scroll-margin-top: 12px; }
 
 /* Touch screens: every control at least 44px tall */
 @media (pointer: coarse) {
-  .chip, .vb, .btn, .whoami button, .tabs button, select, .cform button, .filters summary { min-height: 44px; }
+  .chip, .vb, .btn, .whoami button, .bell, .tabs button, select, .cform button, .filters summary { min-height: 44px; }
+  .actlist li { min-height: 44px; }
   .chip { padding-inline: 14px; }
   .msgbox summary, .history summary, .dropped summary { min-height: 44px; display: flex; align-items: center; }
   .selbtn, .link, .contactbox a, .foot a, .leaflet-control-attribution a { display: inline-block; padding-block: 12px; margin-block: -12px; }

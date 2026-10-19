@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Schibsted+Grotesk:wght@400;500;600;800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.css">
-<link rel="stylesheet" href="styles.css?v=12">
+<link rel="stylesheet" href="styles.css?v=13">
 <script>try { if (localStorage.getItem("flat-review:person") === "lilly") document.documentElement.classList.add("lilly"); } catch (e) {}</script>
 </head>
 <body>
@@ -25,6 +25,7 @@
         <button type="button" role="radio" data-person="malte" aria-checked="false">Malte</button>
         <button type="button" role="radio" data-person="lilly" aria-checked="false">Lilly</button>
       </div>
+      <button type="button" class="bell" id="bell" aria-haspopup="dialog" aria-controls="activity">Activity <span class="n" id="bell-n" hidden></span></button>
     </div>
   </header>
 
@@ -108,10 +109,17 @@
     Map © <a href="https://www.openstreetmap.org/copyright" target="_blank" rel="noopener">OpenStreetMap</a> contributors.
   </footer>
 </div>
+<dialog class="activity" id="activity" aria-labelledby="activity-title">
+  <div class="acthead">
+    <h2 id="activity-title">Activity</h2>
+    <button type="button" class="btn" id="activity-close">Close</button>
+  </div>
+  <ol class="actlist" id="activity-list"></ol>
+</dialog>
 <div class="toast" id="toast" role="status" hidden></div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.9.4/leaflet.js"></script>
 <script src="config.js?v=3"></script>
-<script src="app.js?v=16"></script>
+<script src="app.js?v=17"></script>
 </body>
 </html>

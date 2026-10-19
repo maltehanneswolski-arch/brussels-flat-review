@@ -284,12 +284,13 @@ async function save(row, okMsg) {
   }
 }
 
-// Flats the daily search added in the last 2 days show in purple.
-function isNew(x) {
+// Flats the daily search added in the last 2 days show in purple, until you've voted on them.
+function addedRecently(x) {
   if (!x.added) return false;
   const days = (Date.now() - new Date(x.added + "T00:00:00").getTime()) / 86400000;
   return days >= 0 && days < 2;
 }
+const isNew = (x) => addedRecently(x) && !votedByMe(x);
 
 // What's new to you: flats that weren't on the map at your last visit (per person, in this browser).
 // A visit ends after an hour away, so a reload doesn't wipe the list.
@@ -310,7 +311,7 @@ function saveSeen() {
   seenRec.latest = {at: new Date().toISOString(), ids: state.flats.map((f) => f.id)};
   store(seenKey(), JSON.stringify(seenRec));
 }
-const isUnseen = (x) => (seenBefore ? !seenBefore.has(x.id) : isNew(x));
+const isUnseen = (x) => (seenBefore ? !seenBefore.has(x.id) : addedRecently(x)) && !votedByMe(x); // voting on a flat means you've seen it
 document.addEventListener("visibilitychange", () => { if (document.hidden) saveSeen(); });
 window.addEventListener("pagehide", saveSeen);
 
@@ -379,9 +380,8 @@ function renderNewStrip() {
   const byArea = {};
   unseen.forEach((x) => { byArea[x.area] = (byArea[x.area] || 0) + 1; });
   const where = Object.entries(byArea).sort((a, b) => b[1] - a[1]).map(([a, n]) => `${n} in ${a}`).join(", ");
-  const voted = unseen.filter(votedByMe).length; // these sit at the bottom of the list, under "Already voted by you"
   strip.replaceChildren(
-    el("span", {class: "nsum"}, el("b", {}, `${unseen.length} new`), ` ${since}: ${where}.`, voted ? ` You've voted on ${voted === unseen.length ? "all of them" : voted}.` : null),
+    el("span", {class: "nsum"}, el("b", {}, `${unseen.length} new`), ` ${since}: ${where}.`),
     el("button", {type: "button", class: "btn " + (state.onlyNew ? "primary" : "ghost"), "aria-pressed": String(state.onlyNew),
       onclick: () => { state.onlyNew = !state.onlyNew; renderAll(); setTimeout(fitVisible, 0); }}, state.onlyNew ? "Show all flats" : "Show only these"));
 }
@@ -642,14 +642,19 @@ function historyBox(x) {
       STAGE[s.stage]?.label || s.stage, s.happens_at ? ` (${fmtWhen(s.happens_at)})` : ""))));
 }
 
+// Your own Yes or Super yes on a flat, so the Shortlist shows which ones you picked
+const mineYes = (x) => { const v = rev(x.id).mine?.verdict; return v === "yes" || v === "super" ? v : null; };
 function headerOf(x) {
   const st = stageOf(x);
   const ls = stageSince(x);
+  const mine = mineYes(x);
   return el("div", {class: "chead"},
     el("div", {class: "ctitle"},
       el("span", {class: "price"}, priceText(x)),
       el("h3", {class: "street"}, el("button", {class: "selbtn", type: "button", onclick: () => select(x.id)}, `${x.street} · ${x.area}`))),
-    el("span", {class: "stage s-" + st, title: ls ? `${STAGE[st].label} since ${fmtStamp(ls.created_at)}` : STAGE[st].label}, STAGE[st].label));
+    el("span", {class: "tags"},
+      mine ? el("span", {class: "mine-tag"}, mine === "super" ? "You said ★ Super yes" : "You said Yes") : null,
+      el("span", {class: "stage s-" + st, title: ls ? `${STAGE[st].label} since ${fmtStamp(ls.created_at)}` : STAGE[st].label}, STAGE[st].label)));
 }
 
 function shortCard(x) {
@@ -674,7 +679,7 @@ function shortCard(x) {
         "Then press “We contacted them”, so you don't both contact them."
       ], [btn("We contacted them", "primary", () => addProgress(x, "contacted")),
           btn("Not for us", "", () => addProgress(x, "dropped", "Not for us"))]);
-  return el("article", {class: "card big" + (state.selected === x.id ? " sel" : ""), role: "listitem", id: "scard-" + x.id},
+  return el("article", {class: "card big" + (state.selected === x.id ? " sel" : "") + (mineYes(x) ? " mine" : ""), role: "listitem", id: "scard-" + x.id},
     headerOf(x),
     watchLine(x),
     factsGrid(x),
@@ -731,7 +736,7 @@ function contactCard(x) {
       "Set up electricity, gas and internet in your names, and take meter readings on day one."
     ], null);
   }
-  return el("article", {class: "card big" + (state.selected === x.id ? " sel" : ""), role: "listitem", id: "ccard-" + x.id},
+  return el("article", {class: "card big" + (state.selected === x.id ? " sel" : "") + (mineYes(x) ? " mine" : ""), role: "listitem", id: "ccard-" + x.id},
     headerOf(x),
     el("ol", {class: "stepper", "aria-label": "Progress"}, STEPPER.map((s) => el("li", {class: s === st ? "now" : STEPPER.indexOf(s) < STEPPER.indexOf(st) ? "past" : ""}, STAGE[s].pin))),
     watchLine(x),
@@ -919,7 +924,69 @@ function renderAll() {
   else if (state.tab === "short") renderShort();
   else renderContact();
   renderMarkers();
+  renderActivityBadge();
 }
+
+// ---------- activity: who said what about which flat ----------
+// Built from the saved rows: a vote row says what changed against that person's previous row on the flat.
+const actKey = () => "flat-review:activity-seen:" + (person || "anyone");
+const VOTE_TEXT = {yes: "said Yes to", super: "said ★ Super yes to", no: "said No to", none: "took back the vote on"};
+function activityEvents() {
+  const ev = [], lastRow = {}, lastStage = {};
+  const flatOf = (id) => state.flats.find((f) => f.id === id);
+  for (const r of state.rows) {
+    const x = flatOf(r.flat_id); if (!x) continue;
+    const k = r.flat_id + "|" + personKey(r), p = lastRow[k]; lastRow[k] = r;
+    const who = isMe(r) ? "You" : r.reviewer_name || "Someone";
+    if (p ? p.verdict !== r.verdict : r.verdict !== "none") ev.push({at: r.created_at, who, mine: isMe(r), x, text: VOTE_TEXT[r.verdict] || "voted on"});
+    if (r.comment && (p?.comment || "") !== r.comment) ev.push({at: r.created_at, who, mine: isMe(r), x, text: "commented on", note: r.comment});
+  }
+  for (const s of state.progressRows) {
+    const x = flatOf(s.flat_id); if (!x) continue;
+    const who = isMe(s) ? "You" : s.reviewer_name || "Someone";
+    const changed = lastStage[s.flat_id] !== s.stage; lastStage[s.flat_id] = s.stage;
+    if (changed) ev.push({at: s.created_at, who, mine: isMe(s), x, text: "moved", tail: `to “${STAGE[s.stage]?.label || s.stage}”`, note: s.note || null});
+    else if (s.note) ev.push({at: s.created_at, who, mine: isMe(s), x, text: "added a note on", note: s.note});
+  }
+  return ev.sort((a, b) => b.at.localeCompare(a.at));
+}
+function fmtAt(iso) {
+  const d = new Date(iso);
+  const day = d.toDateString() === new Date().toDateString() ? "Today" : d.toLocaleDateString("en-GB", {weekday: "short", day: "numeric", month: "short"});
+  return day + ", " + d.toLocaleTimeString("en-GB", {hour: "2-digit", minute: "2-digit"});
+}
+function renderActivityBadge() {
+  const seenAt = store(actKey()) || "";
+  const n = activityEvents().filter((e) => !e.mine && e.at > seenAt).length;
+  const b = $("#bell-n"); b.textContent = n; b.hidden = !n;
+  $("#bell").setAttribute("aria-label", n ? `Activity, ${n} new` : "Activity");
+}
+function renderActivity() {
+  const seenAt = store(actKey()) || "";
+  const events = activityEvents().filter((e, i) => i < 80 || (!e.mine && e.at > seenAt)); // the latest 80, plus anything unread
+  $("#activity-list").replaceChildren(...(events.length ? events.map((e) => el("li", {class: (e.mine ? "mine" : "") + (!e.mine && e.at > seenAt ? " unread" : "")},
+    el("span", {class: "when"}, fmtAt(e.at)),
+    el("span", {class: "what"}, el("b", {}, e.who), ` ${e.text} `,
+      el("button", {type: "button", class: "flatlink", onclick: () => goToFlat(e.x)}, x_name(e.x)), e.tail ? ` ${e.tail}` : null),
+    e.note ? el("q", {class: "note"}, e.note) : null)) : [el("li", {class: "empty"}, "No votes or steps yet.")]));
+  store(actKey(), new Date().toISOString()); // everything shown counts as read
+  renderActivityBadge();
+}
+const x_name = (x) => x.street === "Address not given" ? `a flat in ${x.area} (${priceText(x)})` : `${x.street} (${x.area})`;
+function goToFlat(x) {
+  $("#activity").close();
+  const tab = inContact(x) ? "contact" : inShort(x) ? "short" : "all";
+  if (tab === "all") state.onlyNew = false;
+  const switching = state.tab !== tab;
+  if (switching) setTab(tab);
+  setTimeout(() => {
+    state.selected = null; select(x.id);
+    document.getElementById({all: "card-", short: "scard-", contact: "ccard-"}[tab] + x.id)?.scrollIntoView({block: "center", behavior: "smooth"});
+  }, switching ? 120 : 0);
+}
+$("#bell").addEventListener("click", () => { renderActivity(); $("#activity").showModal(); });
+$("#activity-close").addEventListener("click", () => $("#activity").close());
+$("#activity").addEventListener("click", (e) => { if (e.target === e.currentTarget) e.currentTarget.close(); }); // click on the backdrop
 
 // ---------- controls ----------
 $("#gn-range").addEventListener("input", (e) => {
