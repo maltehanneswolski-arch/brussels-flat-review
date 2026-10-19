@@ -787,11 +787,38 @@ function keepTyping(list, render) {
   list.scrollTop = keepScroll;
   if (typing) { const t = document.getElementById(typing.id); if (t) { t.value = typing.v; t.focus(); } }
 }
+// The Shortlist is grouped by the site or app you contact them through, so you can work through one site at a time.
+const CHANNEL_HINT = {
+  "Immoweb": {text: "Contact form on each listing. Sign in to keep track of your messages:", link: "https://www.immoweb.be/en/login", label: "immoweb.be/en/login"},
+  "Immovlan": {text: "“Contact by email” on each listing. To sign in, open immovlan.be and use Account → Login."},
+  "HousingAnywhere": {text: "Listed on Immovlan but handled by HousingAnywhere: you message, book and pay through their site.", link: "https://housinganywhere.com/login", label: "housinganywhere.com/login"},
+  "Spotahome": {text: "Booked online: you message the landlord and reserve through Spotahome, no viewing first.", link: "https://www.spotahome.com/login", label: "spotahome.com/login"},
+  "Zimmo": {text: "Zimmo only shows the listing; the agency named on the card takes the calls and messages."},
+  "Agency websites": {text: "The agency's own site: call them or use the form on the listing page."},
+  "Vista Residences": {text: "No prices online: call 0478 55 56 20 or email info@vistaresidences.org."}
+};
+function channelOf(x) {
+  if (x.kind === "vista") return "Vista Residences";
+  if (x.source === "Spotahome") return "Spotahome";
+  const c = contactOf(x);
+  if (c.kind === "platform" && /housinganywhere/i.test(c.who || "")) return "HousingAnywhere";
+  if (["Immoweb", "Immovlan", "Zimmo"].includes(x.source)) return x.source;
+  return "Agency websites";
+}
+function groupHead(name, n) {
+  const h = CHANNEL_HINT[name] || {text: ""};
+  return el("div", {class: "grouphead"},
+    el("h3", {}, name, " ", el("span", {class: "n"}, n)),
+    el("p", {}, h.text, h.link ? [" ", el("a", {href: h.link, target: "_blank", rel: "noopener"}, h.label)] : null));
+}
 function renderShort() {
   const list = $("#list-short");
   const flats = state.flats.filter(inShort).sort((a, b) => (stageOf(a) === "contacted") - (stageOf(b) === "contacted") || (score(b.id) - score(a.id)) || ((total(a) ?? 1e9) - (total(b) ?? 1e9)));
+  const groups = {};
+  for (const x of flats) (groups[channelOf(x)] ||= []).push(x);
+  const order = Object.entries(groups).sort((a, b) => b[1].length - a[1].length || a[0].localeCompare(b[0])); // biggest site first
   keepTyping(list, () => list.replaceChildren(...[setupBanner(),
-    ...(flats.length ? flats.map(shortCard) : [el("div", {class: "empty"}, "No flats here yet. Say Yes to a flat in All flats and it appears here.")])].filter(Boolean)));
+    ...(flats.length ? order.flatMap(([name, xs]) => [groupHead(name, xs.length), ...xs.map(shortCard)]) : [el("div", {class: "empty"}, "No flats here yet. Say Yes to a flat in All flats and it appears here.")])].filter(Boolean)));
 }
 function renderContact() {
   const list = $("#list-contact");

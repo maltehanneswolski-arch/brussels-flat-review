@@ -294,7 +294,13 @@ html.stacked #map { flex: none; height: 50vh; min-height: 320px; }
 html.stacked .legend { display: none; }
 html.stacked .side, html.stacked .pane, html.stacked .list { overflow: visible; min-height: auto; }
 html.stacked #list-short, html.stacked #list-contact { grid-template-columns: repeat(auto-fill, minmax(min(100%, 430px), 1fr)); gap: 12px; align-items: start; }
-html.stacked .setup, html.stacked .empty, html.stacked .dropped { grid-column: 1 / -1; }
+html.stacked .setup, html.stacked .empty, html.stacked .dropped, html.stacked .grouphead { grid-column: 1 / -1; }
+/* Shortlist groups: one per site or app */
+.grouphead { display: grid; gap: 2px; padding: 14px 2px 0; border-top: 1px solid var(--line); margin-top: 6px; }
+.grouphead:first-of-type, .setup + .grouphead { border-top: 0; margin-top: 0; padding-top: 4px; }
+.grouphead h3 { margin: 0; font-size: 20px; line-height: 1.3; display: flex; align-items: center; gap: 8px; }
+.grouphead h3 .n { font-family: var(--font-data); font-size: 13px; background: var(--line); color: var(--ink); border-radius: 999px; padding: 0 8px; }
+.grouphead p { margin: 0; color: var(--muted); font-size: 13px; max-width: 80ch; }
 html.stacked .card.big { scroll-margin-top: 12px; }
 .panehead h2 { margin: 0; font-size: 20px; line-height: 1.3; }
 .panehead p { margin: 2px 0 0; color: var(--muted); font-size: 13px; max-width: 80ch; }
