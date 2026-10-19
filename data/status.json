@@ -61,11 +61,11 @@
    }
   },
   "21891432": {
-   "status": "online",
+   "status": "removed",
    "rent": 730,
    "charges": 100,
    "available": "2026-11-15",
-   "since": "2026-10-16",
+   "since": "2026-10-19",
    "checked": "2026-10-19",
    "contact": {
     "who": "Private owner",
@@ -247,6 +247,62 @@
     "website": "https://www.trevi.be",
     "form": "https://www.trevi.be/fr/bien/7895097/1/studio/Schaerbeek",
     "formLabel": "Contact form on Trevi's listing page"
+   }
+  },
+  "spot-1040-de-wavre": {
+   "status": "online",
+   "rent": 900,
+   "charges": null,
+   "available": "2026-11-20",
+   "since": "2026-10-19",
+   "checked": "2026-10-19",
+   "contact": {
+    "who": "Spotahome",
+    "kind": "platform",
+    "phones": [],
+    "emails": [],
+    "website": "https://www.spotahome.com",
+    "form": "https://www.spotahome.com/brussels/for-rent:apartments/256433",
+    "formLabel": "Book or ask a question on the Spotahome listing"
+   }
+  },
+  "zimmo-ls0e9": {
+   "status": "unknown",
+   "checked": "2026-10-19",
+   "note": "Zimmo answered 403"
+  },
+  "spot-1050-de-treves": {
+   "status": "online",
+   "rent": 800,
+   "charges": null,
+   "available": "2026-12-21",
+   "since": "2026-10-19",
+   "checked": "2026-10-19",
+   "contact": {
+    "who": "Spotahome",
+    "kind": "platform",
+    "phones": [],
+    "emails": [],
+    "website": "https://www.spotahome.com",
+    "form": "https://www.spotahome.com/brussels/for-rent:studios/813186",
+    "formLabel": "Book or ask a question on the Spotahome listing"
+   }
+  },
+  "spot-1040-mont-du-cinquantenaire": {
+   "status": "online",
+   "rent": 950,
+   "charges": null,
+   "available": "2027-01-01",
+   "since": "2026-10-19",
+   "checked": "2026-10-19",
+   "contact": {
+    "who": "Spotahome",
+    "kind": "platform",
+    "phones": [],
+    "emails": [],
+    "website": "https://www.spotahome.com",
+    "form": "https://www.spotahome.com/brussels/for-rent:studios/1567483",
+    "formLabel": "Book or ask a question on the Spotahome listing"
    }
   }
  }

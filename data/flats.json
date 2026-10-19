@@ -3835,6 +3835,38 @@
    "domicile": null,
    "domicileQuote": null,
    "added": "2026-10-19"
+  },
+  {
+   "id": "spot-1050-georges-lorand",
+   "kind": "spotahome",
+   "source": "Spotahome",
+   "url": "https://www.spotahome.com/brussels/for-rent:studios/1090629",
+   "area": "Ixelles",
+   "street": "Rue Georges Lorand",
+   "lat": 50.83627,
+   "lng": 4.36784,
+   "approx": true,
+   "furnished": true,
+   "rent": 975,
+   "charges": null,
+   "bedrooms": null,
+   "m2": null,
+   "floor": null,
+   "epc": null,
+   "lift": false,
+   "terrace": null,
+   "garden": false,
+   "available": "2027-01-02",
+   "units": [
+    "Studio, 34 m², €975, from 02/01/2027"
+   ],
+   "unitIds": [
+    "1090629"
+   ],
+   "description": "Furnished flats booked online through Spotahome: you reserve on their site and pay their booking fee, without a viewing first. One unit fits the rules; the price shown is the cheapest. Bills are usually extra.",
+   "domicile": null,
+   "domicileQuote": null,
+   "added": "2026-10-19"
   }
  ]
 }
