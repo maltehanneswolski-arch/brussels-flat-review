@@ -94,6 +94,27 @@
     "formLabel": "Contact form on the Immoweb listing"
    }
   },
+  "21917470": {
+   "status": "online",
+   "rent": 910,
+   "charges": null,
+   "available": "IMMEDIATELY",
+   "since": "2026-10-19",
+   "checked": "2026-10-19",
+   "contact": {
+    "who": "Century 21 Vision",
+    "kind": "agency",
+    "phones": [
+     "02 896 59 21"
+    ],
+    "emails": [
+     "info@century21vision.be"
+    ],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21917470",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
   "21917601": {
    "status": "online",
    "rent": 875,
@@ -135,6 +156,25 @@
     "formLabel": "Contact form on the Immoweb listing"
    }
   },
+  "21923202": {
+   "status": "online",
+   "rent": 950,
+   "charges": 45,
+   "available": "2026-10-18",
+   "since": "2026-10-19",
+   "checked": "2026-10-19",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [
+     "0475 61 22 39"
+    ],
+    "emails": [],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21923202",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
   "vbe62552": {
    "status": "online",
    "rent": 990,
@@ -150,6 +190,63 @@
     "website": null,
     "form": "https://immovlan.be/en/detail/apartment/for-rent/1000/brussels/vbe62552",
     "formLabel": "“Contact by email” on the Immovlan listing"
+   }
+  },
+  "ag-c9192bb3dafe": {
+   "status": "online",
+   "rent": 1050,
+   "charges": 120,
+   "available": "IMMEDIATELY",
+   "since": "2026-10-19",
+   "checked": "2026-10-19",
+   "contact": {
+    "who": "Expertissimmo",
+    "kind": "agency",
+    "phones": [],
+    "emails": [
+     "info@expertissimmo.eu"
+    ],
+    "website": "https://expertissimmo.eu",
+    "form": "https://expertissimmo.eu/fr/nos-biens/a-louer/7909043/2-schaerbeek",
+    "formLabel": "Contact form on Expertissimmo's listing page"
+   }
+  },
+  "ag-9be1b6f0aef3": {
+   "status": "online",
+   "rent": 920,
+   "charges": 270,
+   "available": "2026-12-01",
+   "since": "2026-10-19",
+   "checked": "2026-10-19",
+   "contact": {
+    "who": "Everest Properties",
+    "kind": "agency",
+    "phones": [],
+    "emails": [
+     "info@everestproperties.be"
+    ],
+    "website": "https://www.everestproperties.be",
+    "form": "https://www.everestproperties.be/en/for-rent/bruxelles/schuman-very-nice-furnished-studio-for-rent/32330/",
+    "formLabel": "Contact form on Everest Properties's listing page"
+   }
+  },
+  "ag-96dcbe383580": {
+   "status": "online",
+   "rent": 1000,
+   "charges": 100,
+   "available": "IMMEDIATELY",
+   "since": "2026-10-19",
+   "checked": "2026-10-19",
+   "contact": {
+    "who": "Trevi",
+    "kind": "agency",
+    "phones": [],
+    "emails": [
+     "privacy@trevi.be"
+    ],
+    "website": "https://www.trevi.be",
+    "form": "https://www.trevi.be/fr/bien/7895097/1/studio/Schaerbeek",
+    "formLabel": "Contact form on Trevi's listing page"
    }
   }
  }

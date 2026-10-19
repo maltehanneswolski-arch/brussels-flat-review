@@ -2591,6 +2591,32 @@
    "added": "2026-10-19",
    "domicile": null,
    "domicileQuote": null
+  },
+  {
+   "id": "21924351",
+   "kind": "listing",
+   "source": "Immoweb",
+   "url": "https://www.immoweb.be/en/classified/21924351",
+   "street": "Rue de Spa 84",
+   "lat": 50.8481515,
+   "lng": 4.3753902,
+   "approx": false,
+   "furnished": true,
+   "rent": 1170,
+   "charges": null,
+   "bedrooms": 1,
+   "m2": 83,
+   "floor": 0,
+   "epc": "F",
+   "lift": false,
+   "terrace": 12,
+   "garden": false,
+   "available": "2026-12-01",
+   "area": "Saint-Josse",
+   "description": "Found automatically on 19/10, not checked by hand yet.",
+   "domicile": null,
+   "domicileQuote": null,
+   "added": "2026-10-19"
   }
  ]
 }
