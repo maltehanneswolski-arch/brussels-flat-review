@@ -571,19 +571,20 @@ function contactBox(x) {
 const AMBIORIX = [50.8470, 4.3820];
 function niceThings(x) {
   const text = `${x.street} ${x.description || ""} ${(x.units || []).join(" ")}`;
+  // Each is a full clause, so the sentence reads "…interested in your flat because <clause> and <clause>."
   const nice = [];
-  if (x.terrace) nice.push(["the terrace", "la terrasse"]);
-  if (x.garden) nice.push(["the garden", "le jardin"]);
-  if (/bright|lumineux|lumineuse|light-filled|sunny/i.test(text)) nice.push(["the bright living spaces", "les pièces de vie lumineuses"]);
-  if (/renovat|rénov/i.test(text)) nice.push(["the recent renovation", "la rénovation récente"]);
-  if (/^(Square|Place|Plein)\b|plein$/i.test(x.street)) nice.push(["the location right on the square", "l'emplacement directement sur la place"]);
-  else if (x.lat != null && Math.hypot((x.lat - AMBIORIX[0]) * 111, (x.lng - AMBIORIX[1]) * 70) < 0.7) nice.push(["the location, a few minutes' walk from where we work", "l'emplacement, à quelques minutes à pied de notre travail"]);
-  else if (/Josaphat/i.test(text)) nice.push(["the location next to Josaphat Park", "l'emplacement à côté du parc Josaphat"]);
-  else if (/Cinquantenaire|Jubelpark/i.test(text)) nice.push(["the location near the Cinquantenaire park", "l'emplacement près du parc du Cinquantenaire"]);
-  if (x.m2 >= 70) nice.push(["the generous space", "l'espace généreux"]);
-  if (/^[AB]$/.test(x.epc || "")) nice.push(["the good energy rating", "la bonne classe énergétique"]);
-  if (x.furnished) nice.push(["that it comes fully furnished", "qu'il soit entièrement meublé"]);
-  if (!nice.length) nice.push([`the location in ${x.area}`, `l'emplacement à ${x.area}`]);
+  if (/^(Square|Place|Plein)\b|plein$/i.test(x.street)) nice.push(["it sits right on the square, which we love", "il donne directement sur la place, ce qui nous plaît beaucoup"]);
+  else if (x.lat != null && Math.hypot((x.lat - AMBIORIX[0]) * 111, (x.lng - AMBIORIX[1]) * 70) < 0.7) nice.push(["it is only a few minutes' walk from where we both work", "il se trouve à quelques minutes à pied de nos lieux de travail"]);
+  else if (/Josaphat/i.test(text)) nice.push(["it is right next to Josaphat Park", "il est juste à côté du parc Josaphat"]);
+  else if (/Cinquantenaire|Jubelpark/i.test(text)) nice.push(["it is so close to the Cinquantenaire park", "il est tout près du parc du Cinquantenaire"]);
+  if (/bright|lumineux|lumineuse|light-filled|sunny/i.test(text)) nice.push(["the bright living spaces are exactly what we are looking for", "les pièces de vie lumineuses correspondent exactement à ce que nous cherchons"]);
+  if (x.terrace) nice.push(["the terrace would be a real plus for us", "la terrasse serait un vrai plus pour nous"]);
+  else if (x.garden) nice.push(["a flat with a garden is rare in Brussels and would be a real plus for us", "un appartement avec jardin est rare à Bruxelles et serait un vrai plus pour nous"]);
+  if (/renovat|rénov/i.test(text)) nice.push(["it has been renovated recently", "il a été rénové récemment"]);
+  if (x.m2 >= 70) nice.push(["the space would give us room to work from home", "l'espace nous permettrait de télétravailler confortablement"]);
+  if (/^[AB]$/.test(x.epc || "")) nice.push(["the good energy rating matters to us", "la bonne classe énergétique compte pour nous"]);
+  if (x.furnished) nice.push(["it comes fully furnished, which would make our move much easier", "il est entièrement meublé, ce qui faciliterait beaucoup notre installation"]);
+  if (!nice.length) nice.push([`the location in ${x.area} suits us very well`, `sa situation à ${x.area} nous convient très bien`]);
   const two = nice.slice(0, 2);
   return {en: two.map((n) => n[0]).join(" and "), fr: two.map((n) => n[1]).join(" et ")};
 }
@@ -600,10 +601,10 @@ function messageText(x, lang) {
   const noAddress = x.street === "Address not given";
   if (lang === "fr") {
     const where = noAddress ? `à ${x.area}` : `situé ${x.street}`;
-    return `Madame, Monsieur,\n\nJe m'appelle Malte, j'ai 26 ans et je cherche un appartement à louer avec ma compagne. Nous sommes tous deux de jeunes professionnels d'environ 25 ans, nous travaillons près du square Ambiorix et nous cherchons un logement à long terme à Bruxelles.\n\nVotre appartement ${where} (${refFr}) nous intéresse particulièrement pour ${nice.fr}.\n\nSerait-il possible d'organiser une visite dès que possible ? Je travaille à Bruxelles et je peux adapter mon horaire.${askDom ? " Pourriez-vous aussi nous dire si la domiciliation y est possible ?" : ""}\n\nMerci beaucoup, dans l'attente de votre réponse.\n\nBien à vous,\nMalte Wolski et Lilly Maydell\n+49 15256107600`;
+    return `Madame, Monsieur,\n\nJe m'appelle Malte, j'ai 26 ans et je cherche un appartement à louer avec ma compagne. Nous sommes tous deux de jeunes professionnels d'environ 25 ans, nous travaillons près du square Ambiorix et nous cherchons un logement à long terme à Bruxelles.\n\nVotre appartement ${where} (${refFr}) nous intéresse particulièrement : ${nice.fr}.\n\nSerait-il possible d'organiser une visite dès que possible ? Je travaille à Bruxelles et je peux adapter mon horaire.${askDom ? " Pourriez-vous aussi nous dire si la domiciliation y est possible ?" : ""}\n\nMerci beaucoup, dans l'attente de votre réponse.\n\nBien à vous,\nMalte Wolski et Lilly Maydell\n+49 15256107600`;
   }
   const where = noAddress ? `in ${x.area}` : `${/\d/.test(x.street) ? "at" : "on"} ${x.street}`;
-  return `${agency ? `Dear ${agency},` : "Dear Sir or Madam,"}\n\nMy name is Malte, I am 26, and I am looking for an apartment to rent with my girlfriend. We are both young professionals in our mid-twenties, working near Square Ambiorix, and we are looking for a long-term home in Brussels.\n\nWe are particularly interested in your flat ${where} (${ref}) because of ${nice.en}.\n\nCould we arrange a viewing at your earliest convenience? I work in Brussels and I can adapt my schedule.${askDom ? " Could you also tell us whether we could register our address there (domiciliation)?" : ""}\n\nThank you very much, and I look forward to hearing from you.\n\nKind regards,\nMalte Wolski and Lilly Maydell\n+49 15256107600`;
+  return `${agency ? `Dear ${agency},` : "Dear Sir or Madam,"}\n\nMy name is Malte, I am 26, and I am looking for an apartment to rent with my girlfriend. We are both young professionals in our mid-twenties, working near Square Ambiorix, and we are looking for a long-term home in Brussels.\n\nWe are particularly interested in your flat ${where} (${ref}) because ${nice.en}.\n\nCould we arrange a viewing at your earliest convenience? I work in Brussels and I can adapt my schedule.${askDom ? " Could you also tell us whether we could register our address there (domiciliation)?" : ""}\n\nThank you very much, and I look forward to hearing from you.\n\nKind regards,\nMalte Wolski and Lilly Maydell\n+49 15256107600`;
 }
 function messageBox(x) {
   const lang = state.msgLang[x.id] || "en";
