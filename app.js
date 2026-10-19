@@ -566,20 +566,48 @@ function contactBox(x) {
   );
 }
 
+// Malte's letter, filled in for each flat: the agency's name when we have one, which flat it is, and something
+// nice about it that is true (from the facts and the description). English is the letter as written; French is a translation.
+const AMBIORIX = [50.8470, 4.3820];
+function niceThings(x) {
+  const text = `${x.street} ${x.description || ""} ${(x.units || []).join(" ")}`;
+  const nice = [];
+  if (x.terrace) nice.push(["the terrace", "la terrasse"]);
+  if (x.garden) nice.push(["the garden", "le jardin"]);
+  if (/bright|lumineux|lumineuse|light-filled|sunny/i.test(text)) nice.push(["the bright living spaces", "les pièces de vie lumineuses"]);
+  if (/renovat|rénov/i.test(text)) nice.push(["the recent renovation", "la rénovation récente"]);
+  if (/^(Square|Place|Plein)\b|plein$/i.test(x.street)) nice.push(["the location right on the square", "l'emplacement directement sur la place"]);
+  else if (x.lat != null && Math.hypot((x.lat - AMBIORIX[0]) * 111, (x.lng - AMBIORIX[1]) * 70) < 0.7) nice.push(["the location, a few minutes' walk from where we work", "l'emplacement, à quelques minutes à pied de notre travail"]);
+  else if (/Josaphat/i.test(text)) nice.push(["the location next to Josaphat Park", "l'emplacement à côté du parc Josaphat"]);
+  else if (/Cinquantenaire|Jubelpark/i.test(text)) nice.push(["the location near the Cinquantenaire park", "l'emplacement près du parc du Cinquantenaire"]);
+  if (x.m2 >= 70) nice.push(["the generous space", "l'espace généreux"]);
+  if (/^[AB]$/.test(x.epc || "")) nice.push(["the good energy rating", "la bonne classe énergétique"]);
+  if (x.furnished) nice.push(["that it comes fully furnished", "qu'il soit entièrement meublé"]);
+  if (!nice.length) nice.push([`the location in ${x.area}`, `l'emplacement à ${x.area}`]);
+  const two = nice.slice(0, 2);
+  return {en: two.map((n) => n[0]).join(" and "), fr: two.map((n) => n[1]).join(" et ")};
+}
+const tidyName = (s) => s.replace(/\b([A-Z]{4,})\b/g, (w) => w[0] + w.slice(1).toLowerCase()); // IMMOEXPAT → Immoexpat
 function messageText(x, lang) {
-  const ref = x.source === "Immoweb" ? `Immoweb ${x.id}` : x.source === "Immovlan" ? `Immovlan ${x.id.toUpperCase()}` : x.url;
-  const name = me.name || (lang === "fr" ? "[votre nom]" : "[your name]");
+  const c = contactOf(x);
+  const agency = c.kind === "agency" && c.who && !/advertiser/i.test(c.who) ? tidyName(c.who) : null;
+  const code = x.source === "Immovlan" ? x.id.toUpperCase() : x.source === "Spotahome" ? x.unitIds?.[0] || "" : x.source === "Zimmo" ? x.id.replace("zimmo-", "").toUpperCase() : x.id;
+  const portal = ["Immoweb", "Immovlan", "Spotahome", "Zimmo"].includes(x.source);
+  const ref = portal ? `${x.source} listing ${code}`.trim() : `listed on ${x.source}`;
+  const refFr = portal ? `annonce ${x.source} ${code}`.trim() : `annonce sur ${x.source}`;
+  const nice = niceThings(x);
   const askDom = domOf(x) === "unknown";
+  const noAddress = x.street === "Address not given";
   if (lang === "fr") {
-    const price = x.rent != null ? `, ${x.rent} €${x.charges ? ` + ${x.charges} € de charges` : ""}` : "";
-    return `Bonjour,\n\nNous sommes intéressés par l'appartement ${x.street} (${x.area})${price}, annonce ${ref}.\n\nEst-il toujours disponible pour une entrée en décembre ou en janvier ?${askDom ? " La domiciliation est-elle possible ?" : ""} Serait-il possible de le visiter dans les prochains jours ?\n\nNous sommes deux. [Une phrase sur vous : travail, durée prévue du bail.]\n\nBien à vous,\n${name}`;
+    const where = noAddress ? `à ${x.area}` : `situé ${x.street}`;
+    return `Madame, Monsieur,\n\nJe m'appelle Malte, j'ai 26 ans et je cherche un appartement à louer avec ma compagne. Nous sommes tous deux de jeunes professionnels d'environ 25 ans, nous travaillons près du square Ambiorix et nous cherchons un logement à long terme à Bruxelles.\n\nVotre appartement ${where} (${refFr}) nous intéresse particulièrement pour ${nice.fr}.\n\nSerait-il possible d'organiser une visite dès que possible ? Je travaille à Bruxelles et je peux adapter mon horaire.${askDom ? " Pourriez-vous aussi nous dire si la domiciliation y est possible ?" : ""}\n\nMerci beaucoup, dans l'attente de votre réponse.\n\nBien à vous,\nMalte Wolski et Lilly Maydell\n+49 15256107600`;
   }
-  const price = x.rent != null ? `, €${x.rent}${x.charges ? ` + €${x.charges} charges` : ""}` : "";
-  return `Hello,\n\nWe are interested in the flat at ${x.street} (${x.area})${price}, listing ${ref}.\n\nIs it still available for a move-in in December or January?${askDom ? " Can we register our address there (domiciliation)?" : ""} Could we visit it in the coming days?\n\nWe are two people. [One line about you: work, how long you plan to stay.]\n\nKind regards,\n${name}`;
+  const where = noAddress ? `in ${x.area}` : `${/\d/.test(x.street) ? "at" : "on"} ${x.street}`;
+  return `${agency ? `Dear ${agency},` : "Dear Sir or Madam,"}\n\nMy name is Malte, I am 26, and I am looking for an apartment to rent with my girlfriend. We are both young professionals in our mid-twenties, working near Square Ambiorix, and we are looking for a long-term home in Brussels.\n\nWe are particularly interested in your flat ${where} (${ref}) because of ${nice.en}.\n\nCould we arrange a viewing at your earliest convenience? I work in Brussels and I can adapt my schedule.${askDom ? " Could you also tell us whether we could register our address there (domiciliation)?" : ""}\n\nThank you very much, and I look forward to hearing from you.\n\nKind regards,\nMalte Wolski and Lilly Maydell\n+49 15256107600`;
 }
 function messageBox(x) {
-  const lang = state.msgLang[x.id] || "fr";
-  const ta = el("textarea", {class: "msg", rows: "10", id: "msg-" + x.id, "aria-label": "Message to send"});
+  const lang = state.msgLang[x.id] || "en";
+  const ta = el("textarea", {class: "msg", rows: "16", id: "msg-" + x.id, "aria-label": "Message to send"});
   ta.value = messageText(x, lang);
   const pick = (l) => { state.msgLang[x.id] = l; ta.value = messageText(x, l); fr.setAttribute("aria-pressed", String(l === "fr")); en.setAttribute("aria-pressed", String(l === "en")); };
   const fr = el("button", {type: "button", class: "chip", "aria-pressed": String(lang === "fr"), onclick: () => pick("fr")}, "Français");
