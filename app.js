@@ -465,7 +465,7 @@ function card(x) {
   return el("article", {class: "card" + (sel ? " sel" : "") + (fresh ? " new" : ""), role: "listitem", id: "card-" + x.id},
     el("div", {class: "chead"},
       el("div", {class: "ctitle"},
-        el("span", {class: "price"}, priceText(x), " ", el("small", {}, x.rent == null ? "price and dates on request" : x.charges ? `${euro(x.rent)} rent + ${euro(x.charges)} charges` : "rent, charges not stated")),
+        el("span", {class: "price"}, priceText(x), " ", el("small", {}, x.rent == null ? "price and dates on request" : x.units ? "cheapest unit that fits, bills usually extra" : x.charges ? `${euro(x.rent)} rent + ${euro(x.charges)} charges` : "rent, charges not stated")),
         el("h3", {class: "street"}, el("button", {class: "selbtn", type: "button", "aria-expanded": String(sel), onclick: () => select(x.id)}, x.street))
       ),
       el("span", {class: "tags"},
@@ -520,6 +520,7 @@ function contactOf(x) {
   const c = state.status[x.id]?.contact;
   if (c) return c;
   if (x.kind === "vista") return {who: "Vista Residences", kind: "agency", phones: ["0478 55 56 20"], emails: ["info@vistaresidences.org"], website: "https://www.vistaresidences.org", form: null};
+  if (x.kind === "spotahome") return {who: "Spotahome", kind: "platform", phones: [], emails: [], website: "https://www.spotahome.com", form: x.url, formLabel: "Book or ask a question on the Spotahome listing"};
   const portal = x.source === "Immoweb" || x.source === "Immovlan";
   return {who: portal ? null : x.source, kind: portal ? null : "agency", phones: [], emails: [], website: null, form: x.url, formLabel: `Contact form on the ${x.source} listing`, pending: true};
 }
@@ -534,7 +535,7 @@ const lastStep = (x) => { const s = state.progress[x.id]; return s?.length ? s[s
 
 function factsGrid(x) {
   const rows = [
-    ["Price", x.rent == null ? "On request" : `${euro(total(x))} a month (${euro(x.rent)} rent${x.charges ? ` + ${euro(x.charges)} charges` : ", charges not stated"})`],
+    ["Price", x.rent == null ? "On request" : x.units ? `${euro(x.rent)} a month for the cheapest unit that fits, bills usually extra` : `${euro(total(x))} a month (${euro(x.rent)} rent${x.charges ? ` + ${euro(x.charges)} charges` : ", charges not stated"})`],
     ["Size", x.m2 ? x.m2 + " m²" : "Not given"],
     ["Rooms", x.bedrooms === 0 ? "Studio" : x.bedrooms ? `${x.bedrooms} bedroom${x.bedrooms > 1 ? "s" : ""}` : "Not given"],
     ["Furnished", x.furnished === true ? "Yes" : x.furnished === false ? "No" : "Not stated"],
@@ -560,7 +561,7 @@ function contactBox(x) {
     c.form ? el("p", {}, el("a", {href: c.form, target: "_blank", rel: "noopener"}, (c.formLabel || "Open the listing") + " ↗")) : null,
     c.website ? el("p", {}, "Website ", el("a", {href: c.website, target: "_blank", rel: "noopener"}, c.website.replace(/^https?:\/\/(www\.)?/, "").replace(/\/$/, ""))) : null,
     c.kind === "private" ? el("p", {class: "hint"}, "Private owners don't publish a number on Immoweb. The contact form on the listing goes straight to them.") : null,
-    c.kind === "platform" ? el("p", {class: "hint"}, "HousingAnywhere handles this one: you book and pay through their site. Ask your questions through the listing's email form first.") : null,
+    c.kind === "platform" ? el("p", {class: "hint"}, `${c.who || "The platform"} handles this one: you book and pay through their site, and they take a booking fee. Ask your questions through the listing's message form first.`) : null,
     c.pending ? el("p", {class: "hint"}, "The phone number and email appear after the next daily check, around 08:20.") : null
   );
 }

@@ -19,16 +19,18 @@ The rules for every listing:
 - At least one bedroom, or a studio of at least 30 m².
 - No single rooms in shared houses.
 
-The price shown is rent plus monthly charges. Each flat links to its listing on [Immoweb](https://www.immoweb.be), [Immovlan](https://immovlan.be), an agency's own website, or [Vista Residences](https://www.vistaresidences.org).
+The price shown is rent plus monthly charges. Each flat links to its listing on [Immoweb](https://www.immoweb.be), [Immovlan](https://immovlan.be), [Spotahome](https://www.spotahome.com), [Zimmo](https://www.zimmo.be), an agency's own website, or [Vista Residences](https://www.vistaresidences.org).
 
 ## The daily check
 
 Twice a day, at 06:00 and 16:00 Brussels time, a GitHub Action ([`monitor.yml`](.github/workflows/monitor.yml)) does two things:
 
-1. **Finds new flats.** [`monitor/discover.mjs`](monitor/discover.mjs) searches Immoweb, Immovlan and the agency websites in [`monitor/agencies.json`](monitor/agencies.json). It adds every listing that fits the rules above to `data/flats.json`. New flats show **in purple** on the map for 2 days, and the strip above the list counts the flats that are new since your last visit (one tap shows only those). Each listing is judged once; the verdicts are kept in `monitor/seen.json`. It also reads whether the listing says you can register your address there (**domiciliation**): possible, not allowed, or not stated ([`monitor/domicile.mjs`](monitor/domicile.mjs)). The site shows English only, so a listing's own French or Dutch wording isn't copied onto it.
+1. **Finds new flats.** [`monitor/discover.mjs`](monitor/discover.mjs) searches Immoweb, Immovlan, Spotahome and the agency websites in [`monitor/agencies.json`](monitor/agencies.json). It adds every listing that fits the rules above to `data/flats.json`. New flats show **in purple** on the map for 2 days, and the strip above the list counts the flats that are new since your last visit (one tap shows only those). Each listing is judged once; the verdicts are kept in `monitor/seen.json`. It also reads whether the listing says you can register your address there (**domiciliation**): possible, not allowed, or not stated ([`monitor/domicile.mjs`](monitor/domicile.mjs)). The site shows English only, so a listing's own French or Dutch wording isn't copied onto it.
 2. **Watches the Yes flats** (see below).
 
 **Agency websites checked:** Immoschmidt, Immo Clicking, Realty Belgium, Immo2gether, Grant Properties, Immo 2A, Macnash (Montgomery and Sud), Bathim, Trevi (first 10 pages), Vaneau Lecobel (East and Centre), Immobilière Petitjean, Trior, Everest Properties, Homeside, Nadimmo, Eventimmo and Expertissimmo. Each site's address and reading rules are in `monitor/agencies.json`; the reading code is [`monitor/agencies.mjs`](monitor/agencies.mjs).
+
+**Spotahome** ([`monitor/spotahome.mjs`](monitor/spotahome.mjs)) is furnished flats booked online. It hides house numbers, so the map shows one card per street and postcode, listing the units that fit; the card is refreshed every run and gets a warning once no unit fits any more. **Zimmo** blocks scripts, so it was searched by hand on 19 October 2026 (4 flats added) and isn't checked daily. **Realo** only repeats listings from the other sites. **Facebook** needs a signed-in account.
 
 **Not covered**, because their listings only load through JavaScript, need a site key, or aren't online: Latour et Petit, MyImmo, We Invest, Oralis, Capital Rent, BBF, CH Invest, Gestilex, Hermanns, Stéphane Schweitzer, Pearl Immo, J&J Properties and Skyline.
 
@@ -101,6 +103,7 @@ Then open http://localhost:8000.
 | `config.js` | Supabase connection for shared reviews |
 | `supabase/schema.sql` | Database table and access rules |
 | `supabase/super-yes.sql` | One-time update that allows Super yes votes |
+| `monitor/spotahome.mjs` | Spotahome search, one card per building |
 | `monitor/domicile.mjs` | Reads domiciliation from the listings (`node monitor/domicile.mjs` fills in flats not checked yet) |
 
 Listing details belong to the sites they come from and may have changed since 16 October 2026. Map data © [OpenStreetMap](https://www.openstreetmap.org/copyright) contributors.

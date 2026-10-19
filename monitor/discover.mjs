@@ -13,6 +13,7 @@
 import {readFile, writeFile} from "node:fs/promises";
 import {checkAgencies} from "./agencies.mjs";
 import {domicileFrom} from "./domicile.mjs";
+import {spotahomeCards, spotBuildings, mergeSpotahome} from "./spotahome.mjs";
 
 const root = new URL("../", import.meta.url);
 const UA = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/130.0 Safari/537.36";
@@ -231,6 +232,19 @@ export async function main() {
     }
   } catch (e) { console.error("agencies:", e.message); }
 
+  // Spotahome: one card per building, recomputed every run (see spotahome.mjs)
+  try {
+    const cards = await spotahomeCards();
+    const buildings = spotBuildings(cards, data.flats);
+    const {added: fresh, refreshed} = mergeSpotahome(data.flats, buildings);
+    for (const {text, ...flat} of fresh) {
+      const dom = domicileFrom(text);
+      const full = {...flat, domicile: dom.domicile, domicileQuote: dom.quote, added: TODAY};
+      data.flats.push(full); known.add(full.id); added.push(full);
+    }
+    console.log(`Spotahome: ${cards.length} listings under €1,300, ${buildings.length} buildings with units that fit${refreshed ? `, ${refreshed} cards refreshed` : ""}.`);
+  } catch (e) { console.error("spotahome:", e.message); }
+
   console.log(`Looked at ${looked.immoweb} Immoweb, ${looked.immovlan} Immovlan and ${looked.agencies} agency listings not seen before.`);
   console.log(added.length ? `Added ${added.length}:` : "Nothing new fits the rules.");
   for (const f of added) console.log(`- ${f.street} (${f.area}) ${f.rent == null ? "price on request" : "€" + (f.rent + (f.charges || 0))}, ${f.available || "no date"}: ${f.url}`);
@@ -243,7 +257,9 @@ export async function main() {
   const report = arg("--report");
   if (report && added.length) {
     const when = (av) => !av || av === "TO_BE_DEFINED" ? "no start date" : av === "IMMEDIATELY" ? "free now" : "from " + new Date(av + "T00:00:00").toLocaleDateString("en-GB", {day: "numeric", month: "short", year: "numeric"});
-    const lines = added.map((f) => `- [${f.street} (${f.area})](${f.url}): ${f.rent == null ? "price on request" : `€${(f.rent + (f.charges || 0)).toLocaleString("en-US")} a month`}, ${f.furnished ? "furnished" : "unfurnished"}, ${f.bedrooms ? f.bedrooms + "-bed" : "studio"}${f.m2 ? ", " + f.m2 + " m²" : ""}, ${when(f.available)} · ${f.source}`);
+    const lines = added.map((f) => f.units
+      ? `- [${f.street} (${f.area})](${f.url}): ${f.units.length === 1 ? "1 furnished unit fits" : f.units.length + " furnished units fit"}: ${f.units.slice(0, 3).join("; ")}${f.units.length > 3 ? "; …" : ""} · ${f.source} (booked online)`
+      : `- [${f.street} (${f.area})](${f.url}): ${f.rent == null ? "price on request" : `€${(f.rent + (f.charges || 0)).toLocaleString("en-US")} a month`}, ${f.furnished ? "furnished" : "unfurnished"}, ${f.bedrooms ? f.bedrooms + "-bed" : "studio"}${f.m2 ? ", " + f.m2 + " m²" : ""}, ${when(f.available)} · ${f.source}`);
     await writeFile(report, [`**${added.length} new flat${added.length > 1 ? "s" : ""}** fit the rules today. They show in purple on the map for 2 days.`, "", ...lines, ""].join("\n"));
   }
   return added;

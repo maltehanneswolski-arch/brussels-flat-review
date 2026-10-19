@@ -130,6 +130,21 @@ async function checkVista(flat) {
   };
 }
 
+// A Spotahome building: online while at least one of its units is still listed under €1,300
+async function checkSpotahome(flat) {
+  const contact = {who: "Spotahome", kind: "platform", phones: [], emails: [], website: "https://www.spotahome.com", form: flat.url, formLabel: "Book or ask a question on the Spotahome listing"};
+  const ids = flat.unitIds || [];
+  if (!ids.length) return {status: "removed", contact};
+  const res = await fetch(`https://www.spotahome.com/api/fe/marketplace/homecards?ids=${ids.join(",")}`, {headers: {"user-agent": UA, accept: "application/json"}});
+  if (!res.ok) return {status: "unknown", note: "Spotahome answered " + res.status};
+  const cards = ((await res.json()).data?.homecards || []).filter((c) => (c.pricePerMonth ?? Infinity) <= 1300);
+  if (!cards.length) return {status: "removed", contact};
+  return {
+    status: "online", rent: Math.min(...cards.map((c) => c.pricePerMonth)), charges: null,
+    available: cards.map((c) => (c.firstAvailableDate || "").slice(0, 10)).filter(Boolean).sort()[0] || null, contact
+  };
+}
+
 // A flat found on an agency's own website
 async function checkAgencyPage(flat) {
   const page = await get(flat.url);
@@ -149,6 +164,7 @@ async function checkAgencyPage(flat) {
 async function check(flat) {
   try {
     if (flat.kind === "vista") return await checkVista(flat);
+    if (flat.kind === "spotahome") return await checkSpotahome(flat);
     if (flat.source === "Immovlan") return await checkImmovlan(flat);
     if (flat.source === "Immoweb") return await checkImmoweb(flat);
     return await checkAgencyPage(flat);
