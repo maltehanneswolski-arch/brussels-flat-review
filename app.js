@@ -573,7 +573,7 @@ function niceThings(x) {
   const text = `${x.street} ${x.description || ""} ${(x.units || []).join(" ")}`;
   // Each is a full clause, so the sentence reads "…interested in your flat because <clause> and <clause>."
   const nice = [];
-  if (/^(Square|Place|Plein)\b|plein$/i.test(x.street)) nice.push(["it sits right on the square, which we love", "il donne directement sur la place, ce qui nous plaît beaucoup"]);
+  if (/^(Square|Place|Plein)\b|plein$/i.test(x.street)) nice.push(["it sits right on the square", "il donne directement sur la place"]);
   else if (x.lat != null && Math.hypot((x.lat - AMBIORIX[0]) * 111, (x.lng - AMBIORIX[1]) * 70) < 0.7) nice.push(["it is only a few minutes' walk from where we both work", "il se trouve à quelques minutes à pied de nos lieux de travail"]);
   else if (/Josaphat/i.test(text)) nice.push(["it is right next to Josaphat Park", "il est juste à côté du parc Josaphat"]);
   else if (/Cinquantenaire|Jubelpark/i.test(text)) nice.push(["it is so close to the Cinquantenaire park", "il est tout près du parc du Cinquantenaire"]);
@@ -584,7 +584,8 @@ function niceThings(x) {
   if (x.m2 >= 70) nice.push(["the space would give us room to work from home", "l'espace nous permettrait de télétravailler confortablement"]);
   if (/^[AB]$/.test(x.epc || "")) nice.push(["the good energy rating matters to us", "la bonne classe énergétique compte pour nous"]);
   if (x.furnished) nice.push(["it comes fully furnished, which would make our move much easier", "il est entièrement meublé, ce qui faciliterait beaucoup notre installation"]);
-  if (!nice.length) nice.push([`the location in ${x.area} suits us very well`, `sa situation à ${x.area} nous convient très bien`]);
+  const where = {"EU quarter": ["in the EU quarter", "dans le quartier européen"], "Royal quarter": ["in the Royal quarter", "dans le quartier royal"]}[x.area] || [`in ${x.area}`, `à ${x.area}`];
+  if (!nice.length) nice.push([`the location ${where[0]} suits us very well`, `sa situation ${where[1]} nous convient très bien`]);
   const two = nice.slice(0, 2);
   return {en: two.map((n) => n[0]).join(" and "), fr: two.map((n) => n[1]).join(" et ")};
 }
