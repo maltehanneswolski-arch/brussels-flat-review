@@ -379,8 +379,9 @@ function renderNewStrip() {
   const byArea = {};
   unseen.forEach((x) => { byArea[x.area] = (byArea[x.area] || 0) + 1; });
   const where = Object.entries(byArea).sort((a, b) => b[1] - a[1]).map(([a, n]) => `${n} in ${a}`).join(", ");
+  const voted = unseen.filter(votedByMe).length; // these sit at the bottom of the list, under "Already voted by you"
   strip.replaceChildren(
-    el("span", {class: "nsum"}, el("b", {}, `${unseen.length} new`), ` ${since}: ${where}.`),
+    el("span", {class: "nsum"}, el("b", {}, `${unseen.length} new`), ` ${since}: ${where}.`, voted ? ` You've voted on ${voted === unseen.length ? "all of them" : voted}.` : null),
     el("button", {type: "button", class: "btn " + (state.onlyNew ? "primary" : "ghost"), "aria-pressed": String(state.onlyNew),
       onclick: () => { state.onlyNew = !state.onlyNew; renderAll(); setTimeout(fitVisible, 0); }}, state.onlyNew ? "Show all flats" : "Show only these"));
 }
@@ -959,4 +960,23 @@ $("#sort").addEventListener("change", (e) => { state.sort = e.target.value; rend
     setInterval(() => { if (!document.hidden) refresh(); }, 30000);
     document.addEventListener("visibilitychange", () => { if (!document.hidden) refresh(); });
   }
+  setInterval(() => { if (!document.hidden) checkForUpdate(); }, 300000);
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) checkForUpdate(); });
 })();
+
+// ---------- new versions of the site ----------
+// An open tab (or one the browser kept for up to 10 minutes) would keep running old code. When the page comes back
+// into view, and every 5 minutes, compare the deployed file versions with ours and reload, unless someone is typing.
+const versionsIn = (html) => [...html.matchAll(/(?:src|href)="([^"]+\?v=\d+)"/g)].map((m) => m[1]).join(" ");
+const MY_VERSIONS = [...document.querySelectorAll("link[href*='?v='], script[src*='?v=']")].map((e) => e.getAttribute("href") || e.getAttribute("src")).join(" ");
+async function checkForUpdate() {
+  try {
+    const live = versionsIn(await (await fetch(location.pathname, {cache: "no-store"})).text());
+    if (!live || live === MY_VERSIONS || sessionStorage.getItem("flat-review:reloaded-for") === live) return;
+    const a = document.activeElement;
+    const typing = /^(TEXTAREA|INPUT)$/.test(a?.tagName || "") || [...document.querySelectorAll("textarea.note, .cform textarea")].some((t) => t.value.trim());
+    if (typing) return;
+    sessionStorage.setItem("flat-review:reloaded-for", live); // never loop if the server still hands out the old page
+    location.reload();
+  } catch { /* offline: try again next time */ }
+}
