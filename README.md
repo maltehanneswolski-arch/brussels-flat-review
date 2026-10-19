@@ -42,7 +42,7 @@ node monitor/discover.mjs
 
 1. Pick **Malte** or **Lilly** at the top, so the other knows who voted. Lilly's view has a slight purple tint.
 2. Click a price on the map or a card in the list.
-3. Press **★ Super yes**, **Yes** or **No**. Press it again to take your vote back. A Super yes counts double when sorting by votes.
+3. Press **★ Super yes**, **Yes** or **No**. Press it again to take your vote back. A Super yes counts double when sorting by votes. Flats you have voted on move to the bottom of the list, under "Already voted by you".
 4. Open a card to leave a comment.
 
 A green dot on a map pin means more Yes than No votes, a red dot more No, and a star a Super yes.

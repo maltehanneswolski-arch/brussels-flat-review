@@ -332,8 +332,10 @@ function sorted(list) {
     price: (a, b) => ((total(a) ?? 1e9) - (total(b) ?? 1e9)),
     date: (a, b) => (CAT_ORDER[a.cat] - CAT_ORDER[b.cat]) || String(a.available || "z").localeCompare(String(b.available || "z"))
   }[state.sort];
-  return list.slice().sort(by);
+  // flats you've already voted on go to the bottom, so the top of the list is what you still have to decide
+  return list.slice().sort((a, b) => (votedByMe(a) - votedByMe(b)) || by(a, b));
 }
+const votedByMe = (x) => { const v = rev(x.id).mine?.verdict; return v && v !== "none" ? 1 : 0; };
 
 function renderChips() {
   const area = $("#f-area"); area.replaceChildren();
@@ -492,7 +494,10 @@ function renderList() {
   const hidden = state.onlyNew ? 0 : state.flats.filter((x) => x.d != null && x.d < state.gnKm && state.areaOn.has(x.area)).length;
   $("#count").textContent = `${vis.length} of ${state.flats.length} flats` + (hidden ? ` · ${hidden} hidden near Gare du Nord` : "");
   renderNewStrip();
-  keepTyping(list, () => list.replaceChildren(...(vis.length ? vis.map(card) : [el("div", {class: "empty"}, "No flats match these filters. Turn an area or start date back on.")])));
+  const voted = vis.filter(votedByMe).length;
+  const items = vis.map(card);
+  if (voted && voted < vis.length) items.splice(vis.length - voted, 0, el("div", {class: "listsep", role: "listitem"}, `Already voted by you (${voted})`));
+  keepTyping(list, () => list.replaceChildren(...(vis.length ? items : [el("div", {class: "empty"}, "No flats match these filters. Turn an area or start date back on.")])));
 }
 
 // ---------- Shortlist and In contact tabs ----------
