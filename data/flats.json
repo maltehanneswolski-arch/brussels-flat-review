@@ -2195,12 +2195,14 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "",
+   "description": "Furnished flats on Square Ambiorix, near Schuman and Maelbeek metro and the EU institutions. Internet and utilities are included.",
    "units": [
     "1-bed, ~55 m², semi-basement",
     "1-bed, ~60 m², garden and park view",
     "1-bed, ~50 m², park view",
-    "2-bed penthouse, ~70 m², park view"
+    "2-bed penthouse, ~70 m², park view",
+    "Studio, ~35 m², balcony and park view",
+    "Studio, ~30 m², garden view"
    ],
    "domicile": null,
    "domicileQuote": null
@@ -2226,9 +2228,11 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "",
+   "description": "Furnished flats in a townhouse on a quiet street near Square Ambiorix and Schuman metro. Their home page features unit 1 (1-bed, ~50 m², 1st floor), which may be the one that's free. Internet and utilities are included.",
    "units": [
-    "Three 1-beds, ~50 m² each, quiet street near Square Ambiorix"
+    "Three 1-beds, ~50 m² each (unit 1 on the 1st floor: shower room, separate toilet, washer and dryer in the basement)",
+    "Studio, ~35 m²",
+    "Studio, ~30 m²"
    ],
    "domicile": null,
    "domicileQuote": null
@@ -2254,10 +2258,14 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "",
+   "description": "Furnished flats in a townhouse 100 m from the European Parliament, near Maelbeek metro. Internet and utilities are included.",
    "units": [
     "1-bed, ~45 m²",
-    "Two 1-beds, ~50 m²"
+    "Two 1-beds, ~50 m²",
+    "Studio, ~40 m²",
+    "Studio, ~40 m², garden",
+    "Studio, ~35 m², balcony",
+    "Studio, ~30 m², balcony"
    ],
    "domicile": null,
    "domicileQuote": null
@@ -2283,9 +2291,11 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "",
+   "description": "Furnished flats in a townhouse near Arts-Loi and Madou metro. Their home page features studio 3A (~30 m², 3rd floor), which may be the one that's free. Internet and utilities are included.",
    "units": [
-    "1-bed, ~60 m² (the other units are 30–35 m² studios)"
+    "1-bed, ~60 m²",
+    "Three studios, ~35 m²",
+    "Three studios, ~30 m² (3A is on the 3rd floor)"
    ],
    "domicile": null,
    "domicileQuote": null
@@ -2311,12 +2321,13 @@
    "terrace": null,
    "garden": false,
    "available": null,
-   "description": "",
+   "description": "Furnished flats in a townhouse 5 minutes' walk from Arts-Loi metro. Internet and utilities are included.",
    "units": [
     "1-bed, ~55 m², large terrace",
     "1-bed, ~40 m², large terrace",
     "2-bed, ~95 m², terrace",
-    "2-bed penthouse, ~80 m², terrace"
+    "2-bed penthouse, ~80 m², terrace",
+    "Studio, ~40 m²"
    ],
    "domicile": null,
    "domicileQuote": null
