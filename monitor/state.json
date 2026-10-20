@@ -1203,7 +1203,7 @@
   },
   "vista-a47": {
    "status": "online",
-   "pageHash": "63ea88a95d11",
+   "pageHash": "122226e1899e",
    "contact": {
     "who": "Vista Residences",
     "kind": "agency",
@@ -1243,7 +1243,7 @@
   },
   "vista-b7": {
    "status": "online",
-   "pageHash": "63ea88a95d11",
+   "pageHash": "e851f8de3f75",
    "contact": {
     "who": "Vista Residences",
     "kind": "agency",
@@ -1323,7 +1323,7 @@
   },
   "vista-m57": {
    "status": "online",
-   "pageHash": "23eeb63cbca2",
+   "pageHash": "4536f65c0a1e",
    "contact": {
     "who": "Vista Residences",
     "kind": "agency",
@@ -1363,7 +1363,7 @@
   },
   "vista-d75": {
    "status": "online",
-   "pageHash": "63ea88a95d11",
+   "pageHash": "aaf80c573cba",
    "contact": {
     "who": "Vista Residences",
     "kind": "agency",
@@ -1398,6 +1398,40 @@
      "website": "https://www.vistaresidences.org",
      "form": null,
      "formLabel": null
+    }
+   }
+  },
+  "vbe69842": {
+   "status": "online",
+   "rent": 850,
+   "charges": null,
+   "available": "IMMEDIATELY",
+   "contact": {
+    "who": "Advertiser on Immovlan",
+    "kind": "agency",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/studio/for-rent/1030/schaarbeek/vbe69842",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   },
+   "first_watched": "2026-10-20",
+   "last_checked": "2026-10-20",
+   "public": {
+    "status": "online",
+    "rent": 850,
+    "charges": null,
+    "available": "IMMEDIATELY",
+    "since": "2026-10-20",
+    "checked": "2026-10-20",
+    "contact": {
+     "who": "Advertiser on Immovlan",
+     "kind": "agency",
+     "phones": [],
+     "emails": [],
+     "website": null,
+     "form": "https://immovlan.be/en/detail/studio/for-rent/1030/schaarbeek/vbe69842",
+     "formLabel": "“Contact by email” on the Immovlan listing"
     }
    }
   }

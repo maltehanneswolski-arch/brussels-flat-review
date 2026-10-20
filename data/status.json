@@ -715,6 +715,23 @@
     "form": null,
     "formLabel": null
    }
+  },
+  "vbe69842": {
+   "status": "online",
+   "rent": 850,
+   "charges": null,
+   "available": "IMMEDIATELY",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Advertiser on Immovlan",
+    "kind": "agency",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/studio/for-rent/1030/schaarbeek/vbe69842",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   }
   }
  }
 }
