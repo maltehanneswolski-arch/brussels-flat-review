@@ -1,13 +1,88 @@
 {
- "updated": "2026-10-19",
+ "updated": "2026-10-20",
  "flats": {
+  "21497227": {
+   "status": "online",
+   "rent": 900,
+   "charges": 160,
+   "available": null,
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Immobilière La Marquise",
+    "kind": "agency",
+    "phones": [],
+    "emails": [],
+    "website": "https://www.immobilierelamarquise.be",
+    "form": "https://www.immoweb.be/en/classified/21497227",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
+  "21786140": {
+   "status": "online",
+   "rent": 1120,
+   "charges": 130,
+   "available": "2027-02-28",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [
+     "0472 08 73 63"
+    ],
+    "emails": [],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21786140",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
+  "21810512": {
+   "status": "online",
+   "rent": 600,
+   "charges": null,
+   "available": null,
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [
+     "0471 47 08 58",
+     "0477 60 93 14"
+    ],
+    "emails": [],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21810512",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
+  "21839613": {
+   "status": "online",
+   "rent": 975,
+   "charges": 70,
+   "available": "2026-12-01",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "TREVI Bruxelles - Location",
+    "kind": "agency",
+    "phones": [
+     "02 340 24 94"
+    ],
+    "emails": [],
+    "website": "https://www.trevi.be",
+    "form": "https://www.immoweb.be/en/classified/21839613",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
   "21845501": {
    "status": "online",
    "rent": 1200,
    "charges": null,
    "available": "2026-11-30",
    "since": "2026-10-16",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Vaneau Lecobel Bruxelles Est",
     "kind": "agency",
@@ -26,7 +101,7 @@
    "charges": 60,
    "available": "2026-12-01",
    "since": "2026-10-16",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Homeside Properties",
     "kind": "agency",
@@ -45,7 +120,7 @@
    "charges": null,
    "available": "2027-01-01",
    "since": "2026-10-16",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "SERENIMMO",
     "kind": "agency",
@@ -60,13 +135,34 @@
     "formLabel": "Contact form on the Immoweb listing"
    }
   },
+  "21872512": {
+   "status": "online",
+   "rent": 1000,
+   "charges": 200,
+   "available": "2027-01-01",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [
+     "0471 97 38 16"
+    ],
+    "emails": [
+     "al.angelini@gmail.com"
+    ],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21872512",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
   "21891432": {
    "status": "removed",
    "rent": 730,
    "charges": 100,
    "available": "2026-11-15",
    "since": "2026-10-19",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Private owner",
     "kind": "private",
@@ -83,7 +179,7 @@
    "charges": null,
    "available": "2026-12-01",
    "since": "2026-10-16",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Private owner",
     "kind": "private",
@@ -94,13 +190,49 @@
     "formLabel": "Contact form on the Immoweb listing"
    }
   },
+  "21898608": {
+   "status": "online",
+   "rent": 780,
+   "charges": 60,
+   "available": null,
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21898608",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
+  "21905071": {
+   "status": "online",
+   "rent": 850,
+   "charges": 200,
+   "available": "TO_BE_DEFINED",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [
+     "0473 70 67 45"
+    ],
+    "emails": [],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21905071",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
   "21917470": {
    "status": "online",
    "rent": 910,
    "charges": null,
    "available": "IMMEDIATELY",
    "since": "2026-10-19",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Century 21 Vision",
     "kind": "agency",
@@ -121,7 +253,7 @@
    "charges": 100,
    "available": "2027-01-04",
    "since": "2026-10-16",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "IMMOEXPAT",
     "kind": "agency",
@@ -137,13 +269,34 @@
     "formLabel": "Contact form on the Immoweb listing"
    }
   },
+  "21917668": {
+   "status": "online",
+   "rent": 1000,
+   "charges": 100,
+   "available": null,
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "BBF Apartments",
+    "kind": "agency",
+    "phones": [
+     "02 705 05 21"
+    ],
+    "emails": [
+     "z37335@secure.fortissimmo.net"
+    ],
+    "website": "https://www.bbf.be",
+    "form": "https://www.immoweb.be/en/classified/21917668",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
   "21919319": {
    "status": "online",
    "rent": 1000,
    "charges": 125,
    "available": "2027-01-01",
    "since": "2026-10-16",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "MYIMMO Uccle",
     "kind": "agency",
@@ -162,7 +315,7 @@
    "charges": 45,
    "available": "2026-10-18",
    "since": "2026-10-19",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Private owner",
     "kind": "private",
@@ -181,7 +334,7 @@
    "charges": null,
    "available": "2026-12-01",
    "since": "2026-10-16",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Housinganywhere",
     "kind": "platform",
@@ -198,7 +351,7 @@
    "charges": 120,
    "available": "IMMEDIATELY",
    "since": "2026-10-19",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Expertissimmo",
     "kind": "agency",
@@ -217,7 +370,7 @@
    "charges": 270,
    "available": "2026-12-01",
    "since": "2026-10-19",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Everest Properties",
     "kind": "agency",
@@ -236,7 +389,7 @@
    "charges": 100,
    "available": "IMMEDIATELY",
    "since": "2026-10-19",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Trevi",
     "kind": "agency",
@@ -255,20 +408,20 @@
    "charges": null,
    "available": "2026-11-20",
    "since": "2026-10-19",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Spotahome",
     "kind": "platform",
     "phones": [],
     "emails": [],
     "website": "https://www.spotahome.com",
-    "form": "https://www.spotahome.com/brussels/for-rent:apartments/256433",
+    "form": "https://www.spotahome.com/brussels/for-rent:apartments/292468",
     "formLabel": "Book or ask a question on the Spotahome listing"
    }
   },
   "zimmo-ls0e9": {
    "status": "unknown",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "note": "Zimmo answered 403"
   },
   "spot-1050-de-treves": {
@@ -277,7 +430,7 @@
    "charges": null,
    "available": "2026-12-21",
    "since": "2026-10-19",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Spotahome",
     "kind": "platform",
@@ -294,7 +447,7 @@
    "charges": null,
    "available": "2027-01-01",
    "since": "2026-10-19",
-   "checked": "2026-10-19",
+   "checked": "2026-10-20",
    "contact": {
     "who": "Spotahome",
     "kind": "platform",
@@ -303,6 +456,264 @@
     "website": "https://www.spotahome.com",
     "form": "https://www.spotahome.com/brussels/for-rent:studios/1567483",
     "formLabel": "Book or ask a question on the Spotahome listing"
+   }
+  },
+  "spot-1000-ambiorix": {
+   "status": "online",
+   "rent": 1170,
+   "charges": null,
+   "available": "2026-12-01",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Spotahome",
+    "kind": "platform",
+    "phones": [],
+    "emails": [],
+    "website": "https://www.spotahome.com",
+    "form": "https://www.spotahome.com/brussels/for-rent:apartments/838197",
+    "formLabel": "Book or ask a question on the Spotahome listing"
+   }
+  },
+  "spot-1050-georges-lorand": {
+   "status": "online",
+   "rent": 975,
+   "charges": null,
+   "available": "2027-01-02",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Spotahome",
+    "kind": "platform",
+    "phones": [],
+    "emails": [],
+    "website": "https://www.spotahome.com",
+    "form": "https://www.spotahome.com/brussels/for-rent:studios/1090629",
+    "formLabel": "Book or ask a question on the Spotahome listing"
+   }
+  },
+  "vbe79829": {
+   "status": "online",
+   "rent": 990,
+   "charges": null,
+   "available": "2027-01-01",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Housinganywhere",
+    "kind": "platform",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/apartment/for-rent/1050/elsene/vbe79829",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   }
+  },
+  "vbe75589": {
+   "status": "online",
+   "rent": 840,
+   "charges": null,
+   "available": "Not specified",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Advertiser on Immovlan",
+    "kind": "agency",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/apartment/for-rent/1200/sint-lambrechts-woluwe/vbe75589",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   }
+  },
+  "vbe74938": {
+   "status": "online",
+   "rent": 1200,
+   "charges": null,
+   "available": "2027-01-01",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Housinganywhere",
+    "kind": "platform",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/apartment/for-rent/1040/etterbeek/vbe74938",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   }
+  },
+  "rbv40292": {
+   "status": "online",
+   "rent": 730,
+   "charges": null,
+   "available": "Not specified",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Advertiser on Immovlan",
+    "kind": "agency",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/apartment/for-rent/1210/sint-joost-ten-node/rbv40292",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   }
+  },
+  "vbe73026": {
+   "status": "online",
+   "rent": 1300,
+   "charges": null,
+   "available": "2026-12-05",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Housinganywhere",
+    "kind": "platform",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/apartment/for-rent/1040/etterbeek/vbe73026",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   }
+  },
+  "vwd18894": {
+   "status": "online",
+   "rent": 899,
+   "charges": 399,
+   "available": "Not specified",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Advertiser on Immovlan",
+    "kind": "agency",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/apartment/for-rent/1030/schaarbeek/vwd18894",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   }
+  },
+  "vwd18834": {
+   "status": "online",
+   "rent": 1050,
+   "charges": 260,
+   "available": "Not specified",
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Immo Kalex",
+    "kind": "agency",
+    "phones": [],
+    "emails": [],
+    "website": null,
+    "form": "https://immovlan.be/en/detail/apartment/for-rent/1000/brussels/vwd18834",
+    "formLabel": "“Contact by email” on the Immovlan listing"
+   }
+  },
+  "vista-a47": {
+   "status": "online",
+   "rent": null,
+   "charges": null,
+   "available": null,
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Vista Residences",
+    "kind": "agency",
+    "phones": [
+     "0478 55 56 20"
+    ],
+    "emails": [
+     "info@vistaresidences.org"
+    ],
+    "website": "https://www.vistaresidences.org",
+    "form": null,
+    "formLabel": null
+   }
+  },
+  "vista-b7": {
+   "status": "online",
+   "rent": null,
+   "charges": null,
+   "available": null,
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Vista Residences",
+    "kind": "agency",
+    "phones": [
+     "0478 55 56 20"
+    ],
+    "emails": [
+     "info@vistaresidences.org"
+    ],
+    "website": "https://www.vistaresidences.org",
+    "form": null,
+    "formLabel": null
+   }
+  },
+  "vista-d19": {
+   "status": "online",
+   "rent": null,
+   "charges": null,
+   "available": null,
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Vista Residences",
+    "kind": "agency",
+    "phones": [
+     "0478 55 56 20"
+    ],
+    "emails": [
+     "info@vistaresidences.org"
+    ],
+    "website": "https://www.vistaresidences.org",
+    "form": null,
+    "formLabel": null
+   }
+  },
+  "vista-m57": {
+   "status": "online",
+   "rent": null,
+   "charges": null,
+   "available": null,
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Vista Residences",
+    "kind": "agency",
+    "phones": [
+     "0478 55 56 20"
+    ],
+    "emails": [
+     "info@vistaresidences.org"
+    ],
+    "website": "https://www.vistaresidences.org",
+    "form": null,
+    "formLabel": null
+   }
+  },
+  "vista-d75": {
+   "status": "online",
+   "rent": null,
+   "charges": null,
+   "available": null,
+   "since": "2026-10-20",
+   "checked": "2026-10-20",
+   "contact": {
+    "who": "Vista Residences",
+    "kind": "agency",
+    "phones": [
+     "0478 55 56 20"
+    ],
+    "emails": [
+     "info@vistaresidences.org"
+    ],
+    "website": "https://www.vistaresidences.org",
+    "form": null,
+    "formLabel": null
    }
   }
  }
