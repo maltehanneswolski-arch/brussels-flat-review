@@ -3678,14 +3678,14 @@
    "id": "spot-1210-des-deux-eglises",
    "kind": "spotahome",
    "source": "Spotahome",
-   "url": "https://www.spotahome.com/brussels/for-rent:apartments/611053",
+   "url": "https://www.spotahome.com/brussels/for-rent:apartments/770310",
    "area": "Saint-Josse",
    "street": "Rue des Deux Églises",
-   "lat": 50.84864,
-   "lng": 4.37388,
+   "lat": 50.84869,
+   "lng": 4.37409,
    "approx": true,
    "furnished": true,
-   "rent": 950,
+   "rent": 1000,
    "charges": null,
    "bedrooms": null,
    "m2": null,
@@ -3694,16 +3694,14 @@
    "lift": false,
    "terrace": null,
    "garden": false,
-   "available": "2026-12-02",
+   "available": "2027-01-01",
    "units": [
-    "1-bed, 50 m², €950, from 02/12/2026",
     "1-bed, 40 m², €1,000, from 01/01/2027"
    ],
    "unitIds": [
-    "611053",
     "770310"
    ],
-   "description": "Furnished flats booked online through Spotahome: you reserve on their site and pay their booking fee, without a viewing first. 2 units fit the rules; the price shown is the cheapest. Bills are usually extra.",
+   "description": "Furnished flats booked online through Spotahome: you reserve on their site and pay their booking fee, without a viewing first. One unit fits the rules; the price shown is the cheapest. Bills are usually extra.",
    "domicile": null,
    "domicileQuote": null,
    "added": "2026-10-19"

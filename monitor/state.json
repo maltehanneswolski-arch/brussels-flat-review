@@ -442,31 +442,18 @@
    }
   },
   "21917470": {
-   "status": "online",
    "rent": 910,
    "charges": null,
    "available": "IMMEDIATELY",
-   "contact": {
-    "who": "Century 21 Vision",
-    "kind": "agency",
-    "phones": [
-     "02 896 59 21"
-    ],
-    "emails": [
-     "info@century21vision.be"
-    ],
-    "website": null,
-    "form": "https://www.immoweb.be/en/classified/21917470",
-    "formLabel": "Contact form on the Immoweb listing"
-   },
+   "status": "removed",
    "first_watched": "2026-10-19",
    "last_checked": "2026-10-21",
    "public": {
-    "status": "online",
+    "status": "removed",
     "rent": 910,
     "charges": null,
     "available": "IMMEDIATELY",
-    "since": "2026-10-19",
+    "since": "2026-10-21",
     "checked": "2026-10-21",
     "contact": {
      "who": "Century 21 Vision",
