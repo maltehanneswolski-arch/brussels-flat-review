@@ -165,6 +165,7 @@ async function check(flat) {
   try {
     if (flat.kind === "vista") return await checkVista(flat);
     if (flat.kind === "spotahome") return await checkSpotahome(flat);
+    if (flat.source === "Zimmo") return {status: "unknown", note: "Zimmo blocks automatic checks"}; // Cloudflare stops scripts; the card says so
     if (flat.source === "Immovlan") return await checkImmovlan(flat);
     if (flat.source === "Immoweb") return await checkImmoweb(flat);
     return await checkAgencyPage(flat);

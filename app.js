@@ -425,7 +425,7 @@ function watchLine(x) {
     online: `Watching: still online, checked ${when(w.checked)}`,
     "under-option": `Under option since ${when(w.since)}: someone else is ahead`,
     removed: `Listing removed since ${when(w.since)}, probably rented`,
-    unknown: `Watching: last check failed (${when(w.checked)})`
+    unknown: /blocks/.test(w.note || "") ? "Can't be checked automatically: open the listing to see whether it's still there" : `Watching: last check failed (${when(w.checked)})`
   }[w.status];
   const extra = [];
   if (w.status !== "removed" && w.rent != null && x.rent != null && w.rent !== x.rent) extra.push(`rent now ${euro(w.rent)}`);
