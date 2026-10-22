@@ -328,6 +328,101 @@
     "formLabel": "Contact form on the Immoweb listing"
    }
   },
+  "21932368": {
+   "status": "online",
+   "rent": 950,
+   "charges": 70,
+   "available": "2026-12-01",
+   "since": "2026-10-22",
+   "checked": "2026-10-22",
+   "contact": {
+    "who": "TREVI Bruxelles - Location",
+    "kind": "agency",
+    "phones": [
+     "02 340 24 94"
+    ],
+    "emails": [],
+    "website": "https://www.trevi.be",
+    "form": "https://www.immoweb.be/en/classified/21932368",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
+  "21932597": {
+   "status": "online",
+   "rent": 970,
+   "charges": 5,
+   "available": "IMMEDIATELY",
+   "since": "2026-10-22",
+   "checked": "2026-10-22",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [
+     "0472 31 64 76"
+    ],
+    "emails": [],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21932597",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
+  "21932813": {
+   "status": "online",
+   "rent": 1130,
+   "charges": null,
+   "available": "2026-11-30",
+   "since": "2026-10-22",
+   "checked": "2026-10-22",
+   "contact": {
+    "who": "Vaneau Lecobel Bruxelles Est",
+    "kind": "agency",
+    "phones": [
+     "02 669 70 90"
+    ],
+    "emails": [],
+    "website": "https://www.vaneau-lecobel.be",
+    "form": "https://www.immoweb.be/en/classified/21932813",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
+  "21933730": {
+   "status": "online",
+   "rent": 980,
+   "charges": 20,
+   "available": null,
+   "since": "2026-10-22",
+   "checked": "2026-10-22",
+   "contact": {
+    "who": "Homeside Properties",
+    "kind": "agency",
+    "phones": [
+     "02 567 96 74"
+    ],
+    "emails": [],
+    "website": "https://www.homeside.be",
+    "form": "https://www.immoweb.be/en/classified/21933730",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
+  "21934364": {
+   "status": "online",
+   "rent": 975,
+   "charges": null,
+   "available": null,
+   "since": "2026-10-22",
+   "checked": "2026-10-22",
+   "contact": {
+    "who": "Private owner",
+    "kind": "private",
+    "phones": [
+     "0486 40 54 40"
+    ],
+    "emails": [],
+    "website": null,
+    "form": "https://www.immoweb.be/en/classified/21934364",
+    "formLabel": "Contact form on the Immoweb listing"
+   }
+  },
   "vbe62552": {
    "status": "online",
    "rent": 990,
@@ -415,7 +510,7 @@
     "phones": [],
     "emails": [],
     "website": "https://www.spotahome.com",
-    "form": "https://www.spotahome.com/brussels/for-rent:apartments/292468",
+    "form": "https://www.spotahome.com/brussels/for-rent:apartments/256433",
     "formLabel": "Book or ask a question on the Spotahome listing"
    }
   },
