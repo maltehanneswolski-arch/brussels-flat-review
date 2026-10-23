@@ -6,14 +6,14 @@
    "available": null,
    "status": "removed",
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "removed",
     "rent": 900,
     "charges": 160,
     "available": null,
     "since": "2026-10-21",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Immobilière La Marquise",
      "kind": "agency",
@@ -42,14 +42,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1120,
     "charges": 130,
     "available": "2027-02-28",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -81,14 +81,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 600,
     "charges": null,
     "available": "IMMEDIATELY",
     "since": "2026-10-21",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -109,14 +109,14 @@
    "available": "2026-12-01",
    "status": "removed",
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "removed",
     "rent": 975,
     "charges": 70,
     "available": "2026-12-01",
     "since": "2026-10-21",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "TREVI Bruxelles - Location",
      "kind": "agency",
@@ -136,14 +136,14 @@
    "available": "2026-11-30",
    "status": "removed",
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "removed",
     "rent": 1200,
     "charges": null,
     "available": "2026-11-30",
     "since": "2026-10-21",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Vaneau Lecobel Bruxelles Est",
      "kind": "agency",
@@ -174,14 +174,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 970,
     "charges": 60,
     "available": "2026-12-01",
     "since": "2026-10-16",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Homeside Properties",
      "kind": "agency",
@@ -214,14 +214,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 950,
     "charges": null,
     "available": "2027-01-01",
     "since": "2026-10-16",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "SERENIMMO",
      "kind": "agency",
@@ -256,14 +256,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1000,
     "charges": 200,
     "available": "2027-01-01",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -285,14 +285,14 @@
    "available": "2026-11-15",
    "status": "removed",
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "removed",
     "rent": 730,
     "charges": 100,
     "available": "2026-11-15",
     "since": "2026-10-19",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -319,14 +319,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 990,
     "charges": null,
     "available": "2026-12-01",
     "since": "2026-10-16",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -344,14 +344,14 @@
    "available": null,
    "status": "removed",
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "removed",
     "rent": 780,
     "charges": 60,
     "available": null,
     "since": "2026-10-22",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -380,14 +380,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 850,
     "charges": 200,
     "available": "TO_BE_DEFINED",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -420,14 +420,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-19",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 910,
     "charges": null,
     "available": "IMMEDIATELY",
     "since": "2026-10-22",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Century 21 Vision",
      "kind": "agency",
@@ -463,14 +463,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 875,
     "charges": 100,
     "available": "2027-01-04",
     "since": "2026-10-16",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "IMMOEXPAT",
      "kind": "agency",
@@ -506,14 +506,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1000,
     "charges": 100,
     "available": null,
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "BBF Apartments",
      "kind": "agency",
@@ -546,14 +546,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1000,
     "charges": 125,
     "available": "2027-01-01",
     "since": "2026-10-16",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "MYIMMO Uccle",
      "kind": "agency",
@@ -584,14 +584,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-19",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 950,
     "charges": 45,
     "available": "2026-10-18",
     "since": "2026-10-19",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -622,14 +622,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-22",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 950,
     "charges": 70,
     "available": "2026-12-01",
     "since": "2026-10-22",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "TREVI Bruxelles - Location",
      "kind": "agency",
@@ -660,14 +660,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-22",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 970,
     "charges": 5,
     "available": "IMMEDIATELY",
     "since": "2026-10-22",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -698,14 +698,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-22",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1130,
     "charges": null,
     "available": "2026-11-30",
     "since": "2026-10-22",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Vaneau Lecobel Bruxelles Est",
      "kind": "agency",
@@ -736,14 +736,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-22",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 980,
     "charges": 20,
     "available": null,
     "since": "2026-10-22",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Homeside Properties",
      "kind": "agency",
@@ -774,14 +774,14 @@
     "formLabel": "Contact form on the Immoweb listing"
    },
    "first_watched": "2026-10-22",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 975,
     "charges": null,
     "available": null,
     "since": "2026-10-22",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
      "kind": "private",
@@ -810,14 +810,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-16",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 990,
     "charges": null,
     "available": "2026-12-01",
     "since": "2026-10-16",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Housinganywhere",
      "kind": "platform",
@@ -846,14 +846,14 @@
     "formLabel": "Contact form on Expertissimmo's listing page"
    },
    "first_watched": "2026-10-19",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1050,
     "charges": 120,
     "available": "IMMEDIATELY",
     "since": "2026-10-19",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Expertissimmo",
      "kind": "agency",
@@ -884,14 +884,14 @@
     "formLabel": "Contact form on Everest Properties's listing page"
    },
    "first_watched": "2026-10-19",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 920,
     "charges": 270,
     "available": "2026-12-01",
     "since": "2026-10-19",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Everest Properties",
      "kind": "agency",
@@ -922,14 +922,14 @@
     "formLabel": "Contact form on Trevi's listing page"
    },
    "first_watched": "2026-10-19",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1000,
     "charges": 100,
     "available": "IMMEDIATELY",
     "since": "2026-10-19",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Trevi",
      "kind": "agency",
@@ -958,14 +958,14 @@
     "formLabel": "Book or ask a question on the Spotahome listing"
    },
    "first_watched": "2026-10-19",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 900,
     "charges": null,
     "available": "2026-11-20",
     "since": "2026-10-19",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Spotahome",
      "kind": "platform",
@@ -992,14 +992,14 @@
     "formLabel": "Book or ask a question on the Spotahome listing"
    },
    "first_watched": "2026-10-19",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 800,
     "charges": null,
     "available": "2026-12-21",
     "since": "2026-10-19",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Spotahome",
      "kind": "platform",
@@ -1026,14 +1026,14 @@
     "formLabel": "Book or ask a question on the Spotahome listing"
    },
    "first_watched": "2026-10-19",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 950,
     "charges": null,
     "available": "2027-01-01",
     "since": "2026-10-19",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Spotahome",
      "kind": "platform",
@@ -1060,14 +1060,14 @@
     "formLabel": "Book or ask a question on the Spotahome listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1170,
     "charges": null,
     "available": "2026-12-01",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Spotahome",
      "kind": "platform",
@@ -1094,14 +1094,14 @@
     "formLabel": "Book or ask a question on the Spotahome listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 975,
     "charges": null,
     "available": "2027-01-02",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Spotahome",
      "kind": "platform",
@@ -1128,14 +1128,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 990,
     "charges": null,
     "available": "2027-01-01",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Housinganywhere",
      "kind": "platform",
@@ -1162,14 +1162,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 840,
     "charges": null,
     "available": "Not specified",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Advertiser on Immovlan",
      "kind": "agency",
@@ -1196,14 +1196,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1200,
     "charges": null,
     "available": "2027-01-01",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Housinganywhere",
      "kind": "platform",
@@ -1230,14 +1230,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 730,
     "charges": null,
     "available": "Not specified",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Advertiser on Immovlan",
      "kind": "agency",
@@ -1264,14 +1264,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1300,
     "charges": null,
     "available": "2026-12-05",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Housinganywhere",
      "kind": "platform",
@@ -1298,14 +1298,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 899,
     "charges": 399,
     "available": "Not specified",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Advertiser on Immovlan",
      "kind": "agency",
@@ -1332,14 +1332,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 1050,
     "charges": 260,
     "available": "Not specified",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Immo Kalex",
      "kind": "agency",
@@ -1368,14 +1368,14 @@
     "formLabel": null
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": null,
     "charges": null,
     "available": null,
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Vista Residences",
      "kind": "agency",
@@ -1408,14 +1408,14 @@
     "formLabel": null
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": null,
     "charges": null,
     "available": null,
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Vista Residences",
      "kind": "agency",
@@ -1448,14 +1448,14 @@
     "formLabel": null
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": null,
     "charges": null,
     "available": null,
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Vista Residences",
      "kind": "agency",
@@ -1488,14 +1488,14 @@
     "formLabel": null
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": null,
     "charges": null,
     "available": null,
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Vista Residences",
      "kind": "agency",
@@ -1528,14 +1528,14 @@
     "formLabel": null
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": null,
     "charges": null,
     "available": null,
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Vista Residences",
      "kind": "agency",
@@ -1566,14 +1566,14 @@
     "formLabel": "“Contact by email” on the Immovlan listing"
    },
    "first_watched": "2026-10-20",
-   "last_checked": "2026-10-22",
+   "last_checked": "2026-10-23",
    "public": {
     "status": "online",
     "rent": 850,
     "charges": null,
     "available": "IMMEDIATELY",
     "since": "2026-10-20",
-    "checked": "2026-10-22",
+    "checked": "2026-10-23",
     "contact": {
      "who": "Advertiser on Immovlan",
      "kind": "agency",
