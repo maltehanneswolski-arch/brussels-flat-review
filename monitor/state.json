@@ -364,29 +364,18 @@
    }
   },
   "21905071": {
-   "status": "online",
    "rent": 850,
    "charges": 200,
    "available": "TO_BE_DEFINED",
-   "contact": {
-    "who": "Private owner",
-    "kind": "private",
-    "phones": [
-     "0473 70 67 45"
-    ],
-    "emails": [],
-    "website": null,
-    "form": "https://www.immoweb.be/en/classified/21905071",
-    "formLabel": "Contact form on the Immoweb listing"
-   },
+   "status": "removed",
    "first_watched": "2026-10-20",
    "last_checked": "2026-10-23",
    "public": {
-    "status": "online",
+    "status": "removed",
     "rent": 850,
     "charges": 200,
     "available": "TO_BE_DEFINED",
-    "since": "2026-10-20",
+    "since": "2026-10-23",
     "checked": "2026-10-23",
     "contact": {
      "who": "Private owner",
