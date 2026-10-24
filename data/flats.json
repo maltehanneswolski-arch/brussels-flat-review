@@ -1,5 +1,5 @@
 {
- "checked": "2026-10-23",
+ "checked": "2026-10-24",
  "areas": [
   "Schaerbeek",
   "Etterbeek",
@@ -2752,7 +2752,7 @@
    "id": "spot-1040-de-wavre",
    "kind": "spotahome",
    "source": "Spotahome",
-   "url": "https://www.spotahome.com/brussels/for-rent:apartments/256433",
+   "url": "https://www.spotahome.com/brussels/for-rent:apartments/292468",
    "area": "Etterbeek",
    "street": "Chaussée de Wavre",
    "lat": 50.83124,
@@ -2770,13 +2770,13 @@
    "garden": false,
    "available": "2026-11-20",
    "units": [
-    "1-bed, 45 m², €900, from 01/12/2026",
     "1-bed, 50 m², €900, from 01/01/2027",
+    "1-bed, 45 m², €900, from 01/12/2026",
     "Studio, 30 m², €1,100, from 20/11/2026"
    ],
    "unitIds": [
-    "256433",
     "292468",
+    "256433",
     "967678"
    ],
    "description": "Furnished flats booked online through Spotahome: you reserve on their site and pay their booking fee, without a viewing first. 3 units fit the rules; the price shown is the cheapest. Bills are usually extra.",
@@ -3459,10 +3459,10 @@
    "lift": false,
    "terrace": null,
    "garden": false,
-   "available": "2026-10-25",
+   "available": "2026-10-26",
    "units": [
     "Studio, 35 m², €950, from 17/11/2026",
-    "Studio, 35 m², €1,000, from 25/10/2026"
+    "Studio, 35 m², €1,000, from 26/10/2026"
    ],
    "unitIds": [
     "378070",
